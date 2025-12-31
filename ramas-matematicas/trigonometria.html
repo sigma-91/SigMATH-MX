@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guía de Trigonometría Plana</title>
+    <link rel="website icon" type="png" href="../../img/SigMath.png" />
+
+    <link rel="stylesheet" href="trigonometria.css">
+    <link rel="stylesheet" href="../SigMATH.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.text-3x1{
+    font-size: 2rem;
+}
+
+.sidebar {
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+
+.active-section {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-left: 4px solid #3b82f6;
+}
+
+.formula-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.example-box {
+    background-color: #f0f9ff;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    border-left: 4px solid #60a5fa;
+}
+
+.application-box {
+    background-color: #f0fdf4;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    border-left: 4px solid #34d399;
+}
+
+.diagram-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.diagram-container img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        z-index: 50;
+    }
+}
+
+/* Botón scroll to top */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+.scroll-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background-color: var(--secondary);
+    transform: translateY(-5px);
+}
+
+ .content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+    
+        h1 {
+          
+            margin-bottom: 20px;
+        }
+    
+        p {
+           
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+    
+        /* Tab de búsqueda */
+        .search-tab {
+            position: fixed;
+            right: -350px;
+            top: 0;
+            height: 100vh;
+            width: 350px;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .search-tab.open {
+            right: 0;
+        }
+    
+        .tab-button {
+            position: absolute;
+            left: -50px;
+            top: 100px;
+            width: 50px;
+            height: 120px;
+            background: white;
+            border: none;
+            border-radius: 10px 0 0 10px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            font-weight: bold;
+            color: darkblue;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+    
+        .tab-button:hover {
+            background: #f8f9fa;
+        }
+    
+        .search-content {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            direction: rtl;
+        }
+    
+        .search-content>* {
+            direction: ltr;
+        }
+    
+        .search-content::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        .search-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb:hover {
+            background: #5568d3;
+        }
+    
+        .search-header {
+            margin-bottom: 25px;
+        }
+    
+        .search-header h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+    
+        .search-header p {
+            color: #999;
+            font-size: 14px;
+        }
+    
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+    
+        .search-input {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+    
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+    
+        .topics-list {
+            list-style: none;
+        }
+    
+        .topic-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+    
+        .topic-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+    
+        .topic-item.hidden {
+            display: none;
+        }
+    
+        .no-results {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            display: none;
+        }
+    
+        .no-results.show {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-50">
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+    
+                    <h1 class="sigma">Σ</h1>
+                    <h1 class="sig">Sig</h1>
+                    <h1 class="MATH">MATH</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">SigMATH</a></li>
+                    <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                    <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                    <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                </ul>
+                <button class="hamburger" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Descubre el fascinante mundo de la Trigonometría<span class="typed-text" id="typed-element"></span></h2>
+            <p>La trigonometría es una rama fundamental de las matemáticas que se centra en el estudio de las relaciones entre los
+            ángulos y los lados de los triángulos. Su nombre proviene del griego trigonon , que significa "triángulo", y metron ,
+            que quiere decir "medida". Básicamente, la trigonometría permite medir distancias y ángulos con gran precisión, incluso
+            cuando no se pueden medir de forma directa.
+            
+            Se desarrolló originalmente a partir de observaciones geométricas en triángulos rectángulos, lo que dio lugar a las
+            llamadas funciones trigonométricas básicas : seno, coseno, tangente, y sus funciones recíprocas (cosecante, secante y
+            cotangente). Estas herramientas son clave para resolver problemas relacionados con ángulos y distancias, especialmente
+            en situaciones donde intervienen triángulos. </p>
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <div class="search-tab" id="searchTab">
+        <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+    
+        <div class="search-content">
+            <div class="search-header">
+                <h2>Buscar Temas</h2>
+                <p>Encuentra lo que necesitas</p>
+            </div>
+    
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+                    oninput="filterTopics()">
+                <span class="search-icon">🔍</span>
+            </div>
+    
+            <ul class="topics-list" id="topicsList">
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#triangulos" data-section="triangulos">Triangulos</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#razones" data-section="razones">Razones o Funciones Trigonometricas</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#plano-cartesiano" data-section="plano-cartesiano">Razones Trigonometricas en el Plano Cartesiano</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#logaritmos" data-section="logaritmos">Logaritmos de Funciones Trigonométricas</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#circunferencia" data-section="circunferencia">La Circunferencia Unitaria</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#ley-senos" data-section="ley-senos">La Ley de Senos y de Cosenos</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#teorema-tangente" data-section="teorema-tangente">El Teorema de la Tangente</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#identidades" data-section="identidades">Identidades Trigonométricas</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones" data-section="aplicaciones">Aplicaciones de la Trigonometria Plana</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#trigonometria-esferica" data-section="trigonometria-esferica">Trigonometría Esferica</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#conceptos-esfericos" data-section="conceptos-esfericos">Fundamentos de Trigonometría Esferica</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#leyes-esfericas" data-section="leyes-esfericas">Leyes y Teoremas de la Trigonometría Esferica</a></li>
+                <li class="topic-item" onclick="selectTopic(this)">Node.js y Backend</li>
+                <li class="topic-item" onclick="selectTopic(this)">Bases de Datos</li>
+                <li class="topic-item" onclick="selectTopic(this)">Seguridad Web</li>
+                <li class="topic-item" onclick="selectTopic(this)">Performance Web</li>
+                <li class="topic-item" onclick="selectTopic(this)">PWA y Service Workers</li>
+                <li class="topic-item" onclick="selectTopic(this)">GraphQL y REST APIs</li>
+            </ul>
+    
+            <div class="no-results" id="noResults">
+                No se encontraron resultados
+            </div>
+        </div>
+    </div>
+    
+
+   
+    <section id="triangulos" class="mb-12">
+     <h2 class="text-3x1 font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Clasificaciones de la trigonometría</h2>  
+     <p class="mb-4">Trigonometria Plana: Es la más común y se enfoca en los triángulos que están sobre un plano (es decir, triángulos planos o bidimensionales).
+    Trabaja principalmente con triángulos rectángulos y utiliza las funciones trigonométricas mencionadas anteriormente. Es
+    ampliamente usada en matemáticas elementales, física, ingeniería y arquitectura.</p> 
+
+    <p class="mb-4">Trigonometria Esferica: Se ocupa del estudio de los triángulos que están trazados sobre la superficie de una esfera (triángulos esféricos). Este
+    tipo de trigonometría es especialmente útil en disciplinas como la astronomía, la navegación marítima y aérea, y la
+    geodesia, donde se requiere trabajar con medidas en superficies curvas.</p>
+    </section>
+
+    <!-- Content Sections -->
+    <section id="triangulos" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Triángulos y Tipos</h2>
+        <p class="mb-4">Un triángulo es una figura geométrica cerrada con tres lados y tres ángulos. Los triángulos se
+            clasifican según sus lados y ángulos.</p>
+
+        <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Clasificación según sus lados</h3>
+        <ul class="list-disc pl-6 mb-6 space-y-2">
+            <li><strong>Equilátero:</strong> Tres lados iguales y tres ángulos iguales (60°)</li>
+            <li><strong>Isósceles:</strong> Dos lados iguales y dos ángulos iguales</li>
+            <li><strong>Escaleno:</strong> Todos los lados y ángulos son diferentes</li>
+        </ul>
+
+        <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Clasificación según sus ángulos</h3>
+        <ul class="list-disc pl-6 mb-6 space-y-2">
+            <li><strong>Acutángulo:</strong> Todos los ángulos son agudos (menores de 90°)</li>
+            <li><strong>Rectángulo:</strong> Un ángulo recto (90°)</li>
+            <li><strong>Obtusángulo:</strong> Un ángulo obtuso (mayor de 90°)</li>
+        </ul>
+
+        <div class="diagram-container">
+            <img src="img-2/tipos de triangulos.jpg"
+                alt="Tipos de triángulos" class="max-w-md">
+        </div>
+
+        <div class="formula-box">
+            <p>La suma de los ángulos internos de un triángulo siempre es 180°:</p>
+            <p class="text-center my-3">\(\alpha + \beta + \gamma = 180°\)</p>
+        </div>
+    </section>
+
+    <section id="pitagoras" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Teorema de Pitágoras</h2>
+        <p class="mb-4">El teorema de Pitágoras establece que en un triángulo rectangulo, la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa.</p>
+
+        <div class="formula-box">
+            <p class="text-center my-3">\(a^2 + b^2 = c^2\)</p>
+            <p class="text-sm text-gray-600">Donde \(c\) es la hipotenusa y \(a\) y \(b\) son los catetos.</p>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/teorema de pitagoras.png"
+                alt="Teorema de Pitágoras" class="max-w-md">
+        </div>
+
+        <div class="example-box mt-6">
+            <h4 class="font-bold mb-2">Ejemplo:</h4>
+            <p>Si un triángulo rectángulo tiene catetos de longitudes 3 cm y 4 cm, encuentra la longitud de la
+                hipotenusa.</p>
+            <p class="mt-3">Solución:</p>
+            <p class="mt-2">\(c^2 = a^2 + b^2\)</p>
+            <p class="mt-2">\(c^2 = 3^2 + 4^2\)</p>
+            <p class="mt-2">\(c^2 = 9 + 16\)</p>
+            <p class="mt-2">\(c^2 = 25\)</p>
+            <p class="mt-2">\(c = 5\) cm</p>
+        </div>
+    </section>
+
+    <section id="razones" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Razones Trigonométricas</h2>
+        <p class="mb-4">Las razones trigonométricas son relaciones entre los lados de un triángulo rectángulo. Las
+            principales razones son seno, coseno y tangente.</p>
+
+        <div class="formula-box">
+            <p>Para un ángulo θ en un triángulo rectángulo:</p>
+            <p class="my-2">\(\sin \theta = \frac{\text{cateto opuesto}}{\text{hipotenusa}}\)</p>
+            <p class="my-2">\(\cos \theta = \frac{\text{cateto adyacente}}{\text{hipotenusa}}\)</p>
+            <p class="my-2">\(\tan \theta = \frac{\text{cateto opuesto}}{\text{cateto adyacente}} = \frac{\sin
+                \theta}{\cos \theta}\)</p>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/razones.png"
+                alt="Razones trigonométricas" class="max-w-md">
+        </div>
+
+        <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Razones trigonométricas recíprocas</h3>
+        <div class="formula-box">
+            <p class="my-2">\(\csc \theta = \frac{1}{\sin \theta} = \frac{\text{hipotenusa}}{\text{cateto opuesto}}\)
+            </p>
+            <p class="my-2">\(\sec \theta = \frac{1}{\cos \theta} = \frac{\text{hipotenusa}}{\text{cateto adyacente}}\)
+            </p>
+            <p class="my-2">\(\cot \theta = \frac{1}{\tan \theta} = \frac{\text{cateto adyacente}}{\text{cateto
+                opuesto}}\)</p>
+        </div>
+
+        <div class="example-box mt-6">
+            <h4 class="font-bold mb-2">Ejemplo:</h4>
+            <p>En un triángulo rectángulo, si el cateto opuesto mide 5 unidades y la hipotenusa mide 13 unidades,
+                encuentra el valor de \(\sin \theta\), \(\cos \theta\) y \(\tan \theta\).</p>
+            <p class="mt-3">Solución:</p>
+            <p>Primero, calculemos el cateto adyacente usando el teorema de Pitágoras:</p>
+            <p class="mt-2">\(a^2 + 5^2 = 13^2\)</p>
+            <p class="mt-2">\(a^2 + 25 = 169\)</p>
+            <p class="mt-2">\(a^2 = 144\)</p>
+            <p class="mt-2">\(a = 12\) unidades</p>
+            <p class="mt-3">Ahora calculamos las razones trigonométricas:</p>
+            <p class="mt-2">\(\sin \theta = \frac{5}{13} = \frac{5}{13}\)</p>
+            <p class="mt-2">\(\cos \theta = \frac{12}{13} = \frac{12}{13}\)</p>
+            <p class="mt-2">\(\tan \theta = \frac{5}{12} = \frac{5}{12}\)</p>
+        </div>
+
+        <h3 class="text-2xl font-semibold text-blue-700 mt-8 mb-4">Tabla de Valores de Funciones Trigonométricas</h3>
+        <p class="mb-4">A continuación se presenta una tabla con los valores de las principales funciones
+            trigonométricas para ángulos comunes:</p>
+
+        <div class="overflow-x-auto mb-6">
+            <table class="min-w-full bg-white border border-gray-300 shadow-sm rounded-lg">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="py-3 px-4 border-b border-gray-300 text-left text-sm font-semibold text-blue-800">
+                            Ángulo</th>
+                        <th class="py-3 px-4 border-b border-gray-300 text-left text-sm font-semibold text-blue-800">
+                            Seno</th>
+                        <th class="py-3 px-4 border-b border-gray-300 text-left text-sm font-semibold text-blue-800">
+                            Coseno</th>
+                        <th class="py-3 px-4 border-b border-gray-300 text-left text-sm font-semibold text-blue-800">
+                            Tangente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-300">15°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{4}(\sqrt{6} - \sqrt{2}) \approx
+                            0.259\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{4}(\sqrt{6} + \sqrt{2}) \approx
+                            0.966\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{6} - \sqrt{2}}{\sqrt{6} + \sqrt{2}}
+                            \approx 0.268\)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 bg-blue-50">
+                        <td class="py-2 px-4 border-b border-gray-300">30°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{2} = 0.5\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{3}}{2} \approx 0.866\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{\sqrt{3}} \approx 0.577\)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-300">45°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{2}}{2} \approx 0.707\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{2}}{2} \approx 0.707\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">1</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 bg-blue-50">
+                        <td class="py-2 px-4 border-b border-gray-300">60°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{3}}{2} \approx 0.866\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{2} = 0.5\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\sqrt{3} \approx 1.732\)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-300">75°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{4}(\sqrt{6} + \sqrt{2}) \approx
+                            0.966\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{4}(\sqrt{6} - \sqrt{2}) \approx
+                            0.259\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{6} + \sqrt{2}}{\sqrt{6} - \sqrt{2}}
+                            \approx 3.732\)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 bg-blue-50">
+                        <td class="py-2 px-4 border-b border-gray-300">90°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">1</td>
+                        <td class="py-2 px-4 border-b border-gray-300">0</td>
+                        <td class="py-2 px-4 border-b border-gray-300">Indefinido</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-300">120°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{3}}{2} \approx 0.866\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(-\frac{1}{2} = -0.5\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(-\sqrt{3} \approx -1.732\)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 bg-blue-50">
+                        <td class="py-2 px-4 border-b border-gray-300">135°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{\sqrt{2}}{2} \approx 0.707\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(-\frac{\sqrt{2}}{2} \approx -0.707\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">-1</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-300">150°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{2} = 0.5\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(-\frac{\sqrt{3}}{2} \approx -0.866\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(-\frac{1}{\sqrt{3}} \approx -0.577\)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 bg-blue-50">
+                        <td class="py-2 px-4 border-b border-gray-300">180°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">0</td>
+                        <td class="py-2 px-4 border-b border-gray-300">-1</td>
+                        <td class="py-2 px-4 border-b border-gray-300">0</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-300">270°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">-1</td>
+                        <td class="py-2 px-4 border-b border-gray-300">0</td>
+                        <td class="py-2 px-4 border-b border-gray-300">Indefinido</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 bg-blue-50">
+                        <td class="py-2 px-4 border-b border-gray-300">300°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(-\frac{\sqrt{3}}{2} \approx -0.866\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(\frac{1}{2} = 0.5\)</td>
+                        <td class="py-2 px-4 border-b border-gray-300">\(-\sqrt{3} \approx -1.732\)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-300">360°</td>
+                        <td class="py-2 px-4 border-b border-gray-300">0</td>
+                        <td class="py-2 px-4 border-b border-gray-300">1</td>
+                        <td class="py-2 px-4 border-b border-gray-300">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="text-sm text-gray-600 mb-4">Esta tabla muestra los valores exactos (expresados como fracciones) y
+            aproximados (con tres decimales) de las funciones trigonométricas para ángulos comunes. Estos valores son
+            fundamentales para resolver problemas sin necesidad de calculadora.</p>
+    </section>
+
+    <section id="plano-cartesiano" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Razones en el Plano Cartesiano
+        </h2>
+        <p class="mb-4">Las razones trigonométricas pueden definirse en términos de coordenadas en el plano cartesiano.
+            Si consideramos un punto \(P(x,y)\) en el plano y el ángulo \(\theta\) formado entre el eje positivo x y la
+            línea que conecta el origen con P:</p>
+
+        <div class="formula-box">
+            <p class="my-2">\(\sin \theta = \frac{y}{r}\)</p>
+            <p class="my-2">\(\cos \theta = \frac{x}{r}\)</p>
+            <p class="my-2">\(\tan \theta = \frac{y}{x}\)</p>
+            <p class="text-sm text-gray-600">Donde \(r = \sqrt{x^2 + y^2}\) es la distancia del origen al punto P.</p>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/razones en el plano.jpg"
+                alt="Trigonometría en el plano cartesiano" class="max-w-md">
+        </div>
+
+        <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Signos de las razones trigonométricas en los
+            cuadrantes</h3>
+        <ul class="list-disc pl-6 mb-6 space-y-2">
+            <li><strong>Primer cuadrante (0° a 90°):</strong> Todas las razones son positivas</li>
+            <li><strong>Segundo cuadrante (90° a 180°):</strong> Solo seno y cosecante son positivas</li>
+            <li><strong>Tercer cuadrante (180° a 270°):</strong> Solo tangente y cotangente son positivas</li>
+            <li><strong>Cuarto cuadrante (270° a 360°):</strong> Solo coseno y secante son positivas</li>
+        </ul>
+    </section>
+
+    <section id="logaritmos" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Logaritmos de Funciones
+            Trigonométricas</h2>
+        <p class="mb-4">Los logaritmos de funciones trigonométricas son útiles en diversas aplicaciones matemáticas.
+            Algunas fórmulas importantes son:</p>
+
+        <div class="formula-box">
+            <p class="my-2">\(\ln(\sin x) = \ln\left(2\sin\frac{x}{2}\cos\frac{x}{2}\right) = \ln(2) +
+                \ln\left(\sin\frac{x}{2}\right) + \ln\left(\cos\frac{x}{2}\right)\)</p>
+            <p class="my-2">\(\ln(\cos x) = \ln\left(\cos^2\frac{x}{2} - \sin^2\frac{x}{2}\right)\)</p>
+            <p class="my-2">\(\ln(\tan x) = \ln(\sin x) - \ln(\cos x)\)</p>
+        </div>
+
+        <p class="mt-4">Estas relaciones son especialmente útiles en cálculo integral, donde aparecen integrales que
+            involucran funciones trigonométricas.</p>
+    </section>
+
+    <section id="circunferencia" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Circunferencia Unitaria</h2>
+        <p class="mb-4">La circunferencia unitaria es un círculo de radio 1 centrado en el origen del plano cartesiano.
+            Es una herramienta fundamental para entender las funciones trigonométricas para cualquier ángulo.</p>
+
+        <div class="formula-box">
+            <p>Para un punto \(P(x,y)\) en la circunferencia unitaria, donde el ángulo desde el eje x positivo es
+                \(\theta\):</p>
+            <p class="my-2">\(x = \cos \theta\)</p>
+            <p class="my-2">\(y = \sin \theta\)</p>
+            <p class="my-2">\(x^2 + y^2 = 1\)</p>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/circunferencia unitaria.jpg"
+                alt="Circunferencia unitaria" class="max-w-md">
+        </div>
+
+        <p class="mt-4">La circunferencia unitaria permite extender las definiciones de las funciones trigonométricas
+            para cualquier ángulo, no solo para aquellos en triángulos rectángulos.</p>
+    </section>
+
+    <section id="ley-senos" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Ley de Senos</h2>
+        <p class="mb-4">La ley de senos es una relación entre los lados y los ángulos de un triángulo cualquiera. Esta
+            ley establece que la razón entre el seno de un ángulo y el lado opuesto a ese ángulo es constante para todos
+            los ángulos y lados correspondientes de un triángulo.</p>
+
+        <div class="formula-box">
+            <p class="text-center my-3">\(\frac{\sin A}{a} = \frac{\sin B}{b} = \frac{\sin C}{c}\)</p>
+            <p class="text-sm text-gray-600">Donde A, B y C son los ángulos del triángulo, y a, b y c son los lados
+                opuestos a esos ángulos.</p>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/ley de senos.png" alt="Ley de senos"
+                class="max-w-md">
+        </div>
+
+        <div class="example-box mt-6">
+            <h4 class="font-bold mb-2">Ejemplo:</h4>
+            <p>En un triángulo, conocemos que a = 10 cm, b = 15 cm y ángulo A = 30°. Encuentra el ángulo B.</p>
+            <p class="mt-3">Solución:</p>
+            <p class="mt-2">Usamos la ley de senos:</p>
+            <p class="mt-2">\(\frac{\sin A}{a} = \frac{\sin B}{b}\)</p>
+            <p class="mt-2">\(\frac{\sin 30°}{10} = \frac{\sin B}{15}\)</p>
+            <p class="mt-2">\(\frac{0.5}{10} = \frac{\sin B}{15}\)</p>
+            <p class="mt-2">\(0.05 = \frac{\sin B}{15}\)</p>
+            <p class="mt-2">\(\sin B = 0.05 \times 15 = 0.75\)</p>
+            <p class="mt-2">\(B = \arcsin(0.75) \approx 48.6°\)</p>
+        </div>
+    </section>
+
+    <section id="ley-cosenos" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Ley de Cosenos</h2>
+        <p class="mb-4">La ley de cosenos es una generalización del teorema de Pitágoras para triángulos cualquiera.
+            Relaciona el cuadrado de la longitud de un lado con los cuadrados de las longitudes de los otros dos lados y
+            el coseno del ángulo entre ellos.</p>
+
+        <div class="formula-box">
+            <p class="my-2">\(a^2 = b^2 + c^2 - 2bc\cos A\)</p>
+            <p class="my-2">\(b^2 = a^2 + c^2 - 2ac\cos B\)</p>
+            <p class="my-2">\(c^2 = a^2 + b^2 - 2ab\cos C\)</p>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/ley de cosenos.png" alt="Ley de cosenos"
+                class="max-w-md">
+        </div>
+
+        <div class="example-box mt-6">
+            <h4 class="font-bold mb-2">Ejemplo:</h4>
+            <p>En un triángulo, conocemos que a = 8 cm, b = 12 cm y c = 15 cm. Encuentra el ángulo A.</p>
+            <p class="mt-3">Solución:</p>
+            <p class="mt-2">Usamos la ley de cosenos:</p>
+            <p class="mt-2">\(a^2 = b^2 + c^2 - 2bc\cos A\)</p>
+            <p class="mt-2">\(8^2 = 12^2 + 15^2 - 2 \times 12 \times 15 \times \cos A\)</p>
+            <p class="mt-2">\(64 = 144 + 225 - 360\cos A\)</p>
+            <p class="mt-2">\(64 = 369 - 360\cos A\)</p>
+            <p class="mt-2">\(360\cos A = 369 - 64 = 305\)</p>
+            <p class="mt-2">\(\cos A = \frac{305}{360} \approx 0.847\)</p>
+            <p class="mt-2">\(A = \arccos(0.847) \approx 32.0°\)</p>
+        </div>
+    </section>
+
+    <section id="teorema-tangente" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Teorema de la Tangente</h2>
+        <p class="mb-4">El teorema de la tangente es otra relación entre los lados y ángulos de un triángulo. Es
+            especialmente útil cuando se conocen dos lados y el ángulo incluido, o dos ángulos y un lado.</p>
+
+        <div class="formula-box">
+            <p class="text-center my-3">\(\frac{a + b}{a - b} = \frac{\tan\left(\frac{A +
+                B}{2}\right)}{\tan\left(\frac{A - B}{2}\right)}\)</p>
+        </div>
+
+        <p class="mt-4">Esta fórmula se puede deducir de la ley de senos y es útil en problemas de trigonometría
+            avanzada. También existen formas alternativas del teorema de la tangente:</p>
+
+        <div class="formula-box">
+            <p class="my-2">\(\frac{a}{b} = \frac{\sin A}{\sin B} = \frac{\sin(C+A)}{\sin(C+B)}\)</p>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/teorema-ley-de-la-tangente.png" alt="Ley de cosenos" class="max-w-md">
+        </div>
+    </section>
+
+    <section id="identidades" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Identidades Trigonométricas
+        </h2>
+        <p class="mb-4">Las identidades trigonométricas son ecuaciones que relacionan funciones trigonométricas. Son
+            fundamentales para simplificar expresiones y resolver problemas en trigonometría.</p>
+
+        <section id="identidades-pitagoricas" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades Pitagóricas</h3>
+            <div class="formula-box">
+                <p class="my-2">\(\sin^2 \theta + \cos^2 \theta = 1\)</p>
+                <p class="my-2">\(1 + \tan^2 \theta = \sec^2 \theta\)</p>
+                <p class="my-2">\(1 + \cot^2 \theta = \csc^2 \theta\)</p>
+            </div>
+        </section>
+
+        <section id="identidades-cocientes" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades de Cocientes</h3>
+            <div class="formula-box">
+                <p class="my-2">\(\tan \theta = \frac{\sin \theta}{\cos \theta}\)</p>
+                <p class="my-2">\(\cot \theta = \frac{\cos \theta}{\sin \theta}\)</p>
+            </div>
+        </section>
+
+        <section id="identidades-reciprocas" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades Recíprocas</h3>
+            <div class="formula-box">
+                <p class="my-2">\(\sin \theta = \frac{1}{\csc \theta}\)</p>
+                <p class="my-2">\(\cos \theta = \frac{1}{\sec \theta}\)</p>
+                <p class="my-2">\(\tan \theta = \frac{1}{\cot \theta}\)</p>
+            </div>
+        </section>
+
+        <section id="identidades-suma-diferencia" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades de Suma y Diferencia</h3>
+            <div class="formula-box">
+                <p class="my-2">\(\sin(A + B) = \sin A \cos B + \cos A \sin B\)</p>
+                <p class="my-2">\(\sin(A - B) = \sin A \cos B - \cos A \sin B\)</p>
+                <p class="my-2">\(\cos(A + B) = \cos A \cos B - \sin A \sin B\)</p>
+                <p class="my-2">\(\cos(A - B) = \cos A \cos B + \sin A \sin B\)</p>
+                <p class="my-2">\(\tan(A + B) = \frac{\tan A + \tan B}{1 - \tan A \tan B}\)</p>
+                <p class="my-2">\(\tan(A - B) = \frac{\tan A - \tan B}{1 + \tan A \tan B}\)</p>
+            </div>
+        </section>
+
+        <section id="identidades-angulo-doble" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades de Ángulo Doble y Mitad</h3>
+            <div class="formula-box">
+                <p class="text-center font-semibold">Ángulo Doble</p>
+                <p class="my-2">\(\sin(2\theta) = 2\sin \theta \cos \theta\)</p>
+                <p class="my-2">\(\cos(2\theta) = \cos^2 \theta - \sin^2 \theta = 2\cos^2 \theta - 1 = 1 - 2\sin^2
+                    \theta\)</p>
+                <p class="my-2">\(\tan(2\theta) = \frac{2\tan \theta}{1 - \tan^2 \theta}\)</p>
+
+                <p class="text-center font-semibold mt-4">Ángulo Mitad</p>
+                <p class="my-2">\(\sin^2 \frac{\theta}{2} = \frac{1 - \cos \theta}{2}\)</p>
+                <p class="my-2">\(\cos^2 \frac{\theta}{2} = \frac{1 + \cos \theta}{2}\)</p>
+                <p class="my-2">\(\tan^2 \frac{\theta}{2} = \frac{1 - \cos \theta}{1 + \cos \theta}\)</p>
+                <p class="my-2">\(\tan \frac{\theta}{2} = \frac{\sin \theta}{1 + \cos \theta} = \frac{1 - \cos
+                    \theta}{\sin \theta}\)</p>
+            </div>
+        </section>
+
+        <section id="identidades-suma-producto" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades de Suma a Producto</h3>
+            <div class="formula-box">
+                <p class="my-2">\(\sin A + \sin B = 2\sin\left(\frac{A + B}{2}\right)\cos\left(\frac{A - B}{2}\right)\)
+                </p>
+                <p class="my-2">\(\sin A - \sin B = 2\sin\left(\frac{A - B}{2}\right)\cos\left(\frac{A + B}{2}\right)\)
+                </p>
+                <p class="my-2">\(\cos A + \cos B = 2\cos\left(\frac{A + B}{2}\right)\cos\left(\frac{A - B}{2}\right)\)
+                </p>
+                <p class="my-2">\(\cos A - \cos B = -2\sin\left(\frac{A + B}{2}\right)\sin\left(\frac{A - B}{2}\right)\)
+                </p>
+            </div>
+        </section>
+
+        <section id="identidades-producto-suma" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades de Producto a Suma</h3>
+            <div class="formula-box">
+                <p class="my-2">\(\sin A \sin B = \frac{1}{2}[\cos(A - B) - \cos(A + B)]\)</p>
+                <p class="my-2">\(\cos A \cos B = \frac{1}{2}[\cos(A - B) + \cos(A + B)]\)</p>
+                <p class="my-2">\(\sin A \cos B = \frac{1}{2}[\sin(A + B) + \sin(A - B)]\)</p>
+            </div>
+        </section>
+
+        <section id="identidades-par-impar" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades de Funciones Par e Impar</h3>
+            <div class="formula-box">
+                <p class="my-2">\(\sin(-\theta) = -\sin \theta\) (función impar)</p>
+                <p class="my-2">\(\cos(-\theta) = \cos \theta\) (función par)</p>
+                <p class="my-2">\(\tan(-\theta) = -\tan \theta\) (función impar)</p>
+                <p class="my-2">\(\csc(-\theta) = -\csc \theta\) (función impar)</p>
+                <p class="my-2">\(\sec(-\theta) = \sec \theta\) (función par)</p>
+                <p class="my-2">\(\cot(-\theta) = -\cot \theta\) (función impar)</p>
+            </div>
+        </section>
+
+        <section id="identidades-complementos" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Identidades de Complementos y Suplementos</h3>
+            <div class="formula-box">
+                <p class="text-center font-semibold">Ángulos Complementarios (suma 90°)</p>
+                <p class="my-2">\(\sin(90° - \theta) = \cos \theta\)</p>
+                <p class="my-2">\(\cos(90° - \theta) = \sin \theta\)</p>
+                <p class="my-2">\(\tan(90° - \theta) = \cot \theta\)</p>
+
+                <p class="text-center font-semibold mt-4">Ángulos Suplementarios (suma 180°)</p>
+                <p class="my-2">\(\sin(180° - \theta) = \sin \theta\)</p>
+                <p class="my-2">\(\cos(180° - \theta) = -\cos \theta\)</p>
+                <p class="my-2">\(\tan(180° - \theta) = -\tan \theta\)</p>
+            </div>
+        </section>
+    </section>
+
+    <section id="aplicaciones" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Aplicaciones a la Vida Real y
+            la Física</h2>
+        <p class="mb-4">La trigonometría tiene numerosas aplicaciones en la vida real y en la física. Aquí se presentan
+            algunos ejemplos:</p>
+
+        <div class="application-box">
+            <h3 class="text-xl font-semibold text-green-700 mb-2">Medición de alturas y distancias</h3>
+            <p class="mb-3">La trigonometría permite calcular alturas de edificios, montañas o distancias inaccesibles
+                usando ángulos de elevación o depresión.</p>
+            <div class="formula-box bg-white">
+                <p>Si observas un edificio con un ángulo de elevación \(\theta\) a una distancia \(d\), la altura \(h\)
+                    del edificio se puede calcular como:</p>
+                <p class="text-center my-3">\(h = d \times \tan \theta\)</p>
+            </div>
+        </div>
+
+        <div class="application-box mt-6">
+            <h3 class="text-xl font-semibold text-green-700 mb-2">Navegación y GPS</h3>
+            <p>La trigonometría es fundamental en sistemas de navegación, tanto marítima como aérea y en sistemas GPS.
+                Permite calcular posiciones a partir de coordenadas y distancias.</p>
+        </div>
+
+        <div class="application-box mt-6">
+            <h3 class="text-xl font-semibold text-green-700 mb-2">Física de ondas</h3>
+            <p class="mb-3">Las funciones trigonométricas describen fenómenos ondulatorios como el sonido, la luz, las
+                ondas electromagnéticas y las ondas mecánicas.</p>
+            <div class="formula-box bg-white">
+                <p>Una onda sinusoidal se puede expresar como:</p>
+                <p class="text-center my-3">\(y(t) = A \sin(2\pi ft + \phi)\)</p>
+                <p class="text-sm text-gray-600">Donde \(A\) es la amplitud, \(f\) es la frecuencia, \(t\) es el tiempo
+                    y \(\phi\) es la fase inicial.</p>
+            </div>
+        </div>
+
+        <div class="application-box mt-6">
+            <h3 class="text-xl font-semibold text-green-700 mb-2">Arquitectura e ingeniería</h3>
+            <p>En la construcción de edificios, puentes y otras estructuras, la trigonometría se utiliza para calcular
+                ángulos, fuerzas y tensiones. También es crucial en el diseño de arcos, cúpulas y otras formas
+                arquitectónicas.</p>
+        </div>
+
+        <div class="application-box mt-6">
+            <h3 class="text-xl font-semibold text-green-700 mb-2">Astronomía</h3>
+            <p>La trigonometría permite calcular distancias a estrellas y planetas, así como predecir sus posiciones. La
+                medición de ángulos entre objetos celestes es fundamental en la astronomía.</p>
+        </div>
+
+        <div class="application-box mt-6">
+            <h3 class="text-xl font-semibold text-green-700 mb-2">Movimiento circular y armónico</h3>
+            <p class="mb-3">En física, el movimiento circular y el movimiento armónico simple se describen mediante
+                funciones trigonométricas.</p>
+            <div class="formula-box bg-white">
+                <p>La posición de un objeto en movimiento armónico simple se expresa como:</p>
+                <p class="text-center my-3">\(x(t) = A \cos(\omega t + \phi)\)</p>
+                <p class="text-sm text-gray-600">Donde \(A\) es la amplitud, \(\omega\) es la frecuencia angular, \(t\)
+                    es el tiempo y \(\phi\) es la fase inicial.</p>
+            </div>
+        </div>
+
+        <div class="diagram-container">
+            <img src="img/aplicacion.png"
+                alt="Aplicaciones de la trigonometría" class="max-w-md">
+        </div>
+    </section>
+
+    <section id="trigonometria-esferica" class="mb-12">
+        <h2 class="text-3xl font-bold text-blue-800 mb-4 pb-2 border-b-2 border-blue-200">Trigonometría Esférica</h2>
+        <p class="mb-4">La trigonometría esférica es la rama de la trigonometría que se ocupa de las relaciones entre
+            los elementos de triángulos formados por arcos de círculos máximos en la superficie de una esfera. A
+            diferencia de la trigonometría plana, los ángulos internos de un triángulo esférico pueden sumar más de
+            180°.</p>
+
+        <section id="triangulos-esfericos" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Triángulos Esféricos y Tipos</h3>
+            <p class="mb-4">Un triángulo esférico está formado por arcos de círculos máximos en la superficie de una
+                esfera. Los círculos máximos son aquellos cuyos centros coinciden con el centro de la esfera.</p>
+
+            <div class="diagram-container">
+                <img src="img/triangulo esferico.png"
+                    alt="Triángulo esférico" class="max-w-md">
+            </div>
+
+            <h4 class="text-xl font-semibold text-blue-600 mt-5 mb-2">Clasificación de Triángulos Esféricos</h4>
+            <ul class="list-disc pl-6 mb-6 space-y-2">
+                <li><strong>Triángulo esférico rectángulo:</strong> Tiene un ángulo recto (90°)</li>
+                <li><strong>Triángulo esférico birrectángulo:</strong> Tiene dos ángulos rectos</li>
+                <li><strong>Triángulo esférico trirrectángulo:</strong> Tiene tres ángulos rectos</li>
+                <li><strong>Triángulo esférico oblicuángulo:</strong> No tiene ángulos rectos</li>
+            </ul>
+
+            <div class="formula-box">
+                <p>Una característica única de los triángulos esféricos es que la suma de sus ángulos internos es:</p>
+                <p class="text-center my-3">\(A + B + C > 180°\)</p>
+                <p class="text-center my-3">\(A + B + C = 180° + E\)</p>
+                <p class="text-sm text-gray-600">Donde \(E\) es el exceso esférico, que se relaciona con el área del
+                    triángulo.</p>
+            </div>
+        </section>
+
+        <section id="conceptos-esfericos" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Conceptos Fundamentales</h3>
+            <p class="mb-4">En la trigonometría esférica, los lados de un triángulo se miden por el ángulo que forman en
+                el centro de la esfera (en radianes o grados), y los ángulos son los formados por los arcos de círculo
+                máximo.</p>
+
+            <div class="formula-box">
+                <p>Si \(R\) es el radio de la esfera, entonces la longitud de un arco \(s\) correspondiente a un ángulo
+                    central \(\theta\) (en radianes) es:</p>
+                <p class="text-center my-3">\(s = R\theta\)</p>
+            </div>
+
+            <h4 class="text-xl font-semibold text-blue-600 mt-5 mb-2">Distancia Esférica</h4>
+            <p class="mb-4">La distancia más corta entre dos puntos en una esfera es el arco de círculo máximo que los
+                une. Esta distancia se llama distancia geodésica o distancia esférica.</p>
+
+            <div class="formula-box">
+                <p>La distancia esférica \(d\) entre dos puntos con latitud y longitud \((\phi_1, \lambda_1)\) y
+                    \((\phi_2, \lambda_2)\) se puede calcular usando la fórmula del haversine:</p>
+                <p class="text-center my-3">\(d = 2R \cdot \arcsin\left(\sqrt{\sin^2\left(\frac{\phi_2-\phi_1}{2}\right)
+                    + \cos\phi_1 \cos\phi_2 \sin^2\left(\frac{\lambda_2-\lambda_1}{2}\right)}\right)\)</p>
+            </div>
+
+            <div class="example-box mt-6">
+                <h4 class="font-bold mb-2">Ejemplo:</h4>
+                <p>Calcula la distancia entre Madrid (40.4° N, 3.7° W) y Tokio (35.7° N, 139.8° E) en una esfera con
+                    radio igual al de la Tierra (6371 km).</p>
+                <p class="mt-3">Solución:</p>
+                <p class="mt-2">Convertimos a radianes: \(\phi_1 = 40.4° \cdot \frac{\pi}{180} = 0.705\), \(\lambda_1 =
+                    -3.7° \cdot \frac{\pi}{180} = -0.065\)</p>
+                <p class="mt-2">\(\phi_2 = 35.7° \cdot \frac{\pi}{180} = 0.623\), \(\lambda_2 = 139.8° \cdot
+                    \frac{\pi}{180} = 2.44\)</p>
+                <p class="mt-2">Aplicamos la fórmula del haversine:</p>
+                <p class="mt-2">\(d = 2 \cdot 6371 \cdot \arcsin\left(\sqrt{\sin^2\left(\frac{0.623-0.705}{2}\right) +
+                    \cos(0.705) \cos(0.623) \sin^2\left(\frac{2.44-(-0.065)}{2}\right)}\right)\)</p>
+                <p class="mt-2">\(d \approx 10,756\) km</p>
+            </div>
+        </section>
+
+        <section id="leyes-esfericas" class="ml-4 mb-6">
+            <h3 class="text-2xl font-semibold text-blue-700 mt-6 mb-3">Leyes y Teoremas</h3>
+            <p class="mb-4">En la trigonometría esférica, existen leyes análogas a las de la trigonometría plana, pero
+                adaptadas a la geometría de la esfera.</p>
+
+            <h4 class="text-xl font-semibold text-blue-600 mt-5 mb-2">Ley de Senos Esférica</h4>
+            <div class="formula-box">
+                <p>Para un triángulo esférico con lados \(a\), \(b\), \(c\) y ángulos opuestos \(A\), \(B\), \(C\):</p>
+                <p class="text-center my-3">\(\frac{\sin A}{\sin a} = \frac{\sin B}{\sin b} = \frac{\sin C}{\sin c}\)
+                </p>
+            </div>
+
+            <h4 class="text-xl font-semibold text-blue-600 mt-5 mb-2">Ley de Cosenos Esférica</h4>
+            <div class="formula-box">
+                <p>Existen dos formas de la ley de cosenos esférica:</p>
+                <p class="text-center my-3">Primera forma (para lados):</p>
+                <p class="text-center my-3">\(\cos c = \cos a \cos b + \sin a \sin b \cos C\)</p>
+                <p class="text-center my-3">Segunda forma (para ángulos):</p>
+                <p class="text-center my-3">\(\cos C = -\cos A \cos B + \sin A \sin B \cos c\)</p>
+            </div>
+
+            <h4 class="text-xl font-semibold text-blue-600 mt-5 mb-2">Fórmulas de las Cinco Partes</h4>
+            <div class="formula-box">
+                <p>Para triángulos esféricos rectángulos (con \(C = 90°\)), se tienen las siguientes relaciones:</p>
+                <p class="my-2">\(\sin a = \sin A \sin c\)</p>
+                <p class="my-2">\(\cos A = \cos a \sin B\)</p>
+                <p class="my-2">\(\cos a = \cos b \cos c\)</p>
+                <p class="my-2">\(\tan a = \tan b \cos A\)</p>
+                <p class="my-2">\(\tan b = \tan c \cos B\)</p>
+            </div>
+
+            <div class="application-box mt-6">
+                <h3 class="text-xl font-semibold text-green-700 mb-2">Aplicaciones de la Trigonometría Esférica</h3>
+                <ul class="list-disc pl-6 mb-6 space-y-2">
+                    <li><strong>Navegación marítima y aérea:</strong> Cálculo de rutas óptimas sobre la superficie
+                        terrestre</li>
+                    <li><strong>Astronomía:</strong> Determinación de posiciones y distancias entre cuerpos celestes
+                    </li>
+                    <li><strong>Cartografía:</strong> Proyecciones de mapas y cálculos geodésicos</li>
+                    <li><strong>GPS y sistemas de posicionamiento:</strong> Cálculo preciso de coordenadas y distancias
+                    </li>
+                    <li><strong>Cristalografía:</strong> Estudio de la estructura de cristales y moléculas</li>
+                </ul>
+            </div>
+
+            <div class="example-box mt-6">
+                <h4 class="font-bold mb-2">Ejemplo de aplicación:</h4>
+                <p>Un avión vuela desde Nueva York (40.7° N, 74.0° W) a Roma (41.9° N, 12.5° E). ¿Cuál es la ruta más
+                    corta (ortodrómica) que debe seguir?</p>
+                <p class="mt-3">Solución:</p>
+                <p>Usando la trigonometría esférica, se puede calcular el acimut inicial (ángulo respecto al norte) que
+                    debe seguir el avión desde Nueva York:</p>
+                <p class="mt-2">\(\tan \alpha = \frac{\sin(\lambda_R - \lambda_{NY})}{\cos \phi_{NY} \tan \phi_R - \sin
+                    \phi_{NY} \cos(\lambda_R - \lambda_{NY})}\)</p>
+                <p class="mt-2">Donde \(\phi\) representa la latitud y \(\lambda\) la longitud de cada ciudad.</p>
+                <p class="mt-2">El cálculo da un acimut inicial aproximado de 53° NE, lo que significa que el avión debe
+                    despegar en dirección noreste y seguir una ruta curva sobre el Atlántico Norte.</p>
+            </div>
+        </section>
+    </section>
+    </main>
+    </div>
+
+    <div class="float-buttons">
+    
+        <div class="float-button" id="topBtn">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+    
+    <footer class="bg-gray-100 py-8 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>© 2025 Guía Descriptiva de Trigonometria. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script id="app-script">
+         // Botón Scroll to Top
+            const scrollTopBtn = document.getElementById('scroll-top');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('active');
+                } else {
+                    scrollTopBtn.classList.remove('active');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sidebar toggle functionality
+            const sidebar = document.getElementById('sidebar');
+            const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+            const closeSidebarBtn = document.getElementById('close-sidebar');
+
+            // Get sidebar state from localStorage
+            const sidebarOpen = localStorage.getItem('sidebarOpen') !== 'false';
+
+            // Set initial state
+            if (!sidebarOpen) {
+                sidebar.classList.add('closed');
+            }
+
+            toggleSidebarBtn.addEventListener('click', function () {
+                sidebar.classList.toggle('closed');
+                localStorage.setItem('sidebarOpen', !sidebar.classList.contains('closed'));
+            });
+
+            closeSidebarBtn.addEventListener('click', function () {
+                sidebar.classList.add('closed');
+                localStorage.setItem('sidebarOpen', false);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+
+                        // Close sidebar on mobile after clicking a link
+                        if (window.innerWidth < 768) {
+                            sidebar.classList.add('closed');
+                            localStorage.setItem('sidebarOpen', false);
+                        }
+                    }
+                });
+            });
+
+            // Highlight active section in sidebar
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a');
+
+            function highlightActiveSection() {
+                let scrollPosition = window.scrollY;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active-section');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active-section');
+                            }
+                        });
+                    }
+                });
+
+            }});
+
+        function toggleTab() {
+                const tab = document.getElementById('searchTab');
+                tab.classList.toggle('open');
+            }
+
+            function filterTopics() {
+                const input = document.getElementById('searchInput');
+                const filter = input.value.toLowerCase();
+                const items = document.querySelectorAll('.topic-item');
+                const noResults = document.getElementById('noResults');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.add('show');
+                } else {
+                    noResults.classList.remove('show');
+                }
+            }
+
+            function selectTopic(el) {
+                alert('Has seleccionado: ' + el.textContent);
+                // Aquí puedes agregar la lógica para cargar el contenido del tema
+            }
+
+            // Cerrar tab al hacer clic fuera
+            document.addEventListener('click', function (e) {
+                const tab = document.getElementById('searchTab');
+                const tabButton = document.querySelector('.tab-button');
+
+                if (tab.classList.contains('open') &&
+                    !tab.contains(e.target) &&
+                    !tabButton.contains(e.target)) {
+                    tab.classList.remove('open');
+                }
+            });
+
+    </script>
+
+    
+</body>
+
+</html>

@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Estadística Descriptiva e Inferencial</title>
+    <link rel="website icon" type="png" href="../../img/SigMath.png" />
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../sigMATH.css">
+    <link rel="stylesheet" href="estadistica.css">
+
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    :root {
+    --primary-blue: #1e40af;
+    --secondary-blue: #3b82f6;
+    --light-blue: #93c5fd;
+    --bg-blue: #f0f7ff;
+}
+
+body {
+    background-color: var(--bg-blue);
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.section-title {
+    color: var(--primary-blue);
+    border-bottom: 2px solid var(--secondary-blue);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+    color: var(--secondary-blue);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.formula-box {
+    background-color: white;
+    border-left: 4px solid var(--secondary-blue);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.example-box {
+    background-color: #e6f0ff;
+    border: 1px solid var(--light-blue);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.float-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 50;
+}
+
+.float-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.float-button:hover {
+    background-color: var(--secondary-blue);
+    transform: translateY(-2px);
+}
+
+.index-panel {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.index-panel.active {
+    right: 0;
+}
+
+.index-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.index-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.index-item:hover {
+    color: var(--secondary-blue);
+}
+
+.index-subitem {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background-color: white;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ccc;
+}
+
+th,
+td {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+th {
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+}
+
+.collapsible {
+    cursor: pointer;
+    position: relative;
+    padding-right: 2rem;
+}
+
+.collapsible::after {
+    content: "\f078";
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.collapsible.active::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.collapsible-content.active {
+    max-height: 2000px;
+}
+
+.input-container {
+    margin-top: 1rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--secondary-blue);
+}
+
+.graph-container {
+    width: 100%;
+    height: 400px;
+    margin: 1rem 0;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+}
+
+   .content {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            }
+        
+            h1 {
+              
+                margin-bottom: 20px;
+            }
+        
+            p {
+               
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+        
+            /* Tab de búsqueda */
+            .search-tab {
+                position: fixed;
+                right: -350px;
+                top: 0;
+                height: 100vh;
+                width: 350px;
+                background: white;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                transition: right 0.3s ease;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+            }
+        
+            .search-tab.open {
+                right: 0;
+            }
+        
+            .tab-button {
+                position: absolute;
+                left: -50px;
+                top: 100px;
+                width: 50px;
+                height: 120px;
+                background: white;
+                border: none;
+                border-radius: 10px 0 0 10px;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                writing-mode: vertical-rl;
+                font-weight: bold;
+                color: darkblue;
+                font-size: 16px;
+                transition: background 0.3s ease;
+            }
+        
+            .tab-button:hover {
+                background: #f8f9fa;
+            }
+        
+            .search-content {
+                padding: 30px;
+                overflow-y: auto;
+                flex: 1;
+                direction: rtl;
+            }
+        
+            .search-content>* {
+                direction: ltr;
+            }
+        
+            .search-content::-webkit-scrollbar {
+                width: 8px;
+            }
+        
+            .search-content::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+        
+            .search-content::-webkit-scrollbar-thumb {
+                background: #667eea;
+                border-radius: 10px;
+            }
+        
+            .search-content::-webkit-scrollbar-thumb:hover {
+                background: #5568d3;
+            }
+        
+            .search-header {
+                margin-bottom: 25px;
+            }
+        
+            .search-header h2 {
+                color: #333;
+                margin-bottom: 10px;
+                font-size: 24px;
+            }
+        
+            .search-header p {
+                color: #999;
+                font-size: 14px;
+            }
+        
+            .search-box {
+                position: relative;
+                margin-bottom: 20px;
+            }
+        
+            .search-input {
+                width: 100%;
+                padding: 15px 45px 15px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                font-size: 16px;
+                transition: border-color 0.3s ease;
+            }
+        
+            .search-input:focus {
+                outline: none;
+                border-color: #667eea;
+            }
+        
+            .search-icon {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+            }
+        
+            .topics-list {
+                list-style: none;
+            }
+        
+            .topic-item {
+                padding: 12px 15px;
+                margin-bottom: 8px;
+                background: #f8f9fa;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: #333;
+            }
+        
+            .topic-item:hover {
+                background: #667eea;
+                color: white;
+                transform: translateX(5px);
+            }
+        
+            .topic-item.hidden {
+                display: none;
+            }
+        
+            .no-results {
+                text-align: center;
+                color: #999;
+                padding: 20px;
+                display: none;
+            }
+        
+            .no-results.show {
+                display: block;
+            }
+</style>
+
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+    
+                    <h1 class="sigma">Σ</h1>
+                    <h1 class="sig">Sig</h1>
+                    <h1 class="MATH">MATH</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">SigMATH</a></li>
+                    <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                    <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                    <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                </ul>
+                <button class="hamburger" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Descubre el fascinante mundo de la Estadistica <span class="typed-text" id="typed-element"></span></h2>
+            <p>La <strong>estadística</strong> es la ciencia encargada de reunir, organizar, analizar, presentar e interpretar un
+                conjunto de datos, con el propósito de comparar resultados para tomar decisiones de forma eficiente y oportuna.</p>
+        </div>
+        <div class="wave"></div>
+        </section>
+      
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Sección: Definiciones y Clasificaciones -->
+        <section id="definiciones">
+            <h2 class="text-3xl section-title collapsible">Clasificaciones</h2>
+            <div class="collapsible-content">
+                <h3 class="text-2xl subsection-title">Clasificación de la Estadística</h3>
+                <ul class="list-disc ml-8 mt-2">
+                    <li><strong>Estadística Descriptiva:</strong> ofrece métodos para organizar, resumir y presentar datos de manera informativa, pudiendo ser tabulares, gráficos o numéricos.</li>
+                    <li><strong>Estadística Inferencial:</strong> comprende un conjunto de métodos que se emplean para hacer generalizaciones o probar una hipótesis sobre determinada característica de la población, con base en la información de una muestra.</li>
+                </ul>
+                
+                <h3 class="text-2xl subsection-title">Conceptos Básicos</h3>
+                <ul class="list-disc ml-8 mt-2">
+                    <li><strong>Experimento:</strong> es cualquier procedimiento que puede repetirse cualquier número de veces en las mismas condiciones, y cuyo conjunto de resultados posibles se conoce.</li>
+                    <li><strong>Variable:</strong> es cada una de las características o cualidades que poseen los elementos de una población.</li>
+                    <li><strong>Población:</strong> es el conjunto de todos los elementos, llámense individuos, medidas u objetos de interés en determinado estudio.</li>
+                    <li><strong>Muestra:</strong> es cualquier subconjunto, porción o parte de una población.</li>
+                    <li><strong>Muestreo:</strong> es el proceso de obtención de una muestra.</li>
+                    <li><strong>Datos:</strong> son los resultados, hechos o números que se registran de un evento de interés (experimento).</li>
+                </ul>
+                
+                <h3 class="text-2xl subsection-title">Tipos de Variables</h3>
+                <ul class="list-disc ml-8 mt-2">
+                    <li><strong>Variable Discreta:</strong> es aquella que solo puede tomar un número finito de valores entre dos valores cualesquiera de una característica.</li>
+                    <li><strong>Variable Continua:</strong> es aquella que puede tomar un número infinito de valores entre dos valores cualesquiera de una característica.</li>
+                </ul>
+                
+                <h3 class="text-2xl subsection-title">Tipos de Datos</h3>
+                <ul class="list-disc ml-8 mt-2">
+                    <li><strong>Datos cualitativos:</strong> se refieren a características o cualidades que no pueden ser medidas con números.</li>
+                    <li><strong>Datos cuantitativos:</strong> son aquellos que pueden ser expresados mediante números, por tanto se pueden realizar operaciones aritméticas con ellos.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección: Tabla de distribución de frecuencias -->
+        <section id="tablas-frecuencia">
+            <h2 class="text-3xl section-title collapsible">Tabla de Distribución de Frecuencias</h2>
+            <div class="collapsible-content">
+                <p>Una <strong>tabla de distribución de frecuencias</strong> es una técnica que permite organizar un conjunto de datos y observar su comportamiento. Dicho de otra manera, es un resumen tabular de datos en clases mutuamente excluyentes, que muestra el número de observaciones que hay en cada clase.</p>
+                
+                <h3 class="text-2xl subsection-title">Diagrama Tallo y Hojas</h3>
+                <p>El diagrama Tallo y Hojas es una técnica para ordenar datos. Es una forma fácil y rápida de obtener la información numérica.</p>
+                <p>Para construir este diagrama, cada valor numérico se divide en dos partes. Los primeros dígitos de la izquierda se convierten en el tallo y, el último dígito, en las hojas. Los tallos se localizan a lo largo de un eje vertical y los valores de las hojas se registran de forma horizontal.</p>
+                
+                <h3 class="text-2xl subsection-title">Tipos de Tablas de Frecuencias</h3>
+                
+                <h4 class="text-xl mt-4 font-semibold">1. Tabla de distribución de frecuencias por clases o categorías</h4>
+                <p class="mt-2">Se compone de las siguientes columnas:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Clases o Categorías</th>
+                            <th>Frecuencia Absoluta (fA)</th>
+                            <th>Frecuencia Relativa% (fR)</th>
+                            <th>Frecuencia Absoluta Acumulada (fAA)</th>
+                            <th>Frecuencia Relativa% Acumulada (fRA)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>clase 1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>clase 2</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>...</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><strong>n</strong></td>
+                            <td><strong>100%</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p class="mt-4">Este tipo de tabla es construida cuando la variable es del tipo cualitativa. En algunos casos, también puede usarse cuando la variable es del tipo cuantitativa discreta, donde el rango es un valor no muy grande (menor o igual que 10).</p>
+                
+                <h4 class="text-xl mt-4 font-semibold">2. Tabla de distribución de frecuencias por intervalos de clases</h4>
+                <p class="mt-2">Tiene las siguientes columnas:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Intervalos de Clase (l.i. - l.s.)</th>
+                            <th>Fronteras de Clase (l.i.f. - l.s.f.)</th>
+                            <th>Marca de Clase (Mc)</th>
+                            <th>Frecuencia Absoluta (fA)</th>
+                            <th>Frecuencia Relativa% (fR)</th>
+                            <th>Frecuencia Absoluta Acumulada (fAA)</th>
+                            <th>Frecuencia Relativa% Acumulada (fAR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>intervalo 1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>intervalo 2</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>...</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>intervalo N</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>n</strong></td>
+                            <td><strong>100%</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3 class="text-2xl subsection-title">Pasos para Elaborar una Tabla de Distribución de Frecuencias</h3>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 1:</strong> Determinar el número de intervalos de clase mediante la fórmula de Sturges:</p>
+                    <p>Número de clases = 1 + log<sub>2</sub>(n)</p>
+                    <p>donde n es el número total de datos.</p>
+                    <p>Si el resultado tiene un valor decimal de 0.5 o mayor, se redondea al entero siguiente; si es menor a 0.5 se queda con la parte entera.</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 2:</strong> Definir el Ancho del Intervalo.</p>
+                    <p>Amplitud del intervalo = \(\frac{\text{Rango}}{\text{Número de intervalos}} = \frac{\text{Dato mayor - Dato menor}}{\text{Número de intervalos}}\)</p>
+                    <p>El ancho del intervalo debe ser del mismo tipo que los datos (enteros, decimales, etc.).</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 3:</strong> Determinar los límites de clase.</p>
+                    <ul class="list-disc ml-8">
+                        <li>El límite inferior de la primera clase será el dato más pequeño.</li>
+                        <li>El límite superior de la primera clase: límite inferior + Ancho del intervalo.</li>
+                        <li>El límite inferior de la segunda clase: límite superior de la primera clase + 1 unidad (según el tipo de datos).</li>
+                        <li>Y así sucesivamente.</li>
+                    </ul>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 4:</strong> Determinar las Fronteras de clase.</p>
+                    <p>Para la primera frontera:</p>
+                    <p>Límite inferior de la frontera: \(\frac{(l.i_1-1)+l.i_1}{2}\)</p>
+                    <p>Límite superior de la frontera: \(\frac{l.s_1+l.i_2}{2}\)</p>
+                    <p>Y así para las siguientes fronteras.</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 5:</strong> Calcular las marcas de clase.</p>
+                    <p>La marca de clase es el valor central de cada intervalo:</p>
+                    <p>\(Mc_k = \frac{l.i_k+l.s_k}{2}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 6:</strong> Calcular las frecuencias absolutas.</p>
+                    <p>El valor de cada frecuencia absoluta (fA) es el total de datos que se encuentran en el respectivo intervalo de clase.</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 7:</strong> Calcular las frecuencias relativas.</p>
+                    <p>\(fR_k = \frac{fA_k}{n} \times 100\%\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>PASO 8:</strong> Calcular las frecuencias acumuladas.</p>
+                    <ul class="list-disc ml-8">
+                        <li>Primera frecuencia absoluta acumulada: \(fAA_1 = fA_1\)</li>
+                        <li>Segunda frecuencia absoluta acumulada: \(fAA_2 = fAA_1 + fA_2\)</li>
+                        <li>Y así sucesivamente.</li>
+                    </ul>
+                    <p>De manera similar para las frecuencias relativas acumuladas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Gráficos -->
+        <section id="graficos">
+            <h2 class="text-3xl section-title collapsible">Gráficos</h2>
+            <div class="collapsible-content">
+                <p>Los gráficos son representaciones visuales de los datos que permiten analizar y comprender mejor su comportamiento.</p>
+                
+                <h3 class="text-2xl subsection-title">Histograma</h3>
+                <p>Es una representación gráfica en donde las clases, intervalos de clase o fronteras de clase, son ubicados en el eje horizontal y las frecuencias de clase en el eje vertical. Las barras que se forman están completamente unidas unas a otras a diferencia de los gráficos de barras, cuyas barras pueden presentarse de manera separada.</p>
+                
+                <div class="graph-container">
+                    <canvas id="histogramChart"></canvas>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Polígono de Frecuencias</h3>
+                <p>Se forma con segmentos de recta que conectan los puntos localizados por la intersección de las marcas de clase y las frecuencias absolutas o relativas de clase. Las marcas de clase se marcan en la escala del eje horizontal y las frecuencias de clase en el eje vertical.</p>
+                
+                <div class="graph-container">
+                    <canvas id="polygonChart"></canvas>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Ojiva</h3>
+                <p>Es una gráfica lineal (o suave) construida a partir de las frecuencias acumuladas o relativas acumuladas. Las ojivas ofrecen un medio gráfico para interpolar o aproximar el número o porcentaje de observaciones menores o iguales que un valor específico.</p>
+                
+                <div class="graph-container">
+                    <canvas id="ogiveChart"></canvas>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Gráfico Circular</h3>
+                <p>Es un círculo dividido en partes o secciones, donde el área de cada sección, es proporcional al número de datos de cada categoría o intervalo de clase. Usualmente, este gráfico permite representar variables cualitativas o categóricas.</p>
+                
+                <div class="graph-container">
+                    <img src="../../img-maths/grafica-pastel;.png" alt="grafica pastel">
+                </div>
+                
+                <div class="input-container">
+                    <h4 class="text-xl font-semibold mb-4">Generar Gráficos</h4>
+                    <p>Para generar los gráficos, primero debe crear una tabla de frecuencias en la sección anterior.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Medidas de tendencia central -->
+        <section id="medidas-tendencia-central">
+            <h2 class="text-3xl section-title collapsible">Medidas de Tendencia Central</h2>
+            <div class="collapsible-content">
+                <p>Las medidas de tendencia central son valores que representan a un conjunto de datos y están ubicados centralmente dentro de un conjunto de datos ordenados según su magnitud. Estas son: Media o promedio, Mediana y Moda.</p>
+                
+                <h3 class="text-2xl subsection-title">Para Datos No Agrupados</h3>
+                
+                <div class="formula-box">
+                    <p><strong>Media aritmética:</strong> Se obtiene al sumar cada dato y dividir entre el total de datos n.</p>
+                    <p>\(\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Media geométrica:</strong> Se utiliza para mostrar los cambios porcentuales. Solo es válida para datos positivos.</p>
+                    <p>\(Mg = \sqrt[n]{x_1 \cdot x_2 \cdot x_3 \cdot ... \cdot x_n}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Media armónica:</strong> No es válida para valores nulos (igual a cero).</p>
+                    <p>\(Mh = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Mediana:</strong> Es el valor intermedio del conjunto de datos ordenados.</p>
+                    <p>Para n impar: \(Me = x_{\frac{n+1}{2}}\)</p>
+                    <p>Para n par: \(Me = \frac{x_{\frac{n}{2}} + x_{\frac{n}{2}+1}}{2}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Moda:</strong> Es el valor que se repite con mayor frecuencia.</p>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Para Datos Agrupados</h3>
+                
+                <div class="formula-box">
+                    <p><strong>Media aritmética:</strong></p>
+                    <p>\(\bar{x} = \frac{\sum_{i=1}^{N} (fA \cdot Mc)}{n}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Media geométrica:</strong></p>
+                    <p>\(Mg = 10^{\left(\frac{\sum_{i=1}^{N} fA \cdot \log(Mc)}{n}\right)}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Media armónica:</strong></p>
+                    <p>\(Mh = \frac{n}{\sum_{i=1}^{N} \left(fA \cdot \frac{1}{Mc}\right)}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Mediana:</strong></p>
+                    <p>\(Me = l.i.f. + \frac{\frac{n}{2} - fAA}{fA} \cdot (A)\)</p>
+                    <p>donde:</p>
+                    <ul class="list-disc ml-8">
+                        <li>l.i.f. es el límite inferior de la frontera de clase del intervalo que contiene al dato central</li>
+                        <li>fAA es la frecuencia acumulada del intervalo anterior</li>
+                        <li>fA es la frecuencia absoluta del intervalo que contiene al dato central</li>
+                        <li>A es el ancho del intervalo</li>
+                    </ul>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Moda:</strong></p>
+                    <p>\(Mo = l.i.f. + \frac{d_1}{d_1+d_2} \cdot (A)\)</p>
+                    <p>donde:</p>
+                    <ul class="list-disc ml-8">
+                        <li>l.i.f. es el límite inferior de la frontera de clase del intervalo modal</li>
+                        <li>d₁ = (fA del intervalo modal) - (fA del intervalo anterior)</li>
+                        <li>d₂ = (fA del intervalo modal) - (fA del intervalo posterior)</li>
+                        <li>A es el ancho del intervalo</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Medidas de posición -->
+        <section id="medidas-posicion">
+            <h2 class="text-3xl section-title collapsible">Medidas de Posición</h2>
+            <div class="collapsible-content">
+                <p>Las medidas de posición son aquellas que nos permiten dividir al conjunto de datos en dos grupos: el primero, con respecto a un determinado porcentaje; y el segundo, con respecto a su complemento.</p>
+                
+                <h3 class="text-2xl subsection-title">Para Datos No Agrupados</h3>
+                
+                <div class="formula-box">
+                    <p><strong>Cuartiles:</strong> Dividen el conjunto de datos en 4 partes iguales.</p>
+                    <p>El cuartil Q<sub>k</sub>, es el valor del dato que se encuentra en la posición \(Q_k = x_{\frac{nk}{4}}\)</p>
+                    <ul class="list-disc ml-8">
+                        <li>Q₁ equivale al 25%</li>
+                        <li>Q₂ equivale al 50% (coincide con la mediana)</li>
+                        <li>Q₃ equivale al 75%</li>
+                        <li>Q₄ equivale al 100%</li>
+                    </ul>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Deciles:</strong> Dividen el conjunto de datos en 10 partes iguales.</p>
+                    <p>El decil D<sub>k</sub>, es el valor del dato que se encuentra en la posición \(D_k = x_{\frac{nk}{10}}\)</p>
+                    <p>D₁ equivale al 10%, D₂ al 20%, ..., D₁₀ al 100%</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Percentiles:</strong> Dividen el conjunto de datos en 100 partes iguales.</p>
+                    <p>El percentil P<sub>k</sub>, es el valor del dato que se encuentra en la posición \(P_k = x_{\frac{nk}{100}}\)</p>
+                    <p>P₁ equivale al 1%, P₂ al 2%, ..., P₁₀₀ al 100%</p>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Para Datos Agrupados</h3>
+                
+                <div class="formula-box">
+                    <p><strong>Cuartiles:</strong></p>
+                    <p>\(Q_k = l.i.f. + \frac{\frac{kn}{4} - fAA}{fA} \cdot (A)\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Deciles:</strong></p>
+                    <p>\(D_k = l.i.f. + \frac{\frac{kn}{10} - fAA}{fA} \cdot (A)\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Percentiles:</strong></p>
+                    <p>\(P_k = l.i.f. + \frac{\frac{kn}{100} - fAA}{fA} \cdot (A)\)</p>
+                </div>
+                
+                <p>En todas estas fórmulas:</p>
+                <ul class="list-disc ml-8 mt-2">
+                    <li>l.i.f. es el límite inferior de la frontera de clase del intervalo que contiene la k-ésima medida</li>
+                    <li>fAA es la frecuencia acumulada hasta el intervalo anterior</li>
+                    <li>fA es la frecuencia absoluta del intervalo que contiene la k-ésima medida</li>
+                    <li>A es el ancho del intervalo</li>
+                    <li>n es el total de datos</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección: Medidas de dispersión -->
+        <section id="medidas-dispersion">
+            <h2 class="text-3xl section-title collapsible">Medidas de Dispersión</h2>
+            <div class="collapsible-content">
+                <p>Las medidas de dispersión sirven para conocer el grado de cercanía de los datos hacia la media aritmética. Su importancia radica en que las medidas de tendencia central por sí solas no describen apropiadamente una característica en estudio; se necesita una medida que sea sensible a la variabilidad de los datos.</p>
+                
+                <h3 class="text-2xl subsection-title">Para Datos No Agrupados</h3>
+                
+                <div class="formula-box">
+                    <p><strong>Desviación Media:</strong></p>
+                    <p>\(DM = \frac{\sum_{i=1}^{n} |x_i - \bar{x}|}{n}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Desviación Estándar:</strong></p>
+                    <p>\(DE = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n}}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Varianza:</strong></p>
+                    <p>\(Var = (DE)^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n}\)</p>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Para Datos Agrupados</h3>
+                
+                <div class="formula-box">
+                    <p><strong>Desviación Media:</strong></p>
+                    <p>\(DM = \frac{\sum_{i=1}^{N} fA|Mc - \bar{x}|}{n}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Desviación Estándar:</strong></p>
+                    <p>\(DE = \sqrt{\frac{\sum_{i=1}^{N} fA(Mc - \bar{x})^2}{n}}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Varianza:</strong></p>
+                    <p>\(Var = (DE)^2 = \frac{\sum_{i=1}^{N} fA(Mc - \bar{x})^2}{n}\)</p>
+                </div>
+                
+                <p>En todas estas fórmulas:</p>
+                <ul class="list-disc ml-8 mt-2">
+                    <li>N es el número de intervalos de clase</li>
+                    <li>fA representa la i-ésima frecuencia absoluta</li>
+                    <li>Mc representa la i-ésima marca de clase</li>
+                    <li>x̄ es la media aritmética</li>
+                    <li>n es el total de datos</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección: Estadística Inferencial -->
+        <section id="estadistica-inferencial">
+            <h2 class="text-3xl section-title collapsible">Estadística Inferencial</h2>
+            <div class="collapsible-content">
+                <p>La estadística inferencial comprende los métodos y procedimientos para deducir propiedades de una población a partir de una muestra de esta. Su objetivo es obtener conclusiones útiles para hacer deducciones sobre una población, basándose en la información numérica de la muestra.</p>
+                
+                <h3 class="text-2xl subsection-title">Estimación de Parámetros</h3>
+                <p>La estimación de parámetros es el proceso de utilizar datos de una muestra para estimar un parámetro poblacional desconocido.</p>
+                
+                <h4 class="text-xl mt-4 font-semibold">Estimación Puntual</h4>
+                <p>Una estimación puntual es un único valor que se utiliza como "mejor estimación" del parámetro desconocido.</p>
+                
+                <div class="formula-box">
+                    <p><strong>Estimadores comunes:</strong></p>
+                    <ul class="list-disc ml-8">
+                        <li>Media muestral: \(\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}\)</li>
+                        <li>Varianza muestral: \(s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}\)</li>
+                        <li>Proporción muestral: \(\hat{p} = \frac{x}{n}\) donde x es el número de éxitos</li>
+                    </ul>
+                </div>
+                
+                <h4 class="text-xl mt-4 font-semibold">Estimación por Intervalo (Intervalos de Confianza)</h4>
+                <p>Un intervalo de confianza proporciona un rango de valores que probablemente contenga el parámetro desconocido.</p>
+                
+                <div class="formula-box">
+                    <p><strong>Intervalo de confianza para la media poblacional (σ conocida):</strong></p>
+                    <p>\(\bar{x} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}\)</p>
+                    <p>donde z<sub>α/2</sub> es el valor crítico de la distribución normal estándar para un nivel de confianza de (1-α).</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Intervalo de confianza para la media poblacional (σ desconocida):</strong></p>
+                    <p>\(\bar{x} \pm t_{\alpha/2, n-1} \cdot \frac{s}{\sqrt{n}}\)</p>
+                    <p>donde t<sub>α/2, n-1</sub> es el valor crítico de la distribución t de Student con n-1 grados de libertad.</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Intervalo de confianza para la proporción poblacional:</strong></p>
+                    <p>\(\hat{p} \pm z_{\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\)</p>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Pruebas de Hipótesis</h3>
+                <p>Una prueba de hipótesis es un procedimiento para decidir si una afirmación acerca de un parámetro poblacional debe ser rechazada o no.</p>
+                
+                <h4 class="text-xl mt-4 font-semibold">Pasos para una Prueba de Hipótesis</h4>
+                <ol class="list-decimal ml-8 mt-2">
+                    <li>Establecer las hipótesis nula (H₀) y alternativa (H₁)</li>
+                    <li>Seleccionar el nivel de significancia (α)</li>
+                    <li>Identificar el estadístico de prueba y su distribución</li>
+                    <li>Establecer la región de rechazo</li>
+                    <li>Calcular el estadístico de prueba a partir de los datos muestrales</li>
+                    <li>Tomar una decisión: rechazar H₀ o no rechazar H₀</li>
+                    <li>Interpretar la decisión en el contexto del problema</li>
+                </ol>
+                
+                <div class="formula-box">
+                    <p><strong>Prueba Z para la media (σ conocida):</strong></p>
+                    <p>Estadístico de prueba: \(z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Prueba t para la media (σ desconocida):</strong></p>
+                    <p>Estadístico de prueba: \(t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}\)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <p><strong>Prueba Z para la proporción:</strong></p>
+                    <p>Estadístico de prueba: \(z = \frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}}\)</p>
+                </div>
+                
+                <h3 class="text-2xl subsection-title">Análisis de Varianza (ANOVA)</h3>
+                <p>El análisis de varianza (ANOVA) es una técnica estadística que se utiliza para comparar las medias de tres o más grupos.</p>
+                
+                <div class="formula-box">
+                    <p><strong>Estadístico F:</strong></p>
+                    <p>\(F = \frac{MS_{Between}}{MS_{Within}}\)</p>
+                    <p>donde:</p>
+                    <ul class="list-disc ml-8">
+                        <li>MS<sub>Between</sub> es la media de cuadrados entre grupos</li>
+                        <li>MS<sub>Within</sub> es la media de cuadrados dentro de los grupos</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="bg-gray-100 py-8 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>© 2025 Guía Descriptiva de Estadistica. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="float-buttons">
+       
+        <div class="float-button" id="topBtn">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+
+    
+
+    <div class="overlay" id="overlay"></div>
+
+    <script id="app-script">
+         function toggleTab() {
+                const tab = document.getElementById('searchTab');
+                tab.classList.toggle('open');
+            }
+
+            function filterTopics() {
+                const input = document.getElementById('searchInput');
+                const filter = input.value.toLowerCase();
+                const items = document.querySelectorAll('.topic-item');
+                const noResults = document.getElementById('noResults');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.add('show');
+                } else {
+                    noResults.classList.remove('show');
+                }
+            }
+
+            function selectTopic(el) {
+                alert('Has seleccionado: ' + el.textContent);
+                // Aquí puedes agregar la lógica para cargar el contenido del tema
+            }
+
+            // Cerrar tab al hacer clic fuera
+            document.addEventListener('click', function (e) {
+                const tab = document.getElementById('searchTab');
+                const tabButton = document.querySelector('.tab-button');
+
+                if (tab.classList.contains('open') &&
+                    !tab.contains(e.target) &&
+                    !tabButton.contains(e.target)) {
+                    tab.classList.remove('open');
+                }
+            });
+
+        // Botón para ir al principio de la página
+        document.getElementById('topBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+       
+        
+        // Navegar a las secciones desde el índice
+        const indexItems = document.querySelectorAll('.index-item, .index-subitem');
+        indexItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // Cerrar el panel
+                    indexPanel.classList.remove('active');
+                    overlay.classList.remove('active');
+                    
+                    // Desplazarse a la sección
+                    const offset = 80; // Compensación para el encabezado
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Expandir la sección si está colapsada
+                    const sectionTitle = targetElement.querySelector('.collapsible');
+                    const sectionContent = targetElement.querySelector('.collapsible-content');
+                    
+                    if (sectionTitle && !sectionTitle.classList.contains('active')) {
+                        sectionTitle.classList.add('active');
+                        sectionContent.classList.add('active');
+                    }
+                }
+            });
+        });
+        
+        // Funcionalidad de colapsar secciones
+            const collapsibles = document.querySelectorAll('.collapsible');
+            collapsibles.forEach(collapsible => {
+                collapsible.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.classList.contains('active')) {
+                        content.classList.remove('active');
+                    } else {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        
+        // Expandir la primera sección por defecto
+        const firstCollapsible = document.querySelector('.collapsible');
+        const firstContent = firstCollapsible.nextElementSibling;
+        firstCollapsible.classList.add('active');
+        firstContent.classList.add('active');
+        
+        // Crear gráficos de ejemplo
+        // Estos gráficos son solo para fines de visualización en el prototipo
+        
+        // Histograma
+        const histogramCtx = document.getElementById('histogramChart').getContext('2d');
+        const histogramChart = new Chart(histogramCtx, {
+            type: 'bar',
+            data: {
+                labels: ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60'],
+                datasets: [{
+                    label: 'Frecuencia',
+                    data: [5, 8, 12, 10, 6, 4],
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Frecuencia'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Intervalos de Clase'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Histograma de Ejemplo'
+                    }
+                }
+            }
+        });
+        
+        // Polígono de Frecuencias
+        const polygonCtx = document.getElementById('polygonChart').getContext('2d');
+        const polygonChart = new Chart(polygonCtx, {
+            type: 'line',
+            data: {
+                labels: ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60'],
+                datasets: [{
+                    label: 'Frecuencia',
+                    data: [5, 8, 12, 10, 6, 4],
+                    fill: false,
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    tension: 0.1,
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Frecuencia'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Intervalos de Clase'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Polígono de Frecuencias de Ejemplo'
+                    }
+                }
+            }
+        });
+        
+        // Ojiva
+        const ogiveCtx = document.getElementById('ogiveChart').getContext('2d');
+        const ogiveChart = new Chart(ogiveCtx, {
+            type: 'line',
+            data: {
+                labels: ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60'],
+                datasets: [{
+                    label: 'Frecuencia Acumulada',
+                    data: [5, 13, 25, 35, 41, 45],
+                    fill: false,
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    tension: 0.1,
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Frecuencia Acumulada'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Intervalos de Clase'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Ojiva de Ejemplo'
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Circular
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Categoría A', 'Categoría B', 'Categoría C', 'Categoría D', 'Categoría E'],
+                datasets: [{
+                    data: [15, 25, 20, 30, 10],
+                    backgroundColor: [
+                        'rgba(30, 64, 175, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(147, 197, 253, 0.7)',
+                        'rgba(191, 219, 254, 0.7)',
+                        'rgba(219, 234, 254, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(30, 64, 175, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(147, 197, 253, 1)',
+                        'rgba(191, 219, 254, 1)',
+                        'rgba(219, 234, 254, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Gráfico Circular de Ejemplo'
+                    },
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+        
+        // Recargar MathJax cuando se complete la carga
+        window.addEventListener('load', function() {
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typeset();
+            }
+        });
+    </script>
+</body>
+</html>

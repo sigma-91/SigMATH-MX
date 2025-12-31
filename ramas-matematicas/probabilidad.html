@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Probabilidad</title>
+    <link rel="website icon" type="png" href=".././img/SigMath.png" />
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="../../SigMATH.css">
+    <link rel="stylesheet" href="probabilidad.css">
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+    --primary-blue: #1e40af;
+    --secondary-blue: #3b82f6;
+    --light-blue: #93c5fd;
+    --bg-blue: #f0f7ff;
+}
+
+body {
+    background-color: var(--bg-blue);
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    color: var(--primary-blue);
+    border-bottom: 2px solid var(--secondary-blue);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+    color: var(--secondary-blue);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.math-box {
+    background-color: white;
+    border-left: 4px solid var(--secondary-blue);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.example-box {
+    background-color: #e6f0ff;
+    border: 1px solid var(--light-blue);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.float-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.float-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.float-button:hover {
+    background-color: var(--secondary-blue);
+    transform: translateY(-2px);
+}
+
+.index-panel {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.index-panel.active {
+    right: 0;
+}
+
+.index-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.index-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.index-item:hover {
+    color: var(--secondary-blue);
+}
+
+.index-subitem {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.venn-diagram {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem auto;
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ccc;
+}
+
+th,
+td {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+th {
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+}
+
+.tree-diagram {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem auto;
+    display: block;
+}
+
+     .content {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            }
+        
+            h1 {
+               
+                margin-bottom: 20px;
+            }
+        
+            p {
+               
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+        
+            /* Tab de búsqueda */
+            .search-tab {
+                position: fixed;
+                right: -350px;
+                top: 0;
+                height: 100vh;
+                width: 350px;
+                background: white;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                transition: right 0.3s ease;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+            }
+        
+            .search-tab.open {
+                right: 0;
+            }
+        
+            .tab-button {
+                position: absolute;
+                left: -50px;
+                top: 100px;
+                width: 50px;
+                height: 120px;
+                background: white;
+                border: none;
+                border-radius: 10px 0 0 10px;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                writing-mode: vertical-rl;
+                font-weight: bold;
+                color: darkblue;
+                font-size: 16px;
+                transition: background 0.3s ease;
+            }
+        
+            .tab-button:hover {
+                background: #f8f9fa;
+            }
+        
+            .search-content {
+                padding: 30px;
+                overflow-y: auto;
+                flex: 1;
+                direction: rtl;
+            }
+        
+            .search-content>* {
+                direction: ltr;
+            }
+        
+            .search-content::-webkit-scrollbar {
+                width: 8px;
+            }
+        
+            .search-content::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+        
+            .search-content::-webkit-scrollbar-thumb {
+                background: #667eea;
+                border-radius: 10px;
+            }
+        
+            .search-content::-webkit-scrollbar-thumb:hover {
+                background: #5568d3;
+            }
+        
+            .search-header {
+                margin-bottom: 25px;
+            }
+        
+            .search-header h2 {
+                color: #333;
+                margin-bottom: 10px;
+                font-size: 24px;
+            }
+        
+            .search-header p {
+                color: #999;
+                font-size: 14px;
+            }
+        
+            .search-box {
+                position: relative;
+                margin-bottom: 20px;
+            }
+        
+            .search-input {
+                width: 100%;
+                padding: 15px 45px 15px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                font-size: 16px;
+                transition: border-color 0.3s ease;
+            }
+        
+            .search-input:focus {
+                outline: none;
+                border-color: #667eea;
+            }
+        
+            .search-icon {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+            }
+        
+            .topics-list {
+                list-style: none;
+            }
+        
+            .topic-item {
+                padding: 12px 15px;
+                margin-bottom: 8px;
+                background: #f8f9fa;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: #333;
+            }
+        
+            .topic-item:hover {
+                background: #667eea;
+                color: white;
+                transform: translateX(5px);
+            }
+        
+            .topic-item.hidden {
+                display: none;
+            }
+        
+            .no-results {
+                text-align: center;
+                color: #999;
+                padding: 20px;
+                display: none;
+            }
+        
+            .no-results.show {
+                display: block;
+            }
+    </style>
+    
+</head>
+<body>
+    <!-- AOS para animaciones de scroll -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="SigMATH.css">
+    <script src="sigMATH.js"></script>
+    
+    </head>
+    
+    <body>
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <nav class="navbar">
+                    <div class="logo">
+    
+                        <h1 class="sigma">Σ</h1>
+                        <h1 class="sig">Sig</h1>
+                        <h1 class="MATH">MATH</h1>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a href="../../index.html">SigMATH</a></li>
+                        <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                        <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                        <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                    </ul>
+                    <button class="hamburger" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </nav>
+            </div>
+        </header>
+    
+        <!-- Banner Principal -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h2>Descubre el fascinante mundo de la probabilidad <span class="typed-text" id="typed-element"></span></h2>
+                <p>La probabilidad es una rama de las matemáticas que se ocupa de medir la incertidumbre y analizar fenómenos
+                    aleatorios. Estudia la posibilidad de que ocurra un determinado suceso cuando se realiza un experimento aleatorio,
+                    es decir, un experimento que, repetido en condiciones similares, puede dar lugar a resultados distintos, no
+                    predecibles con certeza.</p>
+                
+                <p class="mt-4">El estudio formal de la probabilidad comenzó en el siglo XVII con los trabajos de Blaise Pascal y Pierre
+                    de Fermat sobre problemas relacionados con juegos de azar, y desde entonces se ha convertido en una disciplina
+                    matemática fundamental con aplicaciones en prácticamente todos los campos científicos y tecnológicos.</p>
+                </section>
+            <div class="wave"></div>
+        </section>
+
+        <div class="search-tab" id="searchTab">
+            <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+        
+            <div class="search-content">
+                <div class="search-header">
+                    <h2>Buscar Temas</h2>
+                    <p>Encuentra lo que necesitas</p>
+                </div>
+        
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+                        oninput="filterTopics()">
+                    <span class="search-icon">🔍</span>
+                </div>
+        
+                <ul class="topics-list" id="topicsList">
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#teoria-conjuntos" data-section="teoria-conjuntos">Algebra de Conjuntos</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#diagramas-venn" data-section="diagramas-venn">Diagramas de Venn</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#tecnicas-conteo" data-section="tecnicas-conteo">Tecnicas de Conteo</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#diagramas-arbol" data-section="diagramas-arbol">Diagramas de Arbol</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#axiomas-probabilidad" data-section="axiomas-probabilidad">Probabilidad Axiomática</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#probabilidad-condicional" data-section="probabilidad-condicional">Probabilidad Condicional</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#teorema-bayes" data-section="teorema-bayes">Teorema de Bayes</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#variables-aleatorias" data-section="variables-aleatorias">Variables Aleatorias</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#esperanza-matematica" data-section="esperanza-matematica">Esperanza Matemática</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#varianza-desviacion" data-section="varianza-desviacion">La Varianza y Desviación Estandar</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#distribuciones-probabilidad" data-section="distribuciones-probabilidad">Distribuciones de la Probabilidad</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#cadenas-markov" data-section="cadenas-markov">Cadenas de Markov y Algunos Procesos Estocasticos</a></li>
+                  
+                </ul>
+        
+                <div class="no-results" id="noResults">
+                    No se encontraron resultados
+                </div>
+            </div>
+        </div>
+      
+        
+
+    <div class="container mx-auto px-4 py-8">
+        <section id="introduccion">
+            
+            <p class="mt-4">La teoría de la probabilidad proporciona un marco matemático para analizar situaciones donde el azar juega un papel fundamental, como:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>Juegos de azar (lanzamiento de dados, extracción de cartas, etc.)</li>
+                <li>Fenómenos naturales (clima, terremotos, etc.)</li>
+                <li>Comportamiento de sistemas complejos (mercados financieros, tráfico, etc.)</li>
+                <li>Análisis de riesgos en diversos campos (medicina, ingeniería, finanzas, etc.)</li>
+                <li>Diseño de experimentos y análisis estadístico</li>
+            </ul>
+            
+            <p class="mt-4">La probabilidad se mide en una escala de 0 a 1 (o de 0% a 100%), donde:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>Probabilidad 0: Indica que un suceso es imposible</li>
+                <li>Probabilidad 1: Indica que un suceso es seguro</li>
+                <li>Valores intermedios: Indican diferentes grados de posibilidad</li>
+            </ul>
+            
+            <p class="mt-4">El estudio formal de la probabilidad comenzó en el siglo XVII con los trabajos de Blaise Pascal y Pierre de Fermat sobre problemas relacionados con juegos de azar, y desde entonces se ha convertido en una disciplina matemática fundamental con aplicaciones en prácticamente todos los campos científicos y tecnológicos.</p>
+        </section>
+
+        <section id="teoria-conjuntos">
+            <h2 class="text-3xl section-title">Teoría y Álgebra de Conjuntos</h2>
+            <p>La teoría de conjuntos es la base matemática para el estudio de la probabilidad. Un conjunto es una colección de objetos o elementos, llamados miembros o elementos del conjunto.</p>
+            
+            <h3 class="text-2xl subsection-title">Conceptos Básicos de Conjuntos</h3>
+            
+            <div class="math-box">
+                <p><strong>Definición:</strong> Un conjunto se puede definir:</p>
+                <ul class="list-disc ml-8">
+                    <li>Por extensión: listando todos sus elementos. Ejemplo: \(A = \{1, 2, 3, 4, 5\}\)</li>
+                    <li>Por comprensión: indicando una propiedad que caracteriza a sus elementos. Ejemplo: \(B = \{x \in \mathbb{N} \mid x < 6\}\)</li>
+                </ul>
+            </div>
+            
+            <p class="mt-4">Notación importante:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>\(a \in A\): El elemento \(a\) pertenece al conjunto \(A\)</li>
+                <li>\(b \notin A\): El elemento \(b\) no pertenece al conjunto \(A\)</li>
+                <li>\(\emptyset\): Conjunto vacío (conjunto sin elementos)</li>
+                <li>\(|A|\): Cardinalidad (número de elementos) del conjunto \(A\)</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Operaciones con Conjuntos</h3>
+            
+            <div class="math-box">
+                <p>Sean \(A\) y \(B\) conjuntos dentro de un universo \(U\):</p>
+                <ol class="list-decimal ml-8">
+                    <li><strong>Unión:</strong> \(A \cup B = \{x \mid x \in A \text{ o } x \in B\}\)</li>
+                    <li><strong>Intersección:</strong> \(A \cap B = \{x \mid x \in A \text{ y } x \in B\}\)</li>
+                    <li><strong>Diferencia:</strong> \(A - B = \{x \mid x \in A \text{ y } x \notin B\}\)</li>
+                    <li><strong>Complemento:</strong> \(A^c = \{x \in U \mid x \notin A\}\)</li>
+                    <li><strong>Diferencia simétrica:</strong> \(A \triangle B = (A - B) \cup (B - A)\)</li>
+                </ol>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Propiedades de las Operaciones con Conjuntos</h3>
+            
+            <div class="math-box">
+                <p><strong>Propiedades de la unión e intersección:</strong></p>
+                <ul class="list-disc ml-8">
+                    <li>Conmutativa: \(A \cup B = B \cup A\) y \(A \cap B = B \cap A\)</li>
+                    <li>Asociativa: \(A \cup (B \cup C) = (A \cup B) \cup C\) y \(A \cap (B \cap C) = (A \cap B) \cap C\)</li>
+                    <li>Distributiva: \(A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\) y \(A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\)</li>
+                    <li>Idempotencia: \(A \cup A = A\) y \(A \cap A = A\)</li>
+                    <li>Identidad: \(A \cup \emptyset = A\) y \(A \cap U = A\)</li>
+                    <li>Complemento: \(A \cup A^c = U\) y \(A \cap A^c = \emptyset\)</li>
+                </ul>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Leyes de De Morgan</h3>
+            
+            <div class="math-box">
+                <p>Las leyes de De Morgan son fundamentales en la teoría de conjuntos:</p>
+                <p>\((A \cup B)^c = A^c \cap B^c\)</p>
+                <p>\((A \cap B)^c = A^c \cup B^c\)</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Dados los conjuntos \(A = \{1, 2, 3, 4\}\) y \(B = \{3, 4, 5, 6\}\), calcular:</p>
+                <ol class="list-decimal ml-8">
+                    <li>\(A \cup B = \{1, 2, 3, 4, 5, 6\}\)</li>
+                    <li>\(A \cap B = \{3, 4\}\)</li>
+                    <li>\(A - B = \{1, 2\}\)</li>
+                    <li>\(B - A = \{5, 6\}\)</li>
+                    <li>\(A \triangle B = \{1, 2, 5, 6\}\)</li>
+                </ol>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Conjuntos en Probabilidad</h3>
+            <p>En el contexto de la probabilidad, los conjuntos tienen interpretaciones específicas:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>Espacio muestral (Ω):</strong> Conjunto de todos los posibles resultados de un experimento aleatorio</li>
+                <li><strong>Evento o suceso (A, B, ...):</strong> Subconjunto del espacio muestral</li>
+                <li><strong>Evento complementario (A<sup>c</sup>):</strong> Suceso que ocurre cuando no ocurre A</li>
+                <li><strong>Eventos mutuamente excluyentes:</strong> Sucesos que no pueden ocurrir simultáneamente (\(A \cap B = \emptyset\))</li>
+            </ul>
+        </section>
+
+        <section id="diagramas-venn-euler">
+            <h2 class="text-3xl section-title">Diagramas de Venn-Euler</h2>
+            <p>Los diagramas de Venn-Euler son representaciones gráficas de conjuntos que utilizan círculos u otras figuras cerradas para visualizar las relaciones entre conjuntos.</p>
+            
+            <h3 class="text-2xl subsection-title">Diagramas de Euler</h3>
+            <p>Los diagramas de Euler representan conjuntos mediante círculos que pueden estar separados o incluidos uno dentro de otro, mostrando relaciones de inclusión o disyunción entre conjuntos.</p>
+            
+            <div class="math-box">
+                <p>En un diagrama de Euler:</p>
+                <ul class="list-disc ml-8">
+                    <li>Si \(A \subset B\) (A es subconjunto de B), el círculo que representa a A está completamente dentro del círculo que representa a B</li>
+                    <li>Si \(A \cap B = \emptyset\) (A y B son disjuntos), los círculos no se solapan</li>
+                </ul>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Diagramas de Venn</h3>
+            <p>Los diagramas de Venn son un caso particular de los diagramas de Euler donde se muestran todas las posibles intersecciones entre los conjuntos, independientemente de si estas intersecciones están vacías o no.</p>
+            
+            <div class="math-box">
+                <p>Un diagrama de Venn con \(n\) conjuntos divide el plano en \(2^n\) regiones, representando todas las posibles combinaciones de pertenencia a los conjuntos.</p>
+            </div>
+            
+            <p class="mt-4">Los diagramas de Venn-Euler son especialmente útiles para visualizar operaciones entre conjuntos:</p>
+            
+            <img src="https://cdn.pixabay.com/photo/2016/03/31/18/50/venn-diagram-1294645_1280.png" alt="Diagrama de Venn con dos conjuntos" class="venn-diagram">
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Representación de operaciones con conjuntos en un diagrama de Venn:</p>
+                <ul class="list-disc ml-8">
+                    <li>La unión \(A \cup B\) corresponde a toda el área cubierta por ambos círculos</li>
+                    <li>La intersección \(A \cap B\) corresponde solo al área donde se solapan los círculos</li>
+                    <li>La diferencia \(A - B\) corresponde al área del círculo A que no se solapa con B</li>
+                    <li>El complemento \(A^c\) corresponde a toda el área fuera del círculo A dentro del universo</li>
+                </ul>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Aplicaciones en Probabilidad</h3>
+            <p>Los diagramas de Venn-Euler son herramientas visuales muy útiles en probabilidad para:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>Representar eventos y sus relaciones</li>
+                <li>Visualizar operaciones como la unión, intersección y complemento de eventos</li>
+                <li>Comprender conceptos como eventos mutuamente excluyentes o independientes</li>
+                <li>Resolver problemas de probabilidad usando el principio de inclusión-exclusión</li>
+            </ul>
+        </section>
+
+        <section id="diagramas-venn">
+            <h2 class="text-3xl section-title">Diagramas de Venn</h2>
+            <p>Los diagramas de Venn son representaciones gráficas que utilizan círculos para visualizar las relaciones entre conjuntos. A diferencia de los diagramas de Euler, los diagramas de Venn muestran todas las posibles intersecciones entre conjuntos, independientemente de si están vacías o no.</p>
+            
+            <h3 class="text-2xl subsection-title">Características de los Diagramas de Venn</h3>
+            <ul class="list-disc ml-8 mt-2">
+                <li>Cada conjunto se representa mediante un círculo o una curva cerrada</li>
+                <li>El universo o espacio muestral se representa mediante un rectángulo que contiene todos los círculos</li>
+                <li>Las intersecciones entre conjuntos se representan mediante solapamientos entre los círculos</li>
+                <li>Cada región en el diagrama corresponde a una combinación única de pertenencia a los conjuntos</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Número de Regiones en un Diagrama de Venn</h3>
+            
+            <div class="math-box">
+                <p>Un diagrama de Venn con \(n\) conjuntos divide el plano en un máximo de \(2^n\) regiones:</p>
+                <ul class="list-disc ml-8">
+                    <li>Con 1 conjunto: 2 regiones</li>
+                    <li>Con 2 conjuntos: 4 regiones</li>
+                    <li>Con 3 conjuntos: 8 regiones</li>
+                    <li>Con 4 conjuntos: 16 regiones</li>
+                </ul>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Principio de Inclusión-Exclusión</h3>
+            <p>El principio de inclusión-exclusión es una fórmula combinatoria que permite calcular la cardinalidad de la unión de varios conjuntos.</p>
+            
+            <div class="math-box">
+                <p>Para dos conjuntos \(A\) y \(B\):</p>
+                <p>\(|A \cup B| = |A| + |B| - |A \cap B|\)</p>
+                
+                <p>Para tres conjuntos \(A\), \(B\) y \(C\):</p>
+                <p>\(|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|\)</p>
+                
+                <p>En general, para \(n\) conjuntos:</p>
+                <p>\(|\cup_{i=1}^{n} A_i| = \sum_{i=1}^{n} |A_i| - \sum_{i<j} |A_i \cap A_j| + \sum_{i<j<k} |A_i \cap A_j \cap A_k| - ... + (-1)^{n-1} |A_1 \cap A_2 \cap ... \cap A_n|\)</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> En una clase de 30 estudiantes, 15 estudian matemáticas, 12 estudian física y 10 estudian química. Además, 7 estudian matemáticas y física, 6 estudian matemáticas y química, 5 estudian física y química, y 3 estudian las tres materias. ¿Cuántos estudiantes no estudian ninguna de estas tres materias?</p>
+                
+                <p>Utilizando el principio de inclusión-exclusión:</p>
+                <p>Sea M = estudiantes de matemáticas, F = estudiantes de física, Q = estudiantes de química</p>
+                <p>\(|M \cup F \cup Q| = |M| + |F| + |Q| - |M \cap F| - |M \cap Q| - |F \cap Q| + |M \cap F \cap Q|\)</p>
+                <p>\(|M \cup F \cup Q| = 15 + 12 + 10 - 7 - 6 - 5 + 3 = 22\)</p>
+                
+                <p>Por lo tanto, 22 estudiantes estudian al menos una de las tres materias, lo que significa que 30 - 22 = 8 estudiantes no estudian ninguna de estas materias.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Diagramas de Venn con Tres o Más Conjuntos</h3>
+            <p>A medida que aumenta el número de conjuntos, los diagramas de Venn se vuelven más complejos:</p>
+            
+            <ul class="list-disc ml-8 mt-2">
+                <li>Con tres conjuntos, se pueden representar utilizando tres círculos que se solapan</li>
+                <li>Con cuatro o más conjuntos, la representación mediante círculos se vuelve más complicada y puede requerir el uso de otras formas geométricas</li>
+            </ul>
+            
+            <p class="mt-4">Los diagramas de Venn con tres conjuntos permiten visualizar hasta 8 regiones diferentes:</p>
+            <ol class="list-decimal ml-8 mt-2">
+                <li>Elementos que pertenecen solo a A</li>
+                <li>Elementos que pertenecen solo a B</li>
+                <li>Elementos que pertenecen solo a C</li>
+                <li>Elementos que pertenecen a A y B, pero no a C</li>
+                <li>Elementos que pertenecen a A y C, pero no a B</li>
+                <li>Elementos que pertenecen a B y C, pero no a A</li>
+                <li>Elementos que pertenecen a A, B y C</li>
+                <li>Elementos que no pertenecen a ninguno de los conjuntos</li>
+            </ol>
+        </section>
+
+        <section id="tecnicas-conteo">
+            <h2 class="text-3xl section-title">Técnicas de Conteo</h2>
+            <p>Las técnicas de conteo son métodos para determinar el número de elementos de un conjunto o el número de formas en que puede ocurrir un evento, sin tener que enumerar todos los casos posibles. Son fundamentales en probabilidad para calcular el tamaño de espacios muestrales y eventos.</p>
+            
+            <h3 class="text-2xl subsection-title">Principio Multiplicativo</h3>
+            <p>También conocido como la regla del producto, establece que si una tarea se puede realizar en \(m\) formas diferentes y, después de realizarla, una segunda tarea se puede realizar en \(n\) formas diferentes, entonces ambas tareas se pueden realizar en \(m \times n\) formas diferentes.</p>
+            
+            <div class="math-box">
+                <p>Si una operación \(A\) se puede realizar de \(n_A\) formas, una operación \(B\) de \(n_B\) formas, y así sucesivamente hasta una operación \(Z\) que se puede realizar de \(n_Z\) formas, entonces la secuencia de operaciones se puede realizar de \(n_A \times n_B \times ... \times n_Z\) formas.</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Si tenemos 5 camisas y 3 pantalones, ¿cuántos conjuntos diferentes de ropa podemos formar?</p>
+                <p>Usando el principio multiplicativo: 5 × 3 = 15 conjuntos diferentes.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Principio Aditivo</h3>
+            <p>También conocido como la regla de la suma, establece que si una tarea se puede realizar en \(m\) formas diferentes y una segunda tarea se puede realizar en \(n\) formas diferentes, y las dos tareas no pueden realizarse simultáneamente, entonces se puede realizar una tarea u otra en \(m + n\) formas diferentes.</p>
+            
+            <div class="math-box">
+                <p>Si una operación \(A\) se puede realizar de \(n_A\) formas, una operación \(B\) de \(n_B\) formas, y las operaciones son mutuamente excluyentes, entonces se puede realizar \(A\) o \(B\) de \(n_A + n_B\) formas.</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Si podemos ir a la universidad en autobús de 3 formas diferentes o en bicicleta de 2 formas diferentes, ¿de cuántas formas podemos ir a la universidad?</p>
+                <p>Usando el principio aditivo: 3 + 2 = 5 formas diferentes.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Permutaciones</h3>
+            <p>Las permutaciones son arreglos ordenados de objetos, donde el orden importa.</p>
+            
+            <div class="math-box">
+                <p><strong>Permutaciones de \(n\) elementos tomados de \(r\) en \(r\) (sin repetición):</strong></p>
+                <p>\(P(n,r) = \frac{n!}{(n-r)!} = n \cdot (n-1) \cdot (n-2) \cdot ... \cdot (n-r+1)\)</p>
+                
+                <p><strong>Permutaciones de \(n\) elementos tomados de \(n\) en \(n\) (sin repetición):</strong></p>
+                <p>\(P(n,n) = n! = n \cdot (n-1) \cdot (n-2) \cdot ... \cdot 2 \cdot 1\)</p>
+                
+                <p><strong>Permutaciones con repetición:</strong> Si tenemos \(n\) elementos donde hay \(n_1\) elementos de un tipo, \(n_2\) de otro tipo, ..., \(n_k\) de un k-ésimo tipo, entonces el número de permutaciones distintas es:</p>
+                <p>\(\frac{n!}{n_1! \cdot n_2! \cdot ... \cdot n_k!}\)</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo 1:</strong> ¿De cuántas formas se pueden ordenar 5 libros diferentes en un estante?</p>
+                <p>\(P(5,5) = 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120\) formas diferentes.</p>
+                
+                <p><strong>Ejemplo 2:</strong> ¿De cuántas formas se pueden ordenar las letras de la palabra "MATEMATICA"?</p>
+                <p>La palabra tiene 10 letras, con repeticiones: M (2 veces), A (3 veces), T (2 veces), E (1 vez), I (1 vez), C (1 vez)</p>
+                <p>\(\frac{10!}{2! \cdot 3! \cdot 2! \cdot 1! \cdot 1! \cdot 1!} = \frac{10!}{2! \cdot 3! \cdot 2!} = \frac{3628800}{2 \cdot 6 \cdot 2} = \frac{3628800}{24} = 151200\) formas diferentes.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Combinaciones</h3>
+            <p>Las combinaciones son selecciones no ordenadas de objetos, donde el orden no importa.</p>
+            
+            <div class="math-box">
+                <p><strong>Combinaciones de \(n\) elementos tomados de \(r\) en \(r\) (sin repetición):</strong></p>
+                <p>\(C(n,r) = \binom{n}{r} = \frac{n!}{r!(n-r)!}\)</p>
+                
+                <p><strong>Combinaciones con repetición:</strong> El número de formas de seleccionar \(r\) elementos de un conjunto de \(n\) elementos distintos, permitiendo repeticiones, es:</p>
+                <p>\(\binom{n+r-1}{r} = \frac{(n+r-1)!}{r!(n-1)!}\)</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo 1:</strong> ¿De cuántas formas se pueden seleccionar 3 estudiantes de un grupo de 10 para formar un comité?</p>
+                <p>\(C(10,3) = \binom{10}{3} = \frac{10!}{3!(10-3)!} = \frac{10!}{3!7!} = \frac{10 \times 9 \times 8}{3 \times 2 \times 1} = 120\) formas diferentes.</p>
+                
+                <p><strong>Ejemplo 2:</strong> ¿De cuántas formas se pueden seleccionar 5 dulces si hay 3 tipos diferentes y se permite repetición?</p>
+                <p>\(\binom{3+5-1}{5} = \binom{7}{5} = \frac{7!}{5!2!} = \frac{7 \times 6}{2 \times 1} = 21\) formas diferentes.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Principio del Palomar (Principio de Dirichlet)</h3>
+            <p>El principio del palomar establece que si \(n\) objetos se colocan en \(m\) recipientes y \(n > m\), entonces al menos un recipiente debe contener más de un objeto.</p>
+            
+            <div class="math-box">
+                <p>Formalmente, si \(n\) objetos se distribuyen en \(m\) recipientes y \(n > m \cdot k\), entonces al menos un recipiente debe contener al menos \(k + 1\) objetos.</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> En un grupo de 367 personas, ¿al menos cuántas personas deben tener el mismo día de cumpleaños?</p>
+                <p>Como hay 366 días posibles para un cumpleaños (considerando el 29 de febrero), por el principio del palomar, al menos 2 personas deben compartir el mismo día de cumpleaños.</p>
+            </div>
+        </section>
+
+        <section id="diagramas-arbol">
+            <h2 class="text-3xl section-title">Diagramas de Árbol</h2>
+            <p>Los diagramas de árbol son representaciones gráficas que muestran todos los posibles resultados de un experimento secuencial. Son particularmente útiles para visualizar espacios muestrales y calcular probabilidades en experimentos con múltiples etapas.</p>
+            
+            <h3 class="text-2xl subsection-title">Estructura de un Diagrama de Árbol</h3>
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>Nodos:</strong> Representan estados o puntos de decisión</li>
+                <li><strong>Ramas:</strong> Representan posibles resultados o transiciones entre estados</li>
+                <li><strong>Trayectorias:</strong> Secuencias de ramas que conectan el nodo inicial con un nodo final</li>
+            </ul>
+            
+            <p class="mt-4">En un diagrama de árbol para un experimento de \(n\) etapas:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>El nodo inicial (raíz) representa el estado antes de comenzar el experimento</li>
+                <li>Los nodos del primer nivel representan los posibles resultados de la primera etapa</li>
+                <li>Los nodos del segundo nivel representan los posibles resultados de la segunda etapa, condicionados a los resultados de la primera etapa</li>
+                <li>Y así sucesivamente hasta la última etapa</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Aplicaciones de los Diagramas de Árbol</h3>
+            <p>Los diagramas de árbol tienen diversas aplicaciones en probabilidad:</p>
+            <ol class="list-decimal ml-8 mt-2">
+                <li><strong>Enumerar espacios muestrales:</strong> Cada trayectoria completa desde la raíz hasta un nodo final representa un posible resultado del experimento</li>
+                <li><strong>Calcular probabilidades:</strong> Asignando probabilidades a las ramas, se pueden calcular las probabilidades de eventos complejos</li>
+                <li><strong>Aplicar probabilidad condicional:</strong> Las probabilidades de las ramas que salen de un nodo pueden representar probabilidades condicionales</li>
+                <li><strong>Resolver problemas de probabilidad secuenciales:</strong> Como lanzamientos sucesivos de monedas o dados</li>
+            </ol>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Consideremos el experimento de lanzar una moneda dos veces. Representemos el espacio muestral y calculemos la probabilidad de obtener exactamente un cara.</p>
+                
+                <p>El diagrama de árbol tendría la siguiente estructura:</p>
+                <ul class="list-disc ml-8">
+                    <li>Nodo raíz: Inicio del experimento</li>
+                    <li>Primer nivel: Resultados del primer lanzamiento (Cara o Cruz), cada uno con probabilidad 1/2</li>
+                    <li>Segundo nivel: Resultados del segundo lanzamiento (Cara o Cruz), cada uno con probabilidad 1/2</li>
+                </ul>
+                
+                <p>Las trayectorias completas representan los posibles resultados:</p>
+                <ol>
+                    <li>Cara, Cara (CC)</li>
+                    <li>Cara, Cruz (CX)</li>
+                    <li>Cruz, Cara (XC)</li>
+                    <li>Cruz, Cruz (XX)</li>
+                </ol>
+                
+                <p>Para calcular la probabilidad de obtener exactamente una cara, identificamos las trayectorias favorables: CX y XC.</p>
+                <p>La probabilidad de cada trayectoria es el producto de las probabilidades de sus ramas:</p>
+                <p>P(CX) = P(C) × P(X) = 1/2 × 1/2 = 1/4</p>
+                <p>P(XC) = P(X) × P(C) = 1/2 × 1/2 = 1/4</p>
+                <p>Por lo tanto, P(exactamente una cara) = P(CX) + P(XC) = 1/4 + 1/4 = 1/2</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Ventajas de los Diagramas de Árbol</h3>
+            <ul class="list-disc ml-8 mt-2">
+                <li>Proporcionan una representación visual clara de experimentos secuenciales</li>
+                <li>Ayudan a identificar todos los posibles resultados sin omitir ninguno</li>
+                <li>Facilitan el cálculo de probabilidades en experimentos complejos</li>
+                <li>Son especialmente útiles para problemas que involucran probabilidad condicional</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Limitaciones de los Diagramas de Árbol</h3>
+            <ul class="list-disc ml-8 mt-2">
+                <li>Pueden volverse muy grandes y complejos para experimentos con muchas etapas o muchos resultados posibles en cada etapa</li>
+                <li>No son tan eficientes para representar experimentos donde el orden de los eventos no importa</li>
+            </ul>
+        </section>
+
+        <section id="axiomas-probabilidad">
+            <h2 class="text-3xl section-title">Axiomas y Probabilidad Axiomática</h2>
+            <p>La teoría axiomática de la probabilidad, desarrollada por Andrey Kolmogorov en 1933, proporciona un marco matemático riguroso para el estudio de la probabilidad. Esta teoría se basa en un conjunto de axiomas que definen las propiedades fundamentales de la probabilidad.</p>
+            
+            <h3 class="text-2xl subsection-title">Espacio de Probabilidad</h3>
+            <p>Un espacio de probabilidad es una terna \((\Omega, \mathcal{F}, P)\) donde:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>\(\Omega\) es el espacio muestral (conjunto de todos los posibles resultados)</li>
+                <li>\(\mathcal{F}\) es una σ-álgebra de subconjuntos de \(\Omega\) (conjunto de eventos)</li>
+                <li>\(P\) es una función de probabilidad que asigna a cada evento \(A \in \mathcal{F}\) un número real \(P(A)\)</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Axiomas de Probabilidad de Kolmogorov</h3>
+            
+            <div class="math-box">
+                <p>La función de probabilidad \(P\) debe satisfacer los siguientes axiomas:</p>
+                <ol class="list-decimal ml-8">
+                    <li><strong>Axioma 1 (No negatividad):</strong> Para todo evento \(A \in \mathcal{F}\), \(P(A) \geq 0\)</li>
+                    <li><strong>Axioma 2 (Normalización):</strong> \(P(\Omega) = 1\)</li>
+                    <li><strong>Axioma 3 (Aditividad contable):</strong> Para una secuencia contable de eventos mutuamente excluyentes \(A_1, A_2, A_3, ...\) (es decir, \(A_i \cap A_j = \emptyset\) para \(i \neq j\)), se cumple:
+                    \[P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)\]</li>
+                </ol>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Propiedades Derivadas de los Axiomas</h3>
+            <p>A partir de los axiomas de Kolmogorov, se pueden derivar varias propiedades importantes:</p>
+            
+            <div class="math-box">
+                <ol class="list-decimal ml-8">
+                    <li><strong>Probabilidad del evento imposible:</strong> \(P(\emptyset) = 0\)</li>
+                    <li><strong>Probabilidad del complemento:</strong> Para todo evento \(A\), \(P(A^c) = 1 - P(A)\)</li>
+                    <li><strong>Monotonía:</strong> Si \(A \subset B\), entonces \(P(A) \leq P(B)\)</li>
+                    <li><strong>Aditividad finita:</strong> Para eventos mutuamente excluyentes \(A_1, A_2, ..., A_n\),
+                    \[P(A_1 \cup A_2 \cup ... \cup A_n) = P(A_1) + P(A_2) + ... + P(A_n)\]</li>
+                    <li><strong>Probabilidad de la unión:</strong> Para dos eventos cualquiera \(A\) y \(B\),
+                    \[P(A \cup B) = P(A) + P(B) - P(A \cap B)\]</li>
+                </ol>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Dado un espacio muestral \(\Omega = \{1, 2, 3, 4, 5, 6\}\) correspondiente a los resultados posibles al lanzar un dado justo, calculemos:</p>
+                
+                <p>1. La probabilidad de obtener un número par: \(A = \{2, 4, 6\}\)</p>
+                <p>\(P(A) = \frac{|A|}{|\Omega|} = \frac{3}{6} = \frac{1}{2}\)</p>
+                
+                <p>2. La probabilidad de obtener un número mayor que 3: \(B = \{4, 5, 6\}\)</p>
+                <p>\(P(B) = \frac{|B|}{|\Omega|} = \frac{3}{6} = \frac{1}{2}\)</p>
+                
+                <p>3. La probabilidad de obtener un número par o mayor que 3: \(A \cup B = \{2, 4, 5, 6\}\)</p>
+                <p>\(P(A \cup B) = \frac{|A \cup B|}{|\Omega|} = \frac{4}{6} = \frac{2}{3}\)</p>
+                
+                <p>4. Verificación usando la fórmula de la probabilidad de la unión:</p>
+                <p>\(A \cap B = \{4, 6\}\)</p>
+                <p>\(P(A \cap B) = \frac{|A \cap B|}{|\Omega|} = \frac{2}{6} = \frac{1}{3}\)</p>
+                <p>\(P(A) + P(B) - P(A \cap B) = \frac{1}{2} + \frac{1}{2} - \frac{1}{3} = 1 - \frac{1}{3} = \frac{2}{3}\)</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Espacios de Probabilidad Finitos</h3>
+            <p>En un espacio muestral finito \(\Omega = \{\omega_1, \omega_2, ..., \omega_n\}\), si todos los resultados son igualmente probables, la probabilidad de un evento \(A\) viene dada por:</p>
+            
+            <div class="math-box">
+                <p>\[P(A) = \frac{|A|}{|\Omega|} = \frac{\text{número de resultados favorables}}{\text{número total de resultados posibles}}\]</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Interpretaciones de la Probabilidad</h3>
+            <p>Existen diferentes interpretaciones de la probabilidad, todas compatibles con los axiomas de Kolmogorov:</p>
+            
+            <ol class="list-decimal ml-8 mt-2">
+                <li><strong>Interpretación clásica:</strong> La probabilidad como la razón entre casos favorables y casos posibles, aplicable cuando todos los resultados son igualmente probables</li>
+                <li><strong>Interpretación frecuentista:</strong> La probabilidad como el límite de la frecuencia relativa de un evento cuando el número de repeticiones del experimento tiende a infinito</li>
+                <li><strong>Interpretación subjetiva o bayesiana:</strong> La probabilidad como un grado de creencia personal, que puede actualizarse a medida que se obtiene nueva información</li>
+            </ol>
+        </section>
+
+        <section id="probabilidad-condicional">
+            <h2 class="text-3xl section-title">Probabilidad Condicional</h2>
+            <p>La probabilidad condicional es la probabilidad de que ocurra un evento A, dado que ha ocurrido otro evento B. Se denota como P(A|B) y proporciona una forma de actualizar las probabilidades cuando se dispone de información adicional.</p>
+            
+            <h3 class="text-2xl subsection-title">Definición de Probabilidad Condicional</h3>
+            
+            <div class="math-box">
+                <p>La probabilidad condicional de un evento A dado un evento B (con P(B) > 0) se define como:</p>
+                <p>\[P(A|B) = \frac{P(A \cap B)}{P(B)}\]</p>
+            </div>
+            
+            <p>Intuitivamente, al conocer que B ha ocurrido, el nuevo espacio muestral se reduce a B, y dentro de este espacio reducido, estamos interesados en la parte que también pertenece a A (es decir, A ∩ B).</p>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> En un grupo de 100 estudiantes, 60 son mujeres y 40 son hombres. De las mujeres, 30 estudian ingeniería, mientras que de los hombres, 20 estudian ingeniería. Si se selecciona un estudiante al azar y resulta ser estudiante de ingeniería, ¿cuál es la probabilidad de que sea mujer?</p>
+                
+                <p>Definimos los eventos:</p>
+                <ul class="list-disc ml-8">
+                    <li>M: el estudiante es mujer</li>
+                    <li>H: el estudiante es hombre</li>
+                    <li>I: el estudiante estudia ingeniería</li>
+                </ul>
+                
+                <p>Datos:</p>
+                <ul class="list-disc ml-8">
+                    <li>P(M) = 60/100 = 0.6</li>
+                    <li>P(H) = 40/100 = 0.4</li>
+                    <li>P(I|M) = 30/60 = 0.5</li>
+                    <li>P(I|H) = 20/40 = 0.5</li>
+                </ul>
+                
+                <p>Necesitamos calcular P(M|I). Usando la definición de probabilidad condicional:</p>
+                <p>\[P(M|I) = \frac{P(M \cap I)}{P(I)}\]</p>
+                
+                <p>Calculamos P(M ∩ I):</p>
+                <p>\[P(M \cap I) = P(I|M) \times P(M) = 0.5 \times 0.6 = 0.3\]</p>
+                
+                <p>Calculamos P(I):</p>
+                <p>\[P(I) = P(M \cap I) + P(H \cap I) = 0.3 + (0.5 \times 0.4) = 0.3 + 0.2 = 0.5\]</p>
+                
+                <p>Por lo tanto:</p>
+                <p>\[P(M|I) = \frac{0.3}{0.5} = 0.6\]</p>
+                
+                <p>La probabilidad de que un estudiante de ingeniería sea mujer es 0.6 o 60%.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Regla del Producto</h3>
+            <p>A partir de la definición de probabilidad condicional, podemos derivar la regla del producto:</p>
+            
+            <div class="math-box">
+                <p>\[P(A \cap B) = P(A|B) \times P(B) = P(B|A) \times P(A)\]</p>
+            </div>
+            
+            <p>Esta regla se puede extender a más de dos eventos:</p>
+            
+            <div class="math-box">
+                <p>\[P(A \cap B \cap C) = P(A|B \cap C) \times P(B|C) \times P(C)\]</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Independencia de Eventos</h3>
+            <p>Dos eventos A y B son independientes si el conocimiento de que uno ha ocurrido no afecta la probabilidad de que ocurra el otro. Formalmente:</p>
+            
+            <div class="math-box">
+                <p>A y B son independientes si y solo si:</p>
+                <p>\[P(A|B) = P(A)\]</p>
+                <p>o equivalentemente:</p>
+                <p>\[P(B|A) = P(B)\]</p>
+                <p>o equivalentemente:</p>
+                <p>\[P(A \cap B) = P(A) \times P(B)\]</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Se lanzan dos dados. ¿Son independientes los eventos "obtener un número par en el primer dado" y "obtener una suma mayor que 7"?</p>
+                
+                <p>Definimos los eventos:</p>
+                <ul class="list-disc ml-8">
+                    <li>A: obtener un número par en el primer dado = {2, 4, 6}</li>
+                    <li>B: obtener una suma mayor que 7 = {(1,7), (2,6), (3,5), (3,6), (4,4), (4,5), (4,6), (5,3), (5,4), (5,5), (5,6), (6,2), (6,3), (6,4), (6,5), (6,6)}</li>
+                </ul>
+                
+                <p>Calculamos las probabilidades:</p>
+                <ul class="list-disc ml-8">
+                    <li>P(A) = 3/6 = 1/2</li>
+                    <li>P(B) = 15/36 = 5/12</li>
+                    <li>P(A ∩ B) = 8/36 = 2/9</li>
+                </ul>
+                
+                <p>Verificamos si P(A ∩ B) = P(A) × P(B):</p>
+                <p>\[P(A) \times P(B) = \frac{1}{2} \times \frac{5}{12} = \frac{5}{24}\]</p>
+                <p>\[P(A \cap B) = \frac{2}{9} = \frac{8}{36} = \frac{16}{72}\]</p>
+                <p>\[\frac{5}{24} = \frac{15}{72} \neq \frac{16}{72}\]</p>
+                
+                <p>Como P(A ∩ B) ≠ P(A) × P(B), los eventos no son independientes.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Ley de la Probabilidad Total</h3>
+            <p>La ley de la probabilidad total permite calcular la probabilidad de un evento A considerando todos los posibles escenarios representados por una partición del espacio muestral.</p>
+            
+            <div class="math-box">
+                <p>Si \(B_1, B_2, ..., B_n\) forman una partición del espacio muestral \(\Omega\) (es decir, son mutuamente excluyentes y su unión es \(\Omega\)), entonces:</p>
+                <p>\[P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)\]</p>
+            </div>
+            
+            <p>Esta ley es especialmente útil cuando es más fácil calcular las probabilidades condicionales P(A|B<sub>i</sub>) que calcular P(A) directamente.</p>
+        </section>
+
+        <section id="teorema-bayes">
+            <h2 class="text-3xl section-title">Teorema de Bayes</h2>
+            <p>El Teorema de Bayes es una fórmula que permite invertir las probabilidades condicionales. Es decir, si conocemos P(B|A), el teorema nos permite calcular P(A|B). Es fundamental en estadística bayesiana y tiene numerosas aplicaciones prácticas.</p>
+            
+            <h3 class="text-2xl subsection-title">Formulación del Teorema de Bayes</h3>
+            
+            <div class="math-box">
+                <p>Para dos eventos A y B, con P(B) > 0, el Teorema de Bayes establece que:</p>
+                <p>\[P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}\]</p>
+            </div>
+            
+            <p>Utilizando la ley de la probabilidad total, el denominador P(B) puede expresarse como:</p>
+            
+            <div class="math-box">
+                <p>Si \(A_1, A_2, ..., A_n\) forman una partición del espacio muestral:</p>
+                <p>\[P(B) = \sum_{i=1}^{n} P(B|A_i) \times P(A_i)\]</p>
+                <p>Por lo tanto, el Teorema de Bayes puede escribirse como:</p>
+                <p>\[P(A_j|B) = \frac{P(B|A_j) \times P(A_j)}{\sum_{i=1}^{n} P(B|A_i) \times P(A_i)}\]</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Interpretación Bayesiana</h3>
+            <p>En la interpretación bayesiana, el Teorema de Bayes permite actualizar nuestras creencias a la luz de nueva evidencia:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>P(A):</strong> Probabilidad a priori o inicial de A, antes de considerar la evidencia B</li>
+                <li><strong>P(A|B):</strong> Probabilidad a posteriori de A, después de considerar la evidencia B</li>
+                <li><strong>P(B|A):</strong> Verosimilitud o likelihood, que indica cuán probable es observar B si A es verdadero</li>
+                <li><strong>P(B):</strong> Evidencia o probabilidad marginal, que actúa como un factor de normalización</li>
+            </ul>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Un laboratorio ha desarrollado una prueba para detectar una enfermedad. La prueba tiene una sensibilidad del 95% (P(Positivo|Enfermo) = 0.95) y una especificidad del 90% (P(Negativo|Sano) = 0.90). La prevalencia de la enfermedad en la población es del 1%. Si una persona da positivo en la prueba, ¿cuál es la probabilidad de que realmente tenga la enfermedad?</p>
+                
+                <p>Definimos los eventos:</p>
+                <ul class="list-disc ml-8">
+                    <li>E: la persona tiene la enfermedad</li>
+                    <li>S: la persona está sana (no tiene la enfermedad)</li>
+                    <li>+: la prueba da resultado positivo</li>
+                    <li>-: la prueba da resultado negativo</li>
+                </ul>
+                
+                <p>Datos:</p>
+                <ul class="list-disc ml-8">
+                    <li>P(E) = 0.01 (prevalencia de la enfermedad)</li>
+                    <li>P(S) = 0.99 (complemento de la prevalencia)</li>
+                    <li>P(+|E) = 0.95 (sensibilidad)</li>
+                    <li>P(-|S) = 0.90 (especificidad)</li>
+                    <li>P(+|S) = 1 - P(-|S) = 1 - 0.90 = 0.10 (falso positivo)</li>
+                </ul>
+                
+                <p>Queremos calcular P(E|+). Aplicando el Teorema de Bayes:</p>
+                <p>\[P(E|+) = \frac{P(+|E) \times P(E)}{P(+)} = \frac{P(+|E) \times P(E)}{P(+|E) \times P(E) + P(+|S) \times P(S)}\]</p>
+                <p>\[P(E|+) = \frac{0.95 \times 0.01}{0.95 \times 0.01 + 0.10 \times 0.99} = \frac{0.0095}{0.0095 + 0.099} = \frac{0.0095}{0.1085} \approx 0.0876\]</p>
+                
+                <p>Por lo tanto, la probabilidad de que una persona con resultado positivo realmente tenga la enfermedad es aproximadamente 0.0876 o 8.76%.</p>
+                
+                <p>Este ejemplo ilustra la "paradoja del falso positivo": aunque la prueba es bastante precisa (95% de sensibilidad y 90% de especificidad), la probabilidad de tener la enfermedad dado un resultado positivo es relativamente baja (8.76%) debido a la baja prevalencia de la enfermedad en la población.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Aplicaciones del Teorema de Bayes</h3>
+            <p>El Teorema de Bayes tiene numerosas aplicaciones en diversos campos:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>Medicina:</strong> Diagnóstico médico, interpretación de resultados de pruebas</li>
+                <li><strong>Inteligencia artificial:</strong> Clasificación bayesiana, redes bayesianas, filtros de spam</li>
+                <li><strong>Ciencia forense:</strong> Evaluación de evidencia, identificación mediante ADN</li>
+                <li><strong>Finanzas:</strong> Análisis de riesgos, detección de fraudes</li>
+                <li><strong>Ciencia de datos:</strong> Actualización de modelos a medida que llegan nuevos datos</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Ventajas del Enfoque Bayesiano</h3>
+            <ul class="list-disc ml-8 mt-2">
+                <li>Permite incorporar conocimiento previo (probabilidades a priori)</li>
+                <li>Proporciona un marco natural para actualizar creencias a medida que se acumula evidencia</li>
+                <li>Maneja de manera elegante la incertidumbre</li>
+                <li>Proporciona interpretaciones probabilísticas directas de los resultados</li>
+            </ul>
+        </section>
+
+        <section id="variables-aleatorias">
+            <h2 class="text-3xl section-title">Variable Discreta y Continua</h2>
+            <p>Una variable aleatoria es una función que asigna un valor numérico a cada resultado posible de un experimento aleatorio. Las variables aleatorias se clasifican principalmente en discretas y continuas, dependiendo de los valores que pueden tomar.</p>
+            
+            <h3 class="text-2xl subsection-title">Variables Aleatorias Discretas</h3>
+            <p>Una variable aleatoria discreta puede tomar un número contable (finito o infinito contable) de valores posibles. Típicamente, estos valores son enteros o conjuntos discretos de números.</p>
+            
+            <div class="math-box">
+                <p><strong>Función de masa de probabilidad (PMF):</strong> Para una variable aleatoria discreta X, la función de masa de probabilidad p(x) asigna a cada valor posible x su probabilidad:</p>
+                <p>\[p(x) = P(X = x)\]</p>
+                <p>Propiedades de la PMF:</p>
+                <ul class="list-disc ml-8">
+                    <li>\(p(x) \geq 0\) para todo x</li>
+                    <li>\(\sum_{x} p(x) = 1\)</li>
+                </ul>
+            </div>
+            
+            <div class="math-box">
+                <p><strong>Función de distribución acumulada (CDF):</strong> La CDF de una variable aleatoria discreta X es:</p>
+                <p>\[F_X(x) = P(X \leq x) = \sum_{t \leq x} p(t)\]</p>
+                <p>Propiedades de la CDF:</p>
+                <ul class="list-disc ml-8">
+                    <li>\(0 \leq F_X(x) \leq 1\) para todo x</li>
+                    <li>\(F_X(x)\) es no decreciente</li>
+                    <li>\(\lim_{x \to -\infty} F_X(x) = 0\) y \(\lim_{x \to \infty} F_X(x) = 1\)</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Sea X una variable aleatoria que representa el número de caras obtenidas al lanzar 3 monedas justas. Encuentra la PMF y la CDF de X.</p>
+                
+                <p>Espacio muestral: {CCC, CCX, CXC, XCC, CXX, XCX, XXC, XXX}</p>
+                <p>Donde C representa cara y X representa cruz.</p>
+                
+                <p>La variable X puede tomar los valores 0, 1, 2, 3, que representan el número de caras.</p>
+                
+                <p>PMF:</p>
+                <ul class="list-disc ml-8">
+                    <li>p(0) = P(X = 0) = P(XXX) = 1/8</li>
+                    <li>p(1) = P(X = 1) = P(CXX, XCX, XXC) = 3/8</li>
+                    <li>p(2) = P(X = 2) = P(CCX, CXC, XCC) = 3/8</li>
+                    <li>p(3) = P(X = 3) = P(CCC) = 1/8</li>
+                </ul>
+                
+                <p>CDF:</p>
+                <ul class="list-disc ml-8">
+                    <li>F_X(x) = 0 para x < 0</li>
+                    <li>F_X(x) = 1/8 para 0 ≤ x < 1</li>
+                    <li>F_X(x) = 4/8 = 1/2 para 1 ≤ x < 2</li>
+                    <li>F_X(x) = 7/8 para 2 ≤ x < 3</li>
+                    <li>F_X(x) = 1 para x ≥ 3</li>
+                </ul>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Variables Aleatorias Continuas</h3>
+            <p>Una variable aleatoria continua puede tomar cualquier valor en un intervalo o conjunto de intervalos de números reales. A diferencia de las variables discretas, la probabilidad de que una variable continua tome exactamente un valor específico es cero.</p>
+            
+            <div class="math-box">
+                <p><strong>Función de densidad de probabilidad (PDF):</strong> Para una variable aleatoria continua X, la función de densidad de probabilidad f(x) satisface:</p>
+                <p>\[P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx\]</p>
+                <p>Propiedades de la PDF:</p>
+                <ul class="list-disc ml-8">
+                    <li>\(f(x) \geq 0\) para todo x</li>
+                    <li>\(\int_{-\infty}^{\infty} f(x) \, dx = 1\)</li>
+                </ul>
+            </div>
+            
+            <div class="math-box">
+                <p><strong>Función de distribución acumulada (CDF):</strong> La CDF de una variable aleatoria continua X es:</p>
+                <p>\[F_X(x) = P(X \leq x) = \int_{-\infty}^{x} f(t) \, dt\]</p>
+                <p>La relación entre PDF y CDF:</p>
+                <p>\[f(x) = \frac{d}{dx}F_X(x)\]</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Sea X una variable aleatoria continua con función de densidad de probabilidad:</p>
+                <p>\[f(x) = 
+                \begin{cases} 
+                2x & \text{si } 0 \leq x \leq 1 \\
+                0 & \text{en otro caso}
+                \end{cases}\]</p>
+                
+                <p>Verificamos que es una PDF válida:</p>
+                <p>\[\int_{-\infty}^{\infty} f(x) \, dx = \int_{0}^{1} 2x \, dx = [x^2]_{0}^{1} = 1 - 0 = 1\]</p>
+                
+                <p>La CDF es:</p>
+                <p>\[F_X(x) = 
+                \begin{cases} 
+                0 & \text{si } x < 0 \\
+                \int_{0}^{x} 2t \, dt = [t^2]_{0}^{x} = x^2 & \text{si } 0 \leq x \leq 1 \\
+                1 & \text{si } x > 1
+                \end{cases}\]</p>
+                
+                <p>Calculamos algunas probabilidades:</p>
+                <p>P(0.2 ≤ X ≤ 0.7) = F_X(0.7) - F_X(0.2) = (0.7)^2 - (0.2)^2 = 0.49 - 0.04 = 0.45</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Comparación entre Variables Discretas y Continuas</h3>
+            <table>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Variables Discretas</th>
+                    <th>Variables Continuas</th>
+                </tr>
+                <tr>
+                    <td>Posibles valores</td>
+                    <td>Conjunto contable (finito o infinito contable)</td>
+                    <td>Intervalo o conjunto de intervalos (infinito no contable)</td>
+                </tr>
+                <tr>
+                    <td>Función de probabilidad</td>
+                    <td>Función de masa de probabilidad (PMF)</td>
+                    <td>Función de densidad de probabilidad (PDF)</td>
+                </tr>
+                <tr>
+                    <td>Cálculo de probabilidades</td>
+                    <td>Suma de probabilidades</td>
+                    <td>Integral de la densidad</td>
+                </tr>
+                <tr>
+                    <td>Probabilidad de un valor exacto</td>
+                    <td>Puede ser mayor que cero</td>
+                    <td>Siempre es cero</td>
+                </tr>
+                <tr>
+                    <td>Ejemplos comunes</td>
+                    <td>Número de éxitos en n ensayos, número de clientes, conteos</td>
+                    <td>Tiempo, distancia, temperatura, peso</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="esperanza-matematica">
+            <h2 class="text-3xl section-title">Esperanza Matemática</h2>
+            <p>La esperanza matemática, también conocida como valor esperado o media, es una medida del valor "promedio" que se espera que tome una variable aleatoria. Representa el centro de gravedad de la distribución de probabilidad.</p>
+            
+            <h3 class="text-2xl subsection-title">Definición de Esperanza Matemática</h3>
+            
+            <div class="math-box">
+                <p><strong>Para variables aleatorias discretas:</strong> Si X es una variable aleatoria discreta con función de masa de probabilidad p(x), su esperanza matemática es:</p>
+                <p>\[E[X] = \sum_{x} x \cdot p(x)\]</p>
+                <p>donde la suma se extiende sobre todos los posibles valores de X.</p>
+                
+                <p><strong>Para variables aleatorias continuas:</strong> Si X es una variable aleatoria continua con función de densidad de probabilidad f(x), su esperanza matemática es:</p>
+                <p>\[E[X] = \int_{-\infty}^{\infty} x \cdot f(x) \, dx\]</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo (Discreto):</strong> Sea X una variable aleatoria que representa el número de puntos al lanzar un dado justo. Encontrar E[X].</p>
+                
+                <p>La PMF de X es:</p>
+                <ul class="list-disc ml-8">
+                    <li>p(1) = p(2) = p(3) = p(4) = p(5) = p(6) = 1/6</li>
+                </ul>
+                
+                <p>Calculamos E[X]:</p>
+                <p>\[E[X] = \sum_{x=1}^{6} x \cdot p(x) = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} + 4 \cdot \frac{1}{6} + 5 \cdot \frac{1}{6} + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5\]</p>
+                
+                <p>El valor esperado del lanzamiento de un dado justo es 3.5.</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo (Continuo):</strong> Sea X una variable aleatoria continua con PDF:</p>
+                <p>\[f(x) = 
+                \begin{cases} 
+                2x & \text{si } 0 \leq x \leq 1 \\
+                0 & \text{en otro caso}
+                \end{cases}\]</p>
+                
+                <p>Calculamos E[X]:</p>
+                <p>\[E[X] = \int_{-\infty}^{\infty} x \cdot f(x) \, dx = \int_{0}^{1} x \cdot 2x \, dx = \int_{0}^{1} 2x^2 \, dx = 2 \cdot \left[ \frac{x^3}{3} \right]_{0}^{1} = 2 \cdot \frac{1}{3} = \frac{2}{3}\]</p>
+                
+                <p>El valor esperado de X es 2/3.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Propiedades de la Esperanza Matemática</h3>
+            
+            <div class="math-box">
+                <ol class="list-decimal ml-8">
+                    <li><strong>Linealidad:</strong> Para constantes a y b,
+                    \[E[aX + b] = aE[X] + b\]</li>
+                    <li><strong>Aditividad:</strong> Para variables aleatorias X y Y,
+                    \[E[X + Y] = E[X] + E[Y]\]</li>
+                    <li><strong>Multiplicatividad para variables independientes:</strong> Si X y Y son independientes,
+                    \[E[XY] = E[X] \cdot E[Y]\]</li>
+                    <li><strong>Esperanza de una constante:</strong> Si c es una constante,
+                    \[E[c] = c\]</li>
+                </ol>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Esperanza de Funciones de Variables Aleatorias</h3>
+            
+            <div class="math-box">
+                <p>Si g(X) es una función de la variable aleatoria X, entonces:</p>
+                <p><strong>Para variables aleatorias discretas:</strong>
+                \[E[g(X)] = \sum_{x} g(x) \cdot p(x)\]</p>
+                
+                <p><strong>Para variables aleatorias continuas:</strong>
+                \[E[g(X)] = \int_{-\infty}^{\infty} g(x) \cdot f(x) \, dx\]</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Sea X una variable aleatoria que representa el resultado de lanzar un dado justo. Calcular E[X²].</p>
+                
+                <p>\[E[X^2] = \sum_{x=1}^{6} x^2 \cdot p(x) = 1^2 \cdot \frac{1}{6} + 2^2 \cdot \frac{1}{6} + 3^2 \cdot \frac{1}{6} + 4^2 \cdot \frac{1}{6} + 5^2 \cdot \frac{1}{6} + 6^2 \cdot \frac{1}{6}\]</p>
+                <p>\[E[X^2] = \frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6} \approx 15.17\]</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Aplicaciones de la Esperanza Matemática</h3>
+            <p>La esperanza matemática tiene numerosas aplicaciones en diferentes campos:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>Teoría de juegos y apuestas:</strong> Cálculo de pagos esperados</li>
+                <li><strong>Finanzas:</strong> Rendimiento esperado de inversiones</li>
+                <li><strong>Seguros:</strong> Cálculo de primas basadas en reclamaciones esperadas</li>
+                <li><strong>Ingeniería:</strong> Fiabilidad y tiempo medio hasta el fallo</li>
+                <li><strong>Ciencia de datos:</strong> Base para algoritmos de predicción y optimización</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Esperanza Condicional</h3>
+            <p>La esperanza condicional E[X|Y = y] es el valor esperado de X dado que Y toma el valor y.</p>
+            
+            <div class="math-box">
+                <p><strong>Para variables aleatorias discretas:</strong>
+                \[E[X|Y = y] = \sum_{x} x \cdot P(X = x | Y = y)\]</p>
+                
+                <p><strong>Para variables aleatorias continuas:</strong>
+                \[E[X|Y = y] = \int_{-\infty}^{\infty} x \cdot f_{X|Y}(x|y) \, dx\]</p>
+                <p>donde \(f_{X|Y}(x|y)\) es la densidad condicional de X dado Y = y.</p>
+            </div>
+            
+            <p>La ley de la esperanza total establece que:</p>
+            
+            <div class="math-box">
+                <p>\[E[X] = E[E[X|Y]]\]</p>
+                <p>Es decir, la esperanza de X se puede calcular como la esperanza de la esperanza condicional de X dado Y.</p>
+            </div>
+        </section>
+
+        <section id="varianza-desviacion">
+            <h2 class="text-3xl section-title">Varianza y Desviación Estándar</h2>
+            <p>La varianza y la desviación estándar son medidas de dispersión que indican cuán esparcidos están los valores de una variable aleatoria alrededor de su esperanza matemática (media).</p>
+            
+            <h3 class="text-2xl subsection-title">Definición de Varianza</h3>
+            
+            <div class="math-box">
+                <p>La varianza de una variable aleatoria X, denotada por Var(X) o σ², es la esperanza del cuadrado de la desviación de X respecto a su media:</p>
+                <p>\[Var(X) = E[(X - E[X])^2]\]</p>
+                <p>Alternativamente, se puede calcular como:</p>
+                <p>\[Var(X) = E[X^2] - (E[X])^2\]</p>
+            </div>
+            
+            <div class="math-box">
+                <p><strong>Para variables aleatorias discretas:</strong>
+                \[Var(X) = \sum_{x} (x - E[X])^2 \cdot p(x)\]</p>
+                
+                <p><strong>Para variables aleatorias continuas:</strong>
+                \[Var(X) = \int_{-\infty}^{\infty} (x - E[X])^2 \cdot f(x) \, dx\]</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular la varianza del lanzamiento de un dado justo.</p>
+                
+                <p>Ya sabemos que E[X] = 3.5 y E[X²] = 91/6.</p>
+                <p>Usando la fórmula Var(X) = E[X²] - (E[X])²:</p>
+                <p>\[Var(X) = \frac{91}{6} - (3.5)^2 = \frac{91}{6} - \frac{49}{4} = \frac{91}{6} - \frac{73.5}{6} = \frac{17.5}{6} \approx 2.92\]</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Desviación Estándar</h3>
+            
+            <div class="math-box">
+                <p>La desviación estándar de una variable aleatoria X, denotada por σ o SD(X), es la raíz cuadrada de la varianza:</p>
+                <p>\[SD(X) = \sqrt{Var(X)} = \sqrt{E[(X - E[X])^2]}\]</p>
+            </div>
+            
+            <p>La desviación estándar tiene la ventaja de estar en las mismas unidades que la variable aleatoria original, lo que facilita su interpretación.</p>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> La desviación estándar del lanzamiento de un dado justo es:</p>
+                <p>\[SD(X) = \sqrt{Var(X)} = \sqrt{\frac{17.5}{6}} \approx \sqrt{2.92} \approx 1.71\]</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Propiedades de la Varianza</h3>
+            
+            <div class="math-box">
+                <ol class="list-decimal ml-8">
+                    <li><strong>No negatividad:</strong> \(Var(X) \geq 0\)</li>
+                    <li><strong>Varianza de una constante:</strong> \(Var(c) = 0\) para cualquier constante c</li>
+                    <li><strong>Efecto de la adición de una constante:</strong> \(Var(X + c) = Var(X)\) para cualquier constante c</li>
+                    <li><strong>Efecto de la multiplicación por una constante:</strong> \(Var(cX) = c^2 \cdot Var(X)\) para cualquier constante c</li>
+                    <li><strong>Para variables independientes X y Y:</strong> \(Var(X + Y) = Var(X) + Var(Y)\)</li>
+                    <li><strong>Para variables no necesariamente independientes X y Y:</strong> \(Var(X + Y) = Var(X) + Var(Y) + 2 \cdot Cov(X, Y)\)</li>
+                </ol>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Coeficiente de Variación</h3>
+            <p>El coeficiente de variación (CV) es una medida de dispersión relativa que expresa la desviación estándar como porcentaje de la media:</p>
+            
+            <div class="math-box">
+                <p>\[CV = \frac{SD(X)}{E[X]} \times 100\%\]</p>
+            </div>
+            
+            <p>El CV es útil para comparar la variabilidad de diferentes distribuciones, especialmente cuando tienen diferentes unidades o escalas.</p>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> El coeficiente de variación del lanzamiento de un dado justo es:</p>
+                <p>\[CV = \frac{SD(X)}{E[X]} \times 100\% = \frac{1.71}{3.5} \times 100\% \approx 48.86\%\]</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Momentos de una Variable Aleatoria</h3>
+            <p>Los momentos son valores esperados de potencias de la variable aleatoria o de sus desviaciones respecto a la media.</p>
+            
+            <div class="math-box">
+                <p><strong>Momento de orden r respecto al origen:</strong> \(\mu'_r = E[X^r]\)</p>
+                <p><strong>Momento de orden r respecto a la media:</strong> \(\mu_r = E[(X - E[X])^r]\)</p>
+            </div>
+            
+            <p>Relación entre momentos:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>La media (esperanza) es el primer momento respecto al origen: \(E[X] = \mu'_1\)</li>
+                <li>La varianza es el segundo momento respecto a la media: \(Var(X) = \mu_2\)</li>
+                <li>La asimetría (skewness) está relacionada con el tercer momento respecto a la media: \(\gamma_1 = \frac{\mu_3}{\mu_2^{3/2}}\)</li>
+                <li>La curtosis está relacionada con el cuarto momento respecto a la media: \(\gamma_2 = \frac{\mu_4}{\mu_2^2} - 3\)</li>
+            </ul>
+        </section>
+
+        <section id="distribuciones-probabilidad">
+            <h2 class="text-3xl section-title">Distribuciones de Probabilidad</h2>
+            <p>Las distribuciones de probabilidad describen cómo se distribuyen las probabilidades entre los posibles valores de una variable aleatoria. Hay muchas distribuciones estándar que modelan diferentes fenómenos aleatorios.</p>
+            
+            <h3 class="text-2xl subsection-title">Distribución Binomial</h3>
+            <p>La distribución binomial modela el número de éxitos en n ensayos independientes, cada uno con probabilidad de éxito p.</p>
+            
+            <div class="math-box">
+                <p><strong>Condiciones para la distribución binomial:</strong></p>
+                <ol class="list-decimal ml-8">
+                    <li>Un número fijo n de ensayos</li>
+                    <li>Cada ensayo es independiente</li>
+                    <li>Cada ensayo tiene dos posibles resultados: "éxito" o "fracaso"</li>
+                    <li>La probabilidad de éxito p es la misma en cada ensayo</li>
+                </ol>
+                
+                <p>Si X ~ Bin(n, p), entonces la PMF de X es:</p>
+                <p>\[P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, ..., n\]</p>
+                
+                <p>Donde \(\binom{n}{k} = \frac{n!}{k!(n-k)!}\) es el coeficiente binomial.</p>
+                
+                <p><strong>Esperanza y varianza:</strong></p>
+                <p>\[E[X] = np\]</p>
+                <p>\[Var(X) = np(1-p)\]</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Si lanzamos una moneda justa 10 veces, ¿cuál es la probabilidad de obtener exactamente 6 caras?</p>
+                
+                <p>Aquí, X ~ Bin(10, 0.5) y queremos P(X = 6).</p>
+                <p>\[P(X = 6) = \binom{10}{6} (0.5)^6 (0.5)^4 = \binom{10}{6} (0.5)^{10} = 210 \cdot (0.5)^{10} = 210 \cdot \frac{1}{1024} \approx 0.205\]</p>
+                
+                <p>La probabilidad de obtener exactamente 6 caras en 10 lanzamientos de una moneda justa es aproximadamente 0.205 o 20.5%.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Distribución Normal</h3>
+            <p>La distribución normal, también conocida como distribución gaussiana, es una distribución continua que aparece en muchos fenómenos naturales y sociales. Está completamente caracterizada por su media μ y su desviación estándar σ.</p>
+            
+            <div class="math-box">
+                <p>Si X ~ N(μ, σ²), entonces la PDF de X es:</p>
+                <p>\[f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}, \quad -\infty < x < \infty\]</p>
+                
+                <p><strong>Propiedades de la distribución normal:</strong></p>
+                <ul class="list-disc ml-8">
+                    <li>Es simétrica alrededor de su media μ</li>
+                    <li>La media, la mediana y la moda coinciden</li>
+                    <li>Los puntos de inflexión de la curva ocurren en μ - σ y μ + σ</li>
+                    <li>Aproximadamente el 68% de los valores caen dentro de μ ± σ</li>
+                    <li>Aproximadamente el 95% de los valores caen dentro de μ ± 2σ</li>
+                    <li>Aproximadamente el 99.7% de los valores caen dentro de μ ± 3σ</li>
+                </ul>
+                
+                <p><strong>Distribución normal estándar:</strong></p>
+                <p>La distribución normal estándar Z ~ N(0, 1) tiene media 0 y desviación estándar 1.</p>
+                <p>Si X ~ N(μ, σ²), entonces Z = (X - μ) / σ ~ N(0, 1).</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Las puntuaciones en un examen siguen una distribución normal con media μ = 70 y desviación estándar σ = 10. ¿Qué porcentaje de estudiantes obtiene una puntuación mayor que 85?</p>
+                
+                <p>Necesitamos calcular P(X > 85) donde X ~ N(70, 10²).</p>
+                
+                <p>Estandarizamos la variable:</p>
+                <p>\[z = \frac{x - \mu}{\sigma} = \frac{85 - 70}{10} = 1.5\]</p>
+                
+                <p>Ahora, necesitamos P(Z > 1.5) donde Z ~ N(0, 1).</p>
+                <p>P(Z > 1.5) = 1 - P(Z ≤ 1.5) = 1 - 0.9332 = 0.0668</p>
+                
+                <p>Por lo tanto, aproximadamente el 6.68% de los estudiantes obtiene una puntuación mayor que 85.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Distribución de Poisson</h3>
+            <p>La distribución de Poisson modela el número de eventos que ocurren en un intervalo fijo de tiempo o espacio, cuando estos eventos ocurren con una tasa constante y de manera independiente.</p>
+            
+            <div class="math-box">
+                <p>Si X ~ Poisson(λ), donde λ > 0 es el parámetro de la distribución (la tasa media de ocurrencia), entonces la PMF de X es:</p>
+                <p>\[P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, ...\]</p>
+                
+                <p><strong>Esperanza y varianza:</strong></p>
+                <p>\[E[X] = Var(X) = \lambda\]</p>
+                
+                <p><strong>Propiedades de la distribución de Poisson:</strong></p>
+                <ul class="list-disc ml-8">
+                    <li>La suma de variables Poisson independientes es también Poisson: Si X ~ Poisson(λ₁) y Y ~ Poisson(λ₂) son independientes, entonces X + Y ~ Poisson(λ₁ + λ₂)</li>
+                    <li>La distribución de Poisson puede aproximar a la binomial cuando n es grande y p es pequeño, con λ = np</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Un sitio web recibe en promedio 3 comentarios por hora. ¿Cuál es la probabilidad de recibir exactamente 5 comentarios en una hora específica?</p>
+                
+                <p>Modelamos esto como X ~ Poisson(3), donde X es el número de comentarios en una hora.</p>
+                <p>Queremos calcular P(X = 5).</p>
+                <p>\[P(X = 5) = \frac{3^5 e^{-3}}{5!} = \frac{243 \cdot e^{-3}}{120} \approx \frac{243 \cdot 0.0498}{120} \approx 0.1008\]</p>
+                
+                <p>La probabilidad de recibir exactamente 5 comentarios en una hora específica es aproximadamente 0.1008 o 10.08%.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Otras Distribuciones Importantes</h3>
+            <p>Además de las distribuciones binomial, normal y Poisson, hay otras distribuciones importantes en la teoría de la probabilidad:</p>
+            
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>Distribución uniforme:</strong> Todos los valores en un intervalo tienen la misma probabilidad o densidad</li>
+                <li><strong>Distribución exponencial:</strong> Modela el tiempo entre eventos en un proceso de Poisson</li>
+                <li><strong>Distribución gamma:</strong> Generalización de la distribución exponencial y la distribución chi-cuadrado</li>
+                <li><strong>Distribución beta:</strong> Útil para modelar proporciones y probabilidades</li>
+                <li><strong>Distribución t de Student:</strong> Utilizada en inferencia estadística cuando se desconoce la varianza poblacional</li>
+                <li><strong>Distribución F:</strong> Utilizada en análisis de varianza (ANOVA)</li>
+                <li><strong>Distribución multinomial:</strong> Generalización de la distribución binomial a más de dos categorías</li>
+            </ul>
+        </section>
+
+        <section id="cadenas-markov">
+            <h2 class="text-3xl section-title">Cadenas de Markov</h2>
+            <p>Las cadenas de Markov son modelos matemáticos que describen una secuencia de eventos posibles, donde la probabilidad de cada evento depende únicamente del estado alcanzado en el evento anterior. Fueron introducidas por el matemático ruso Andrey Markov a principios del siglo XX.</p>
+            
+            <h3 class="text-2xl subsection-title">Definición y Propiedades</h3>
+            <p>Una cadena de Markov es un proceso estocástico que satisface la propiedad de Markov: el futuro del proceso depende del presente, pero no del pasado.</p>
+            
+            <div class="math-box">
+                <p><strong>Propiedad de Markov:</strong> Para cualquier secuencia de estados \(i_0, i_1, ..., i_{n-1}, i, j\),</p>
+                <p>\[P(X_{n+1} = j | X_n = i, X_{n-1} = i_{n-1}, ..., X_0 = i_0) = P(X_{n+1} = j | X_n = i)\]</p>
+                
+                <p>Donde \(X_n\) representa el estado del proceso en el tiempo \(n\).</p>
+                
+                <p><strong>Probabilidades de transición:</strong> La probabilidad de pasar del estado \(i\) al estado \(j\) en un paso se denota por \(p_{ij}\):</p>
+                <p>\[p_{ij} = P(X_{n+1} = j | X_n = i)\]</p>
+                
+                <p><strong>Matriz de transición:</strong> Las probabilidades de transición se organizan en una matriz \(P\), donde cada fila suma 1:</p>
+                <p>\[P = 
+                \begin{pmatrix} 
+                p_{11} & p_{12} & \cdots & p_{1m} \\
+                p_{21} & p_{22} & \cdots & p_{2m} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                p_{m1} & p_{m2} & \cdots & p_{mm} 
+                \end{pmatrix}\]</p>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Consideremos un modelo simplificado del clima, donde cada día puede ser "Soleado" (S), "Nublado" (N) o "Lluvioso" (L). Las probabilidades de transición son:</p>
+                <ul class="list-disc ml-8">
+                    <li>Si hoy es soleado, mañana será soleado con probabilidad 0.7, nublado con probabilidad 0.2 y lluvioso con probabilidad 0.1</li>
+                    <li>Si hoy es nublado, mañana será soleado con probabilidad 0.3, nublado con probabilidad 0.4 y lluvioso con probabilidad 0.3</li>
+                    <li>Si hoy es lluvioso, mañana será soleado con probabilidad 0.2, nublado con probabilidad 0.3 y lluvioso con probabilidad 0.5</li>
+                </ul>
+                
+                <p>La matriz de transición es:</p>
+                <p>\[P = 
+                \begin{pmatrix} 
+                0.7 & 0.2 & 0.1 \\
+                0.3 & 0.4 & 0.3 \\
+                0.2 & 0.3 & 0.5 
+                \end{pmatrix}\]</p>
+                
+                <p>Si hoy es soleado, ¿cuál es la probabilidad de que dentro de dos días sea lluvioso?</p>
+                <p>Necesitamos calcular \(P(X_2 = L | X_0 = S)\). Utilizando la matriz de transición:</p>
+                <p>\[P(X_2 = L | X_0 = S) = \sum_{k \in \{S,N,L\}} P(X_1 = k | X_0 = S) \cdot P(X_2 = L | X_1 = k)\]</p>
+                <p>\[= p_{SS} \cdot p_{SL} + p_{SN} \cdot p_{NL} + p_{SL} \cdot p_{LL}\]</p>
+                <p>\[= 0.7 \cdot 0.1 + 0.2 \cdot 0.3 + 0.1 \cdot 0.5\]</p>
+                <p>\[= 0.07 + 0.06 + 0.05 = 0.18\]</p>
+                
+                <p>La probabilidad de que dentro de dos días sea lluvioso, dado que hoy es soleado, es 0.18 o 18%.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Clasificación de Estados</h3>
+            <p>Los estados de una cadena de Markov se pueden clasificar según sus propiedades:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>Estado accesible:</strong> Un estado j es accesible desde un estado i si existe alguna secuencia de transiciones que permita ir de i a j</li>
+                <li><strong>Estado comunicante:</strong> Dos estados i y j se comunican si i es accesible desde j y j es accesible desde i</li>
+                <li><strong>Clase comunicante:</strong> Conjunto de estados que se comunican entre sí</li>
+                <li><strong>Estado absorbente:</strong> Un estado i es absorbente si una vez que se entra en él, no se puede salir (p<sub>ii</sub> = 1)</li>
+                <li><strong>Estado transitorio:</strong> Un estado que, una vez abandonado, no puede ser revisitado</li>
+                <li><strong>Estado recurrente:</strong> Un estado que, una vez abandonado, será revisitado con probabilidad 1</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Distribución Estacionaria</h3>
+            <p>Una distribución de probabilidad π = (π<sub>1</sub>, π<sub>2</sub>, ..., π<sub>m</sub>) es una distribución estacionaria si πP = π, es decir, si la distribución de probabilidad no cambia después de una transición.</p>
+            
+            <div class="math-box">
+                <p>Formalmente, para todo estado j:</p>
+                <p>\[\pi_j = \sum_{i=1}^{m} \pi_i p_{ij}\]</p>
+                <p>Además, como π es una distribución de probabilidad, debe cumplir:</p>
+                <p>\[\sum_{j=1}^{m} \pi_j = 1\]</p>
+            </div>
+            
+            <p>Para cadenas de Markov irreducibles (todas las clases comunicantes) y aperiódicas (no cíclicas), existe una única distribución estacionaria, y la distribución de probabilidad a largo plazo converge a esta distribución estacionaria independientemente del estado inicial.</p>
+            
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Encontrar la distribución estacionaria para la cadena de Markov del ejemplo anterior (modelo del clima).</p>
+                
+                <p>Necesitamos encontrar π = (π<sub>S</sub>, π<sub>N</sub>, π<sub>L</sub>) tal que πP = π, donde P es la matriz de transición:</p>
+                <p>\[P = 
+                \begin{pmatrix} 
+                0.7 & 0.2 & 0.1 \\
+                0.3 & 0.4 & 0.3 \\
+                0.2 & 0.3 & 0.5 
+                \end{pmatrix}\]</p>
+                
+                <p>Esto lleva a las ecuaciones:</p>
+                <p>\[\pi_S = 0.7\pi_S + 0.3\pi_N + 0.2\pi_L\]</p>
+                <p>\[\pi_N = 0.2\pi_S + 0.4\pi_N + 0.3\pi_L\]</p>
+                <p>\[\pi_L = 0.1\pi_S + 0.3\pi_N + 0.5\pi_L\]</p>
+                <p>\[\pi_S + \pi_N + \pi_L = 1\]</p>
+                
+                <p>Resolviendo este sistema de ecuaciones, obtenemos:</p>
+                <p>\[\pi_S = 0.4, \pi_N = 0.3, \pi_L = 0.3\]</p>
+                
+                <p>Por lo tanto, a largo plazo, la probabilidad de que un día sea soleado es 0.4, nublado 0.3 y lluvioso 0.3, independientemente del clima inicial.</p>
+            </div>
+            
+            <h3 class="text-2xl subsection-title">Aplicaciones de las Cadenas de Markov</h3>
+            <p>Las cadenas de Markov tienen numerosas aplicaciones en diversos campos:</p>
+            <ul class="list-disc ml-8 mt-2">
+                <li><strong>Física:</strong> Modelado de sistemas de partículas, transiciones de fase</li>
+                <li><strong>Biología:</strong> Modelado de poblaciones, evolución genética</li>
+                <li><strong>Economía:</strong> Modelado de mercados financieros, comportamiento del consumidor</li>
+                <li><strong>Informática:</strong> Algoritmos de búsqueda web (PageRank), reconocimiento de voz</li>
+                <li><strong>Teoría de colas:</strong> Modelado de sistemas de servicio</li>
+                <li><strong>Juegos:</strong> Modelado de estrategias de juego, análisis de tableros</li>
+            </ul>
+            
+            <h3 class="text-2xl subsection-title">Tiempo Medio de Primera Pasada</h3>
+            <p>El tiempo medio de primera pasada m<sub>ij</sub> es el número esperado de transiciones para llegar al estado j por primera vez, partiendo del estado i.</p>
+            
+            <div class="math-box">
+                <p>Si i = j, entonces m<sub>ii</sub> es el tiempo medio de retorno al estado i.</p>
+                <p>Para un estado recurrente i, el tiempo medio de retorno es:</p>
+                <p>\[m_{ii} = \frac{1}{\pi_i}\]</p>
+                <p>donde π<sub>i</sub> es la probabilidad estacionaria del estado i.</p>
+            </div>
+            
+            <p>El cálculo del tiempo medio de primera pasada para i ≠ j generalmente requiere resolver sistemas de ecuaciones lineales basados en las probabilidades de transición.</p>
+        </section>
+    </div>
+
+
+    <footer class="bg-gray-100 py-8 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>© 2025 Guía Descriptiva de Probabilidad. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+   
+
+    <div class="overlay" id="overlay"></div>
+
+    <script id="app-script">
+         function toggleTab() {
+                const tab = document.getElementById('searchTab');
+                tab.classList.toggle('open');
+            }
+
+            function filterTopics() {
+                const input = document.getElementById('searchInput');
+                const filter = input.value.toLowerCase();
+                const items = document.querySelectorAll('.topic-item');
+                const noResults = document.getElementById('noResults');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.add('show');
+                } else {
+                    noResults.classList.remove('show');
+                }
+            }
+
+            function selectTopic(el) {
+                alert('Has seleccionado: ' + el.textContent);
+                // Aquí puedes agregar la lógica para cargar el contenido del tema
+            }
+
+            // Cerrar tab al hacer clic fuera
+            document.addEventListener('click', function (e) {
+                const tab = document.getElementById('searchTab');
+                const tabButton = document.querySelector('.tab-button');
+
+                if (tab.classList.contains('open') &&
+                    !tab.contains(e.target) &&
+                    !tabButton.contains(e.target)) {
+                    tab.classList.remove('open');
+                }
+            });
+
+         // Botón Scroll to Top
+            const scrollTopBtn = document.getElementById('scroll-top');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('active');
+                } else {
+                    scrollTopBtn.classList.remove('active');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+        // Botón para ir al principio de la página
+        document.getElementById('topBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Panel de índice
+        const indexPanel = document.getElementById('indexPanel');
+        const overlay = document.getElementById('overlay');
+        const indexBtn = document.getElementById('indexBtn');
+        const closeIndexBtn = document.getElementById('closeIndexBtn');
+        
+        // Mostrar panel de índice
+        indexBtn.addEventListener('click', function() {
+            indexPanel.classList.add('active');
+            overlay.classList.add('active');
+        });
+        
+        // Cerrar panel de índice
+        closeIndexBtn.addEventListener('click', function() {
+            indexPanel.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+        
+        // Cerrar panel al hacer clic en el overlay
+        overlay.addEventListener('click', function() {
+            indexPanel.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+        
+        // Navegar a las secciones desde el índice
+        const indexItems = document.querySelectorAll('.index-item, .index-subitem');
+        indexItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // Cerrar el panel
+                    indexPanel.classList.remove('active');
+                    overlay.classList.remove('active');
+                    
+                    // Desplazarse a la sección
+                    const offset = 80; // Compensación para el encabezado
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Recargar MathJax cuando se complete la carga
+        window.addEventListener('load', function() {
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typeset();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cálculo Diferencial</title>
+  <link rel="website icon" type="png" href="../../img/SigMath.png" />
+
+    <link rel="stylesheet" href="diferencial.css">
+    <link rel="stylesheet" href="../../SigMATH.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+    --primary-green: #1e40af;
+    --secondary-green: #3b82f6;
+    --light-green: #93c5fd;
+    --bg-green: #f0f7ff;
+}
+
+body {
+    background-color: var(--bg-green);
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    color: var(--primary-green);
+    border-bottom: 2px solid var(--secondary-green);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+    color: var(--secondary-green);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.math-box {
+    background-color: white;
+    border-left: 4px solid var(--secondary-green);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.example-box {
+    background-color: #e6ffec;
+    border: 1px solid var(--light-green);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.float-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.float-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-green);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.float-button:hover {
+    background-color: var(--secondary-green);
+    transform: translateY(-2px);
+}
+
+.index-panel {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.index-panel.active {
+    right: 0;
+}
+
+.index-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.index-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.index-item:hover {
+    color: var(--secondary-green);
+}
+
+.index-subitem {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.function-graph {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.function-graph img {
+    max-width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background-color: var(--light-green);
+    color: var(--primary-green);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.section-title {
+    color: var(--primary-green);
+    border-bottom: 2px solid var(--secondary-green);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+    color: var(--secondary-green);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.math-box {
+    background-color: white;
+    border-left: 4px solid var(--secondary-green);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.example-box {
+    background-color: #e6ffec;
+    border: 1px solid var(--light-green);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.float-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.float-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-green);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.float-button:hover {
+    background-color: var(--secondary-green);
+    transform: translateY(-2px);
+}
+
+.index-panel {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.index-panel.active {
+    right: 0;
+}
+
+.index-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.index-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.index-item:hover {
+    color: var(--secondary-green);
+}
+
+.index-subitem {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.function-graph {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.function-graph img {
+    max-width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.float-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-green);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.float-button:hover {
+    background-color: var(--secondary-green);
+    transform: translateY(-2px);
+}
+
+.index-panel {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.index-panel.active {
+    right: 0;
+}
+
+.index-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.index-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.index-item:hover {
+    color: var(--secondary-green);
+}
+
+.index-subitem {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.function-graph {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.function-graph img {
+    max-width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background-color: var(--light-green);
+    color: var(--primary-green);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+ .content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+    
+        h1 {
+           
+            margin-bottom: 20px;
+        }
+    
+        p {
+           
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+    
+        /* Tab de búsqueda */
+        .search-tab {
+            position: fixed;
+            right: -350px;
+            top: 0;
+            height: 100vh;
+            width: 350px;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .search-tab.open {
+            right: 0;
+        }
+    
+        .tab-button {
+            position: absolute;
+            left: -50px;
+            top: 100px;
+            width: 50px;
+            height: 120px;
+            background: white;
+            border: none;
+            border-radius: 10px 0 0 10px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            font-weight: bold;
+            color: darkblue;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+    
+        .tab-button:hover {
+            background: #f8f9fa;
+        }
+    
+        .search-content {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            direction: rtl;
+        }
+    
+        .search-content>* {
+            direction: ltr;
+        }
+    
+        .search-content::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        .search-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb:hover {
+            background: #5568d3;
+        }
+    
+        .search-header {
+            margin-bottom: 25px;
+        }
+    
+        .search-header h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+    
+        .search-header p {
+            color: #999;
+            font-size: 14px;
+        }
+    
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+    
+        .search-input {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+    
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+    
+        .topics-list {
+            list-style: none;
+        }
+    
+        .topic-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+    
+        .topic-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+    
+        .topic-item.hidden {
+            display: none;
+        }
+    
+        .no-results {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            display: none;
+        }
+    
+        .no-results.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+    
+                    <h1 class="sigma">Σ</h1>
+                    <h1 class="sig">Sig</h1>
+                    <h1 class="MATH">MATH</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">SigMATH</a></li>
+                    <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                    <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                    <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                </ul>
+                <button class="hamburger" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Descubre el fascinante mundo del Calculo Diferencial <span class="typed-text" id="typed-element"></span></h2>
+            <p>El cálculo diferencial es una rama de las matemáticas que estudia cómo cambian las funciones respecto a sus variables,
+            principalmente a través del concepto de derivada . Sirve para analizar tasas de cambio, pendientes de curvas y
+            comportamiento de funciones en puntos específicos.</p>
+    </section>
+    <div class="wave"></div>
+    </section>
+
+    <div class="search-tab" id="searchTab">
+        <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+    
+        <div class="search-content">
+            <div class="search-header">
+                <h2>Buscar Temas</h2>
+                <p>Encuentra lo que necesitas</p>
+            </div>
+    
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+                    oninput="filterTopics()">
+                <span class="search-icon">🔍</span>
+            </div>
+    
+            <ul class="topics-list" id="topicsList">
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#variables" data-section="variables">Variables y Funciones</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#limites" data-section="limites">Limites</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#derivadas-definicion" data-section="derivadas-definicion">La Derivada</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#reglas-derivacion" data-section="reglas-derivacion">Regla de los 4 Pasos</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#tabla-derivadas" data-section="tabla-derivadas">Derivacion por Formula</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#metodos-derivacion" data-section="metodos-derivacion">Metodos de Derivacion</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#derivadas-parciales" data-section="derivadas-parciales">Derivadas Parciales</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones-geometricas" data-section="aplicaciones-geometricas">Aplicaciones Geométricas</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones-fisica" data-section="aplicaciones-fisica">Aplicaciones a la Fisica</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#hopital" data-section="hopital">Regla de L'Hôpital</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones-reales" data-section="aplicaciones-reales">Aplicaciones a la Vida Real</a></li>
+            </ul>
+
+            <div class="no-results" id="noResults">
+                No se encontraron resultados
+            </div>
+        </div>
+    </div>
+   
+    
+
+    <div class="container mx-auto px-4 py-8">
+        <section id="variables">
+            <h2 class="text-3xl section-title">Variables y Funciones</h2>
+
+            <h3 class="text-2xl subsection-title">Dominio y Contradominio (Rango)</h3>
+            <p>En matemáticas, una función establece una relación entre dos conjuntos: el <strong>dominio</strong> y el
+                <strong>contradominio</strong> (también llamado rango o imagen).</p>
+
+            <div class="math-box">
+                <p><strong>Dominio:</strong> Es el conjunto de todos los valores de entrada posibles para una función.
+                </p>
+                <p><strong>Contradominio (Rango):</strong> Es el conjunto de todos los valores de salida que resultan al
+                    evaluar todos los elementos del dominio en la función.</p>
+            </div>
+
+            <p class="mt-4">Para determinar el dominio de una función, debemos considerar las restricciones matemáticas:
+            </p>
+            <ul class="list-disc ml-8 mt-2">
+                <li>No se permite la división por cero</li>
+                <li>No se pueden calcular raíces de índice par de números negativos (en los números reales)</li>
+                <li>No se pueden calcular logaritmos de números negativos o cero</li>
+            </ul>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Determinar el dominio y rango de \(f(x) = \sqrt{4-x^2}\)</p>
+                <p><strong>Dominio:</strong> Para que la raíz sea un número real, necesitamos \(4-x^2 \geq 0\)</p>
+                <p>Resolviendo: \(4-x^2 \geq 0 \Rightarrow x^2 \leq 4 \Rightarrow -2 \leq x \leq 2\)</p>
+                <p>Por lo tanto, el dominio es \([-2, 2]\)</p>
+                <p><strong>Rango:</strong> Cuando \(x = 0\), \(f(0) = 2\) (valor máximo)</p>
+                <p>Cuando \(x = \pm 2\), \(f(\pm 2) = 0\) (valor mínimo)</p>
+                <p>Por lo tanto, el rango es \([0, 2]\)</p>
+            </div>
+        </section>
+
+        <section id="funciones">
+            <h2 class="text-3xl section-title">Tipos de Funciones</h2>
+            <p>Una función es una relación que asocia a cada elemento de un conjunto A (dominio) exactamente un elemento
+                de un conjunto B (contradominio).</p>
+
+            <h3 class="text-2xl subsection-title">Funciones Algebraicas</h3>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Lineales</h4>
+            <p>Una función lineal tiene la forma \(f(x) = mx + b\), donde \(m\) es la pendiente y \(b\) es la
+                intersección con el eje Y.</p>
+
+            <div class="function-graph">
+                <img src="../../img-maths/lineal.png"
+                    alt="Gráfica de función lineal">
+            </div>
+
+            <div class="math-box">
+                <p>\(f(x) = mx + b\)</p>
+                <p>Dominio: \(\mathbb{R}\) (todos los números reales)</p>
+                <p>Rango: \(\mathbb{R}\) (todos los números reales)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Polinómicas</h4>
+            <p>Una función polinómica tiene la forma \(f(x) = a_n x^n + a_{n-1} x^{n-1} + \ldots + a_1 x + a_0\), donde
+                \(n\) es un entero no negativo y \(a_n \neq 0\).</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> \(f(x) = 2x^3 - 3x^2 + 4x - 1\) es un polinomio de grado 3.</p>
+                <p>Dominio: \(\mathbb{R}\) (todos los números reales)</p>
+                <p>El rango depende del grado del polinomio:</p>
+                <ul class="list-disc ml-8">
+                    <li>Si \(n\) es impar, el rango es \(\mathbb{R}\)</li>
+                    <li>Si \(n\) es par y \(a_n > 0\), el rango es \([f(c), \infty)\), donde \(c\) es el punto donde
+                        \(f'(c) = 0\)</li>
+                    <li>Si \(n\) es par y \(a_n < 0\), el rango es \((-\infty, f(c)]\), donde \(c\) es el punto donde
+                            \(f'(c)=0\)</li>
+                </ul>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Racionales</h4>
+            <p>Una función racional es el cociente de dos polinomios \(P(x)\) y \(Q(x)\), donde \(Q(x) \neq 0\).</p>
+
+            <div class="math-box">
+                <p>\(f(x) = \frac{P(x)}{Q(x)}\), donde \(P(x)\) y \(Q(x)\) son polinomios y \(Q(x) \neq 0\)</p>
+                <p>Dominio: \(\{x \in \mathbb{R} : Q(x) \neq 0\}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> \(f(x) = \frac{x^2 - 1}{x - 2}\)</p>
+                <p>Dominio: \(\{x \in \mathbb{R} : x \neq 2\} = (-\infty, 2) \cup (2, \infty)\)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Irracionales</h4>
+            <p>Las funciones irracionales contienen raíces o potencias fraccionarias de la variable independiente.</p>
+
+            <div class="math-box">
+                <p>Ejemplos: \(f(x) = \sqrt{x}\), \(g(x) = \sqrt[3]{x^2 - 1}\), \(h(x) = x^{2/3}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> \(f(x) = \sqrt{x - 3}\)</p>
+                <p>Dominio: \(\{x \in \mathbb{R} : x - 3 \geq 0\} = [3, \infty)\)</p>
+                <p>Rango: \([0, \infty)\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Funciones Trascendentales</h3>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Logarítmicas</h4>
+            <p>Una función logarítmica tiene la forma \(f(x) = \log_a(x)\), donde \(a > 0\) y \(a \neq 1\).</p>
+
+            <div class="function-graph">
+                <img src="../../img-maths/logaritmica.png" alt="Gráfica de función logarítmica">
+            </div>
+
+            <div class="math-box">
+                <p>\(f(x) = \log_a(x)\), donde \(a > 0\) y \(a \neq 1\)</p>
+                <p>Dominio: \((0, \infty)\)</p>
+                <p>Rango: \(\mathbb{R}\)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Exponenciales</h4>
+            <p>Una función exponencial tiene la forma \(f(x) = a^x\), donde \(a > 0\) y \(a \neq 1\).</p>
+
+            <div class="function-graph">
+                <img src="../../img-maths/exponencial.png"
+                    alt="Gráfica de función exponencial">
+            </div>
+
+            <div class="math-box">
+                <p>\(f(x) = a^x\), donde \(a > 0\) y \(a \neq 1\)</p>
+                <p>Dominio: \(\mathbb{R}\)</p>
+                <p>Rango: \((0, \infty)\)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Trigonométricas</h4>
+            <p>Las funciones trigonométricas incluyen seno, coseno, tangente, cotangente, secante y cosecante.</p>
+
+            <div class="function-graph">
+                <img src="../../img-maths/razones.png"
+                    alt="Gráficas de funciones trigonométricas">
+            </div>
+
+            <div class="math-box">
+                <p><strong>Seno:</strong> \(f(x) = \sin(x)\)</p>
+                <p>Dominio: \(\mathbb{R}\)</p>
+                <p>Rango: \([-1, 1]\)</p>
+                <p><strong>Coseno:</strong> \(f(x) = \cos(x)\)</p>
+                <p>Dominio: \(\mathbb{R}\)</p>
+                <p>Rango: \([-1, 1]\)</p>
+                <p><strong>Tangente:</strong> \(f(x) = \tan(x)\)</p>
+                <p>Dominio: \(\{x \in \mathbb{R} : x \neq \frac{\pi}{2} + n\pi, n \in \mathbb{Z}\}\)</p>
+                <p>Rango: \(\mathbb{R}\)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Funciones Trigonométricas Inversas</h4>
+            <p>Las funciones trigonométricas inversas incluyen arcoseno, arcocoseno, arcotangente, etc.</p>
+
+            <div class="math-box">
+                <p><strong>Arcoseno:</strong> \(f(x) = \arcsin(x)\)</p>
+                <p>Dominio: \([-1, 1]\)</p>
+                <p>Rango: \([-\frac{\pi}{2}, \frac{\pi}{2}]\)</p>
+                <p><strong>Arcocoseno:</strong> \(f(x) = \arccos(x)\)</p>
+                <p>Dominio: \([-1, 1]\)</p>
+                <p>Rango: \([0, \pi]\)</p>
+                <p><strong>Arcotangente:</strong> \(f(x) = \arctan(x)\)</p>
+                <p>Dominio: \(\mathbb{R}\)</p>
+                <p>Rango: \((-\frac{\pi}{2}, \frac{\pi}{2})\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Funciones Hiperbólicas</h3>
+            <p>Las funciones hiperbólicas son análogas a las funciones trigonométricas pero se definen en términos de la
+                exponencial.</p>
+
+            <div class="math-box">
+                <p><strong>Seno hiperbólico:</strong> \(\sinh(x) = \frac{e^x - e^{-x}}{2}\)</p>
+                <p>Dominio: \(\mathbb{R}\)</p>
+                <p>Rango: \(\mathbb{R}\)</p>
+                <p><strong>Coseno hiperbólico:</strong> \(\cosh(x) = \frac{e^x + e^{-x}}{2}\)</p>
+                <p>Dominio: \(\mathbb{R}\)</p>
+                <p>Rango: \([1, \infty)\)</p>
+                <p><strong>Tangente hiperbólica:</strong> \(\tanh(x) = \frac{\sinh(x)}{\cosh(x)} = \frac{e^x -
+                    e^{-x}}{e^x + e^{-x}}\)</p>
+                <p>Dominio: \(\mathbb{R}\)</p>
+                <p>Rango: \((-1, 1)\)</p>
+            </div>
+        </section>
+
+        <section id="test-linea-vertical">
+            <h2 class="text-3xl section-title">Test de la Línea Vertical</h2>
+            <p>El test de la línea vertical es un método visual para determinar si una relación en el plano cartesiano
+                representa una función.</p>
+
+            <div class="math-box">
+                <p><strong>Test de la Línea Vertical:</strong> Una relación en el plano cartesiano representa una
+                    función si y solo si cualquier línea vertical interseca la gráfica de la relación en a lo más un
+                    punto.</p>
+            </div>
+
+            <div class="function-graph">
+                <img src="../../img-maths/conjuntos.png" alt="Test de la línea vertical">
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo 1:</strong> La parábola \(y = x^2\) pasa el test de la línea vertical porque
+                    cualquier línea vertical interseca la parábola en exactamente un punto. Por lo tanto, es una
+                    función.</p>
+                <p><strong>Ejemplo 2:</strong> La circunferencia \(x^2 + y^2 = 1\) no pasa el test de la línea vertical
+                    porque hay líneas verticales que intersecan la circunferencia en dos puntos. Por lo tanto, no es una
+                    función.</p>
+            </div>
+        </section>
+
+        <section id="operaciones-funciones">
+            <h2 class="text-3xl section-title">Operaciones con Funciones</h2>
+            <p>Se pueden combinar funciones mediante operaciones aritméticas básicas.</p>
+
+            <div class="math-box">
+                <p>Sean \(f\) y \(g\) dos funciones con dominios \(D_f\) y \(D_g\), respectivamente.</p>
+                <p><strong>Suma:</strong> \((f + g)(x) = f(x) + g(x)\)</p>
+                <p>Dominio: \(D_f \cap D_g\)</p>
+                <p><strong>Resta:</strong> \((f - g)(x) = f(x) - g(x)\)</p>
+                <p>Dominio: \(D_f \cap D_g\)</p>
+                <p><strong>Producto:</strong> \((f \cdot g)(x) = f(x) \cdot g(x)\)</p>
+                <p>Dominio: \(D_f \cap D_g\)</p>
+                <p><strong>Cociente:</strong> \(\left(\frac{f}{g}\right)(x) = \frac{f(x)}{g(x)}\)</p>
+                <p>Dominio: \(\{x \in D_f \cap D_g : g(x) \neq 0\}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Sean \(f(x) = x^2\) y \(g(x) = \sqrt{x}\)</p>
+                <p>\((f + g)(x) = x^2 + \sqrt{x}\)</p>
+                <p>Dominio: \([0, \infty)\)</p>
+                <p>\(\left(\frac{f}{g}\right)(x) = \frac{x^2}{\sqrt{x}} = x^{3/2}\)</p>
+                <p>Dominio: \((0, \infty)\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Funcion Compuesta</h3>
+            <p>La funcion compuesta o composicion de funciones es una operación que combina dos funciones para formar una nueva función.</p>
+
+            <div class="math-box">
+                <p><strong>Composición:</strong> \((f \circ g)(x) = f(g(x))\)</p>
+                <p>Dominio: \(\{x \in D_g : g(x) \in D_f\}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Sean \(f(x) = x^2\) y \(g(x) = x + 1\)</p>
+                <p>\((f \circ g)(x) = f(g(x)) = f(x + 1) = (x + 1)^2 = x^2 + 2x + 1\)</p>
+                <p>\((g \circ f)(x) = g(f(x)) = g(x^2) = x^2 + 1\)</p>
+                <p>Observe que en general \(f \circ g \neq g \circ f\)</p>
+            </div>
+        </section>
+
+        <section id="limites">
+            <h2 class="text-3xl section-title">Límites</h2>
+            <p>El concepto de límite es fundamental en el cálculo diferencial y se utiliza para definir la derivada.</p>
+
+            <div class="math-box">
+                <p>El límite de una función \(f(x)\) cuando \(x\) se aproxima a un valor \(a\) se denota por:</p>
+                <p>\[\lim_{x \to a} f(x) = L\]</p>
+                <p>Esto significa que podemos hacer que \(f(x)\) esté tan cerca como queramos de \(L\) tomando \(x\)
+                    suficientemente cerca de \(a\) (pero no igual a \(a\)).</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Límites Directos</h3>
+            <p>Si una función es continua en \(x = a\), entonces el límite de la función cuando \(x\) se aproxima a
+                \(a\) es simplemente el valor de la función en \(a\).</p>
+
+            <div class="math-box">
+                <p>Si \(f\) es continua en \(x = a\), entonces \(\lim_{x \to a} f(x) = f(a)\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> \(\lim_{x \to 2} (3x^2 - 4x + 1)\)</p>
+                <p>Como \(f(x) = 3x^2 - 4x + 1\) es un polinomio, es continua en todo su dominio.</p>
+                <p>\(\lim_{x \to 2} (3x^2 - 4x + 1) = 3(2)^2 - 4(2) + 1 = 12 - 8 + 1 = 5\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Límites con Indeterminaciones</h3>
+            <p>A veces, al evaluar un límite directamente, obtenemos expresiones indeterminadas como \(\frac{0}{0}\),
+                \(\frac{\infty}{\infty}\), \(0 \cdot \infty\), etc. En estos casos, necesitamos técnicas especiales para
+                resolver el límite.</p>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Factorización</h4>
+            <p>La factorización es útil para resolver indeterminaciones del tipo \(\frac{0}{0}\).</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> \(\lim_{x \to 3} \frac{x^2 - 9}{x - 3}\)</p>
+                <p>Al evaluar directamente, obtenemos \(\frac{0}{0}\) (indeterminación).</p>
+                <p>Factorizando el numerador: \(x^2 - 9 = (x + 3)(x - 3)\)</p>
+                <p>\(\lim_{x \to 3} \frac{(x + 3)(x - 3)}{x - 3} = \lim_{x \to 3} (x + 3) = 3 + 3 = 6\)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Racionalización</h4>
+            <p>La racionalización es útil para resolver límites con raíces.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> \(\lim_{x \to 4} \frac{\sqrt{x} - 2}{x - 4}\)</p>
+                <p>Al evaluar directamente, obtenemos \(\frac{0}{0}\) (indeterminación).</p>
+                <p>Multiplicamos numerador y denominador por \(\sqrt{x} + 2\):</p>
+                <p>\(\lim_{x \to 4} \frac{\sqrt{x} - 2}{x - 4} \cdot \frac{\sqrt{x} + 2}{\sqrt{x} + 2} = \lim_{x \to 4}
+                    \frac{(\sqrt{x})^2 - 2^2}{(x - 4)(\sqrt{x} + 2)}\)</p>
+                <p>\(= \lim_{x \to 4} \frac{x - 4}{(x - 4)(\sqrt{x} + 2)} = \lim_{x \to 4} \frac{1}{\sqrt{x} + 2} =
+                    \frac{1}{2 + 2} = \frac{1}{4}\)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-green-700">Sustitución Directa</h4>
+            <p>Para límites con indeterminaciones del tipo \(\frac{\infty}{\infty}\), a menudo es útil dividir numerador
+                y denominador por la potencia más alta de \(x\).</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> \(\lim_{x \to \infty} \frac{3x^2 + 2x + 1}{5x^2 - 3x + 4}\)</p>
+                <p>Dividimos numerador y denominador por \(x^2\):</p>
+                <p>\(\lim_{x \to \infty} \frac{3 + \frac{2}{x} + \frac{1}{x^2}}{5 - \frac{3}{x} + \frac{4}{x^2}}\)</p>
+                <p>Cuando \(x \to \infty\), los términos con \(x\) en el denominador tienden a 0:</p>
+                <p>\(\lim_{x \to \infty} \frac{3 + 0 + 0}{5 - 0 + 0} = \frac{3}{5}\)</p>
+            </div>
+        </section>
+
+        <section id="derivadas-definicion">
+            <h2 class="text-3xl section-title">Derivadas: Definiciones</h2>
+            <p>La derivada de una función es una medida de cómo cambia la función con respecto a una variable. Tiene
+                múltiples interpretaciones:</p>
+
+            <h3 class="text-2xl subsection-title">Definición Algebraica (Límite)</h3>
+            <p>La derivada de una función \(f(x)\) en un punto \(x = a\) se define como:</p>
+
+            <div class="math-box">
+                <p>\[f'(a) = \lim_{h \to 0} \frac{f(a + h) - f(a)}{h}\]</p>
+                <p>o equivalentemente:</p>
+                <p>\[f'(a) = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular la derivada de \(f(x) = x^2\) en \(x = 3\) usando la definición.
+                </p>
+                <p>\[f'(3) = \lim_{h \to 0} \frac{f(3 + h) - f(3)}{h} = \lim_{h \to 0} \frac{(3 + h)^2 - 3^2}{h}\]</p>
+                <p>\[= \lim_{h \to 0} \frac{9 + 6h + h^2 - 9}{h} = \lim_{h \to 0} \frac{6h + h^2}{h} = \lim_{h \to 0} (6
+                    + h) = 6\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Interpretación Geométrica (Pendiente de la Recta Tangente)</h3>
+            <p>Geométricamente, la derivada de una función en un punto representa la pendiente de la recta tangente a la
+                gráfica de la función en ese punto.</p>
+
+            <div class="function-graph">
+                <img src="../../img-maths/geometrica.jpg"
+                    alt="Interpretación geométrica de la derivada">
+            </div>
+
+            <div class="math-box">
+                <p>Si \(f'(a) = m\), entonces la ecuación de la recta tangente a la gráfica de \(f\) en el punto \((a,
+                    f(a))\) es:</p>
+                <p>\[y - f(a) = m(x - a)\]</p>
+                <p>o equivalentemente:</p>
+                <p>\[y = f(a) + f'(a)(x - a)\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Encontrar la ecuación de la recta tangente a la curva \(f(x) = x^2\) en el
+                    punto \((3, 9)\).</p>
+                <p>Ya calculamos \(f'(3) = 6\)</p>
+                <p>La ecuación de la recta tangente es:</p>
+                <p>\[y - 9 = 6(x - 3)\]</p>
+                <p>\[y = 6x - 18 + 9 = 6x - 9\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Interpretación Física (Velocidad y Aceleración)</h3>
+            <p>En física, la derivada de la posición respecto al tiempo representa la velocidad, y la derivada de la
+                velocidad respecto al tiempo representa la aceleración.</p>
+
+            <div class="math-box">
+                <p>Si \(s(t)\) es la posición de un objeto en el tiempo \(t\), entonces:</p>
+                <p>Velocidad: \(v(t) = s'(t)\)</p>
+                <p>Aceleración: \(a(t) = v'(t) = s''(t)\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Un objeto se mueve según la ecuación \(s(t) = t^3 - 3t^2 + 2t\), donde
+                    \(s\) está en metros y \(t\) en segundos. Encontrar la velocidad y aceleración en \(t = 2\)
+                    segundos.</p>
+                <p>Velocidad: \(v(t) = s'(t) = 3t^2 - 6t + 2\)</p>
+                <p>\(v(2) = 3(2)^2 - 6(2) + 2 = 12 - 12 + 2 = 2\) m/s</p>
+                <p>Aceleración: \(a(t) = v'(t) = 6t - 6\)</p>
+                <p>\(a(2) = 6(2) - 6 = 12 - 6 = 6\) m/s²</p>
+            </div>
+        </section>
+
+        <section id="reglas-derivacion">
+            <h2 class="text-3xl section-title">Reglas de Derivación</h2>
+
+            <h3 class="text-2xl subsection-title">Método de los 4 Pasos</h3>
+            <p>El método de los 4 pasos es una forma sistemática de aplicar la definición de derivada:</p>
+
+            <div class="math-box">
+                <ol class="list-decimal ml-8">
+                    <li>Escribir la expresión para \(\frac{f(x + h) - f(x)}{h}\)</li>
+                    <li>Simplificar algebraicamente la expresión</li>
+                    <li>Calcular el límite cuando \(h \to 0\)</li>
+                    <li>Simplificar el resultado si es posible</li>
+                </ol>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Derivar \(f(x) = x^3\) usando el método de los 4 pasos.</p>
+                <p>Paso 1: \(\frac{f(x + h) - f(x)}{h} = \frac{(x + h)^3 - x^3}{h}\)</p>
+                <p>Paso 2: \(\frac{(x + h)^3 - x^3}{h} = \frac{x^3 + 3x^2h + 3xh^2 + h^3 - x^3}{h} = \frac{3x^2h + 3xh^2
+                    + h^3}{h} = 3x^2 + 3xh + h^2\)</p>
+                <p>Paso 3: \(\lim_{h \to 0} (3x^2 + 3xh + h^2) = 3x^2 + 0 + 0 = 3x^2\)</p>
+                <p>Paso 4: \(f'(x) = 3x^2\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Método de Newton (Notación de Leibniz)</h3>
+            <p>La notación de Leibniz para la derivada de una función \(y = f(x)\) es:</p>
+
+            <div class="math-box">
+                <p>\[\frac{dy}{dx} = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}\]</p>
+                <p>Esta notación trata a \(dy\) y \(dx\) como cantidades infinitesimales cuyo cociente es la derivada.
+                </p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Derivación por Fórmula</h3>
+            <p>La fórmula fundamental para la derivada de \(ax^n\) es:</p>
+
+            <div class="math-box">
+                <p>\[\frac{d}{dx}(ax^n) = na x^{n-1}\]</p>
+                <p>donde \(a\) es una constante y \(n\) es cualquier número real.</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Derivar \(f(x) = 3x^5\)</p>
+                <p>\(f'(x) = 3 \cdot 5 \cdot x^4 = 15x^4\)</p>
+                <p><strong>Ejemplo:</strong> Derivar \(g(x) = 2x^{-3}\)</p>
+                <p>\(g'(x) = 2 \cdot (-3) \cdot x^{-4} = -6x^{-4} = -\frac{6}{x^4}\)</p>
+                <p><strong>Ejemplo:</strong> Derivar \(h(x) = 4x^{1/2} = 4\sqrt{x}\)</p>
+                <p>\(h'(x) = 4 \cdot \frac{1}{2} \cdot x^{-1/2} = 2x^{-1/2} = \frac{2}{\sqrt{x}}\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Regla de la Cadena</h3>
+            <p>La regla de la cadena se utiliza para derivar funciones compuestas.</p>
+
+            <div class="math-box">
+                <p>Si \(y = f(g(x))\), entonces:</p>
+                <p>\[\frac{dy}{dx} = \frac{df}{dg} \cdot \frac{dg}{dx}\]</p>
+                <p>o equivalentemente:</p>
+                <p>\[\frac{d}{dx}(f(g(x))) = f'(g(x)) \cdot g'(x)\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Derivar \(f(x) = \sin(x^2)\)</p>
+                <p>Aquí, \(f(x) = \sin(g(x))\) donde \(g(x) = x^2\)</p>
+                <p>\(f'(x) = \cos(g(x)) \cdot g'(x) = \cos(x^2) \cdot 2x = 2x\cos(x^2)\)</p>
+                <p><strong>Ejemplo:</strong> Derivar \(g(x) = (3x + 2)^4\)</p>
+                <p>Aquí, \(g(x) = [h(x)]^4\) donde \(h(x) = 3x + 2\)</p>
+                <p>\(g'(x) = 4[h(x)]^3 \cdot h'(x) = 4(3x + 2)^3 \cdot 3 = 12(3x + 2)^3\)</p>
+            </div>
+        </section>
+
+        <section id="tabla-derivadas">
+            <h2 class="text-3xl section-title">Tabla de Derivadas</h2>
+            <p>A continuación se presenta una tabla con las fórmulas de derivación más comunes para diferentes tipos de
+                funciones.</p>
+
+            <h3 class="text-2xl subsection-title">Fórmulas de Derivación Lineales</h3>
+            <div class="math-box">
+                <p>Si \(f(x) = ax + b\), entonces \(f'(x) = a\)</p>
+                <p>La derivada de una función lineal es simplemente la pendiente de la línea.</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Derivar \(f(x) = 5x + 3\)</p>
+                <p>\(f'(x) = 5\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Fórmulas de Derivación Algebraicas</h3>
+            <div class="math-box">
+                <p>Fórmula fundamental: \(\frac{d}{dx}(ax^n) = nax^{n-1}\)</p>
+                <p>Para funciones compuestas de la forma \(f(x) = [u(x)]^n\):</p>
+                <p>\(\frac{d}{dx}[u(x)]^n = n[u(x)]^{n-1} \cdot \frac{du}{dx}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo 1:</strong> Derivar \(f(x) = 3x^4\)</p>
+                <p>\(f'(x) = 3 \cdot 4 \cdot x^{4-1} = 12x^3\)</p>
+                <p><strong>Ejemplo 2:</strong> Derivar \(f(x) = 2x^{-3}\)</p>
+                <p>\(f'(x) = 2 \cdot (-3) \cdot x^{-3-1} = -6x^{-4}\)</p>
+                <p><strong>Ejemplo 3:</strong> Derivar \(f(x) = (2x + 1)^3\)</p>
+                <p>Aquí, \(u(x) = 2x + 1\) y \(\frac{du}{dx} = 2\)</p>
+                <p>\(f'(x) = 3(2x + 1)^2 \cdot 2 = 6(2x + 1)^2\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Fórmulas de Derivación Trigonométricas</h3>
+            <div class="math-box">
+                <p>\(\frac{d}{dx}(\sin x) = \cos x\)</p>
+                <p>\(\frac{d}{dx}(\cos x) = -\sin x\)</p>
+                <p>\(\frac{d}{dx}(\tan x) = \sec^2 x\)</p>
+                <p>\(\frac{d}{dx}(\cot x) = -\csc^2 x\)</p>
+                <p>\(\frac{d}{dx}(\sec x) = \sec x \tan x\)</p>
+                <p>\(\frac{d}{dx}(\csc x) = -\csc x \cot x\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo 1:</strong> Derivar \(f(x) = \sin x\)</p>
+                <p>\(f'(x) = \cos x\)</p>
+                <p><strong>Ejemplo 2:</strong> Derivar \(f(x) = \sin(2x + 1)\)</p>
+                <p>Usando la regla de la cadena con \(u = 2x + 1\) y \(\frac{du}{dx} = 2\):</p>
+                <p>\(f'(x) = \cos(2x + 1) \cdot 2 = 2\cos(2x + 1)\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Fórmulas de Derivación Trascendentales</h3>
+            <div class="math-box">
+                <p><strong>Funciones Logarítmicas:</strong></p>
+                <p>\(\frac{d}{dx}(\log_a x) = \frac{1}{x \ln a}\)</p>
+                <p>\(\frac{d}{dx}(\ln x) = \frac{1}{x}\)</p>
+                <p><strong>Funciones Exponenciales:</strong></p>
+                <p>\(\frac{d}{dx}(e^x) = e^x\)</p>
+                <p>\(\frac{d}{dx}(a^x) = a^x \ln a\)</p>
+                <p><strong>Funciones Trigonométricas Inversas:</strong></p>
+                <p>\(\frac{d}{dx}(\arcsin x) = \frac{1}{\sqrt{1-x^2}}\)</p>
+                <p>\(\frac{d}{dx}(\arccos x) = -\frac{1}{\sqrt{1-x^2}}\)</p>
+                <p>\(\frac{d}{dx}(\arctan x) = \frac{1}{1+x^2}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo 1:</strong> Derivar \(f(x) = \ln x\)</p>
+                <p>\(f'(x) = \frac{1}{x}\)</p>
+                <p><strong>Ejemplo 2:</strong> Derivar \(f(x) = e^{3x}\)</p>
+                <p>Usando la regla de la cadena con \(u = 3x\) y \(\frac{du}{dx} = 3\):</p>
+                <p>\(f'(x) = e^{3x} \cdot 3 = 3e^{3x}\)</p>
+                <p><strong>Ejemplo 3:</strong> Derivar \(f(x) = 2^x\)</p>
+                <p>\(f'(x) = 2^x \ln 2\)</p>
+                <p><strong>Ejemplo 4:</strong> Derivar \(f(x) = \arctan(x^2)\)</p>
+                <p>Usando la regla de la cadena con \(u = x^2\) y \(\frac{du}{dx} = 2x\):</p>
+                <p>\(f'(x) = \frac{1}{1+(x^2)^2} \cdot 2x = \frac{2x}{1+x^4}\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Fórmulas de Derivación de Funciones Hiperbólicas</h3>
+            <div class="math-box">
+                <p>\(\frac{d}{dx}(\sinh x) = \cosh x\)</p>
+                <p>\(\frac{d}{dx}(\cosh x) = \sinh x\)</p>
+                <p>\(\frac{d}{dx}(\tanh x) = \text{sech}^2 x\)</p>
+                <p>\(\frac{d}{dx}(\coth x) = -\text{csch}^2 x\)</p>
+                <p>\(\frac{d}{dx}(\text{sech } x) = -\text{sech } x \tanh x\)</p>
+                <p>\(\frac{d}{dx}(\text{csch } x) = -\text{csch } x \coth x\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo 1:</strong> Derivar \(f(x) = \sinh x\)</p>
+                <p>\(f'(x) = \cosh x\)</p>
+                <p><strong>Ejemplo 2:</strong> Derivar \(f(x) = \tanh(2x)\)</p>
+                <p>Usando la regla de la cadena con \(u = 2x\) y \(\frac{du}{dx} = 2\):</p>
+                <p>\(f'(x) = \text{sech}^2(2x) \cdot 2 = 2\text{ sech}^2(2x)\)</p>
+            </div>
+        </section>
+
+        <section id="metodos-derivacion">
+            <h2 class="text-3xl section-title">Métodos Especiales</h2>
+
+            <h3 class="text-2xl subsection-title">Cambio de Variable</h3>
+            <p>El cambio de variable es una técnica útil para simplificar la derivación de funciones complejas.</p>
+
+            <div class="math-box">
+                <p>Si \(y = f(g(x))\) y \(u = g(x)\), entonces:</p>
+                <p>\(\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Derivar \(f(x) = \sin(3x)\)</p>
+                <p>Aquí, \(u = 3x\) y \(\frac{du}{dx} = 3\)</p>
+                <p>\(f'(x) = \cos(3x) \cdot 3 = 3\cos(3x)\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Derivación Sucesiva</h3>
+            <p>La derivación sucesiva es una técnica para derivar funciones compuestas de manera iterativa.</p>
+
+            <div class="math-box">
+                <p>Si \(y = f(g(h(x)))\), entonces:</p>
+                <p>\(\frac{dy}{dx} = f'(g(h(x))) \cdot g'(h(x)) \cdot h'(x)\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Derivar \(f(x) = \sin(x^3)\)</p>
+                <p>Aquí, \(u = x^3\) y \(\frac{du}{dx} = 3x^2\)</p>
+                <p>\(f'(x) = \cos(x^3) \cdot 3x^2 = 3x^2\cos(x^3)\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Derivación Implícita</h3>
+            <p>La derivación implícita se utiliza para derivar funciones donde la variable independiente no está
+                explícita.</p>
+
+            <div class="math-box">
+                <p>Si \(F(x, y) = 0\), entonces:</p>
+                <p>\(\frac{dy}{dx} = -\frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Derivar \(x^2 + y^2 = 1\)</p>
+                <p>Usando la derivación implícita:</p>
+                <p>\(\frac{\partial F}{\partial x} = 2x\), \(\frac{\partial F}{\partial y} = 2y\)</p>
+                <p>\(\frac{dy}{dx} = -\frac{2x}{2y} = -\frac{x}{y}\)</p>
+            </div>
+        </section>
+
+        <section id="diferenciales">
+            <h2 class="text-3xl section-title">Diferenciales</h2>
+            <p>Un diferencial es una medida de la variación de una función en una pequeña cantidad de cambio de su
+                variable independiente.</p>
+
+            <div class="math-box">
+                <p>Si \(y = f(x)\), entonces:</p>
+                <p>\(dy = f'(x) \, dx\)</p>
+                <p>o equivalentemente:</p>
+                <p>\(dy = \frac{dy}{dx} \, dx\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Si \(f(x) = x^2\), entonces:</p>
+                <p>\(dy = 2x \, dx\)</p>
+            </div>
+        </section>
+
+        <section id="derivadas-parciales">
+            <h2 class="text-3xl section-title">Derivadas Parciales</h2>
+            <p>Las derivadas parciales se utilizan para derivar funciones de varias variables.</p>
+
+            <div class="math-box">
+                <p>Si \(f(x, y) = f(x, y)\), entonces:</p>
+                <p>\(\frac{\partial f}{\partial x} = \frac{\partial f}{\partial x}\)</p>
+                <p>\(\frac{\partial f}{\partial y} = \frac{\partial f}{\partial y}\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Si \(f(x, y) = x^2 + y^2\), entonces:</p>
+                <p>\(\frac{\partial f}{\partial x} = 2x\)</p>
+                <p>\(\frac{\partial f}{\partial y} = 2y\)</p>
+            </div>
+        </section>
+
+        <section id="aplicaciones-geometricas">
+            <h2 class="text-3xl section-title">Aplicaciones Geométricas</h2>
+            <p>Las derivadas tienen aplicaciones geométricas importantes en la geometría y la física.</p>
+
+            <h3 class="text-2xl subsection-title">Recta Tangente</h3>
+            <p>La derivada de una función en un punto representa la pendiente de la recta tangente a la gráfica de la
+                función en ese punto.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Encontrar la ecuación de la recta tangente a la curva \(f(x) = x^2\) en el
+                    punto \((3, 9)\).</p>
+                <p>Ya calculamos \(f'(3) = 6\)</p>
+                <p>La ecuación de la recta tangente es:</p>
+                <p>\[y - 9 = 6(x - 3)\]</p>
+                <p>\[y = 6x - 18 + 9 = 6x - 9\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Razón de Cambio</h3>
+            <p>La derivada de una función representa la razón de cambio de la función con respecto a su variable
+                independiente.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Si \(f(x) = x^2\), entonces:</p>
+                <p>\(f'(x) = 2x\)</p>
+                <p>La razón de cambio de \(f(x)\) con respecto a \(x\) es \(2x\).</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Optimización</h3>
+            <p>La derivada se utiliza para encontrar los puntos máximos y mínimos de una función.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Encontrar los puntos máximos y mínimos de \(f(x) = x^3 - 3x^2 + 2x\).</p>
+                <p>Primero, encontramos la derivada:</p>
+                <p>\(f'(x) = 3x^2 - 6x + 2\)</p>
+                <p>Para encontrar los puntos críticos, se iguala a cero:</p>
+                <p>3x^2 - 6x + 2 = 0</p>
+                <p>Resolviendo: \(x = \frac{6 \pm \sqrt{36 - 24}}{6} = \frac{6 \pm 2\sqrt{3}}{6} = 1 \pm
+                    \frac{\sqrt{3}}{3}\)</p>
+                <p>Para determinar si son máximos o mínimos, se evalúa la segunda derivada:</p>
+                <p>La segunda derivada es \(f''(x) = 6x - 6\)</p>
+                <p>En \(x = 1 + \frac{\sqrt{3}}{3}\), \(f''(x) < 0\), por lo que es un punto máximo.</p>
+                        <p>En \(x = 1 - \frac{\sqrt{3}}{3}\), \(f''(x) > 0\), por lo que es un punto mínimo.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Análisis de Curvas</h3>
+            <p>La derivada se utiliza para analizar las propiedades de las curvas, como la concavidad y la curvatura.
+            </p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Analizar la concavidad de la curva \(f(x) = x^3 - 3x^2 + 2x\).</p>
+                <p>Primero, encontramos la segunda derivada:</p>
+                <p>La segunda derivada es \(f''(x) = 6x - 6\)</p>
+                <p>La curva es concava arriba cuando \(f''(x) > 0\) y concava abajo cuando \(f''(x) < 0\).</p>
+                        <p>En \(x = 1\), \(f''(x) = 0\), por lo que es un punto de inflexión.</p>
+            </div>
+        </section>
+
+        <section id="aplicaciones-fisica">
+            <h2 class="text-3xl section-title">Aplicaciones a la Física</h2>
+            <p>Las derivadas tienen aplicaciones importantes en la física, como la velocidad, la aceleración y la
+                fuerza.</p>
+
+            <h3 class="text-2xl subsection-title">Velocidad y Aceleración</h3>
+            <p>La derivada de la posición respecto al tiempo representa la velocidad, y la derivada de la velocidad
+                respecto al tiempo representa la aceleración.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Un objeto se mueve según la ecuación \(s(t) = t^3 - 3t^2 + 2t\), donde
+                    \(s\) está en metros y \(t\) en segundos. Encontrar la velocidad y aceleración en \(t = 2\)
+                    segundos.</p>
+                <p>Velocidad: \(v(t) = s'(t) = 3t^2 - 6t + 2\)</p>
+                <p>\(v(2) = 3(2)^2 - 6(2) + 2 = 12 - 12 + 2 = 2\) m/s</p>
+                <p>Aceleración: \(a(t) = v'(t) = 6t - 6\)</p>
+                <p>\(a(2) = 6(2) - 6 = 12 - 6 = 6\) m/s²</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Fuerza</h3>
+            <p>La derivada de la energía potencial con respecto a la posición representa la fuerza.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> La energía potencial de un objeto en una fuerza gravitacional es \(U =
+                    mgh\), donde \(m\) es la masa, \(g\) es la aceleración debido a la gravedad y \(h\) es la altura.
+                </p>
+                <p>La fuerza es:</p>
+                <p>\(F = \frac{dU}{dx} = mg\)</p>
+            </div>
+        </section>
+
+        <section id="hopital">
+            <h2 class="text-3xl section-title">Regla de L'Hôpital</h2>
+            <p>La regla de L'Hôpital es una técnica para resolver límites indeterminados del tipo \(\frac{0}{0}\) o
+                \(\frac{\infty}{\infty}\).</p>
+
+            <div class="math-box">
+                <p>Si \(\lim_{x \to a} \frac{f(x)}{g(x)}\) es indeterminado, entonces:</p>
+                <p>\(\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}\)</p>
+                <p>Si el límite resultante es indeterminado, se puede aplicar la regla de L'Hôpital nuevamente.</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Resolver el límite \(\lim_{x \to 0} \frac{\sin x}{x}\).</p>
+                <p>Al evaluar directamente, obtenemos \(\frac{0}{0}\) (indeterminación).</p>
+                <p>Aplicando la regla de L'Hôpital:</p>
+                <p>\(\lim_{x \to 0} \frac{\sin x}{x} = \lim_{x \to 0} \frac{\cos x}{1} = \cos 0 = 1\)</p>
+            </div>
+        </section>
+
+        <section id="aplicaciones-reales">
+            <h2 class="text-3xl section-title">Aplicaciones Reales</h2>
+            <p>Las derivadas tienen aplicaciones reales en una variedad de campos, como la economía, la ingeniería y la
+                ciencia.</p>
+
+            <h3 class="text-2xl subsection-title">Economía</h3>
+            <p>Las derivadas se utilizan para analizar la demanda y la oferta de bienes y servicios.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> La demanda de un producto es \(Q = 100 - 2P\), donde \(Q\) es la cantidad
+                    de bienes y \(P\) es el precio.</p>
+                <p>La razón de cambio de la demanda con respecto al precio es:</p>
+                <p>\(\frac{dQ}{dP} = -2\)</p>
+                <p>Por lo tanto, la demanda disminuye a medida que el precio aumenta.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Ingeniería</h3>
+            <p>Las derivadas se utilizan para resolver problemas de optimización en ingeniería.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Encontrar el punto de inflexión de la curva \(f(x) = x^3 - 3x^2 + 2x\).</p>
+                <p>Primero, encontramos la segunda derivada:</p>
+                <p>La segunda derivada es \(f''(x) = 6x - 6\)</p>
+                <p>La curva es concava arriba cuando \(f''(x) > 0\) y concava abajo cuando \(f''(x) < 0\).</p>
+                        <p>En \(x = 1\), \(f''(x) = 0\), por lo que es un punto de inflexión.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Ciencia</h3>
+            <p>Las derivadas se utilizan para resolver problemas de física y matemáticas.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> La velocidad de un objeto es \(v(t) = 3t^2 - 6t + 2\), donde \(t\) es el
+                    tiempo.</p>
+                <p>La aceleración es:</p>
+                <p>\(a(t) = v'(t) = 6t - 6\)</p>
+                <p>La aceleración es cero cuando \(t = 1\), por lo que el objeto está en reposo.</p>
+            </div>
+        </section>
+    </div>
+
+
+        <div class="float-buttons">
+           
+            <div class="float-button" id="topBtn">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+
+        <footer class="bg-gray-100 py-8 border-t border-gray-200">
+            <div class="container mx-auto px-6 text-center text-gray-600">
+                <p>© 2025 Guía Descriptiva de Calculo Diferencial. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+
+       
+
+        <div class="overlay" id="overlay"></div>
+
+        <script id="app-script">
+             function toggleTab() {
+                    const tab = document.getElementById('searchTab');
+                    tab.classList.toggle('open');
+                }
+
+                function filterTopics() {
+                    const input = document.getElementById('searchInput');
+                    const filter = input.value.toLowerCase();
+                    const items = document.querySelectorAll('.topic-item');
+                    const noResults = document.getElementById('noResults');
+                    let visibleCount = 0;
+
+                    items.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        if (text.includes(filter)) {
+                            item.classList.remove('hidden');
+                            visibleCount++;
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+
+                    if (visibleCount === 0) {
+                        noResults.classList.add('show');
+                    } else {
+                        noResults.classList.remove('show');
+                    }
+                }
+
+                function selectTopic(el) {
+                    alert('Has seleccionado: ' + el.textContent);
+                    // Aquí puedes agregar la lógica para cargar el contenido del tema
+                }
+
+                // Cerrar tab al hacer clic fuera
+                document.addEventListener('click', function (e) {
+                    const tab = document.getElementById('searchTab');
+                    const tabButton = document.querySelector('.tab-button');
+
+                    if (tab.classList.contains('open') &&
+                        !tab.contains(e.target) &&
+                        !tabButton.contains(e.target)) {
+                        tab.classList.remove('open');
+                    }
+                });
+
+            // Botón para ir al principio de la página
+            document.getElementById('topBtn').addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Panel de índice
+            const indexPanel = document.getElementById('indexPanel');
+            const overlay = document.getElementById('overlay');
+            const indexBtn = document.getElementById('indexBtn');
+            const closeIndexBtn = document.getElementById('closeIndexBtn');
+
+            // Mostrar panel de índice
+            indexBtn.addEventListener('click', function () {
+                indexPanel.classList.add('active');
+                overlay.classList.add('active');
+            });
+
+            // Cerrar panel de índice
+            closeIndexBtn.addEventListener('click', function () {
+                indexPanel.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Cerrar panel al hacer clic en el overlay
+            overlay.addEventListener('click', function () {
+                indexPanel.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Navegar a las secciones desde el índice
+            const indexItems = document.querySelectorAll('.index-item, .index-subitem');
+            indexItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    const targetId = this.getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        // Cerrar el panel
+                        indexPanel.classList.remove('active');
+                        overlay.classList.remove('active');
+
+                        // Desplazarse a la sección
+                        const offset = 80; // Compensación para el encabezado
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+
+                        // Guardar la posición en localStorage
+                        localStorage.setItem('scrollPosition', targetPosition);
+                    }
+                });
+            });
+
+            // Restaurar la posición de desplazamiento si existe
+            window.addEventListener('load', function () {
+                const savedPosition = localStorage.getItem('scrollPosition');
+                if (savedPosition) {
+                    window.scrollTo({
+                        top: parseInt(savedPosition),
+                        behavior: 'auto'
+                    });
+                }
+
+                // Recargar MathJax cuando se complete la carga
+                if (typeof MathJax !== 'undefined') {
+                    MathJax.typeset();
+                }
+            });
+        </script>
+</body>
+
+</html>

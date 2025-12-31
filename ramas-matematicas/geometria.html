@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geometría</title>
+  <link rel="website icon" type="png" href="../../img/SigMath.png" />
+
+  
+  <link rel="stylesheet" href="../../SigMATH.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Fuente Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+
+  <style>
+    body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.sidebar,
+.tabs-container {
+  display: none;
+  /* Ocultar elementos de navegación */
+}
+
+.content-container {
+  min-height: auto;
+  /* Cambiar de 100vh a auto */
+  padding: 2rem 3rem;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  /* Añadir espacio entre secciones */
+}
+
+.section-title {
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.formula-box {
+  background-color: #f8f9fa;
+  border-left: 4px solid #3498db;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.definition-box {
+  background: #f9fafb;
+  border-left: 4px solid #2563eb;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.example-image {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    margin-left: 0 !important;
+  }
+}
+
+.mathjax-wrapper {
+  overflow-x: auto;
+  padding: 0.5rem 0;
+}
+
+/* Móvil: Tabs en lugar de sidebar */
+.tabs-container {
+  display: none;
+  overflow-x: auto;
+  white-space: nowrap;
+  background-color: #2c3e50;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  color: #ecf0f1;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.tab.active {
+  border-bottom-color: #3498db;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .tabs-container {
+    display: block;
+  }
+
+  .content-wrapper {
+    margin-left: 0 !important;
+  }
+}
+
+ .content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+  
+    h1 {
+     
+      margin-bottom: 20px;
+    }
+  
+    p {
+     
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+  
+    /* Tab de búsqueda */
+    .search-tab {
+      position: fixed;
+      right: -350px;
+      top: 0;
+      height: 100vh;
+      width: 350px;
+      background: white;
+      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+      transition: right 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .search-tab.open {
+      right: 0;
+    }
+  
+    .tab-button {
+      position: absolute;
+      left: -50px;
+      top: 100px;
+      width: 50px;
+      height: 120px;
+      background: white;
+      border: none;
+      border-radius: 10px 0 0 10px;
+      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      font-weight: bold;
+      color: #667eea;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+  
+    .tab-button:hover {
+      background: #f8f9fa;
+    }
+  
+    .search-content {
+      padding: 30px;
+      overflow-y: auto;
+      flex: 1;
+      direction: rtl;
+    }
+  
+    .search-content>* {
+      direction: ltr;
+    }
+  
+    .search-content::-webkit-scrollbar {
+      width: 8px;
+    }
+  
+    .search-content::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+  
+    .search-content::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 10px;
+    }
+  
+    .search-content::-webkit-scrollbar-thumb:hover {
+      background: #5568d3;
+    }
+  
+    .search-header {
+      margin-bottom: 25px;
+    }
+  
+    .search-header h2 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+  
+    .search-header p {
+      color: #999;
+      font-size: 14px;
+    }
+  
+    .search-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+  
+    .search-input {
+      width: 100%;
+      padding: 15px 45px 15px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+  
+    .search-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+  
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+  
+    .topics-list {
+      list-style: none;
+    }
+  
+    .topic-item {
+      padding: 12px 15px;
+      margin-bottom: 8px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #333;
+    }
+  
+    .topic-item:hover {
+      background: #667eea;
+      color: white;
+      transform: translateX(5px);
+    }
+  
+    .topic-item.hidden {
+      display: none;
+    }
+  
+    .no-results {
+      text-align: center;
+      color: #999;
+      padding: 20px;
+      display: none;
+    }
+  
+    .no-results.show {
+      display: block;
+    }
+  </style>
+
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="logo">
+  
+          <h1 class="sigma">Σ</h1>
+          <h1 class="sig">Sig</h1>
+          <h1 class="MATH">MATH</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="../../index.html">SigMATH</a></li>
+          <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+          <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+          <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+        </ul>
+        <button class="hamburger" id="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Banner Principal -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h2>Descubre el fascinante mundo de la Geometría<span class="typed-text" id="typed-element"></span></h2>
+      <p>La geometría es una rama de las matemáticas que estudia las propiedades, medidas, relaciones y características de las
+      figuras y formas en el espacio o en el plano. Su nombre proviene del griego "geo" (tierra) y "metría" (medida), lo que
+      significa "medida de la tierra".</p>
+      <p>La geometria se clasifica en diferentes ramas de estudio basados en sus caracteristicas, entornos y propiedades.</p>
+
+    </div>
+    <div class="wave"></div>
+  </section>
+
+
+  <div class="search-tab" id="searchTab">
+    <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+  
+    <div class="search-content">
+      <div class="search-header">
+        <h2>Buscar Temas</h2>
+        <p>Encuentra lo que necesitas</p>
+      </div>
+  
+      <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+          oninput="filterTopics()">
+        <span class="search-icon">🔍</span>
+      </div>
+  
+      <ul class="topics-list" id="topicsList">
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#euclidiana" data-section="euclidiana">Introducción y Clasificación</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#euclidiana" data-section="euclidiana">Geometria Euclideana</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#descriptiva" data-section="descriptiva">Geometría Descriptiva</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#analitica" data-section="analitica">Geometría Analítica</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#espacial" data-section="espacial">Geometría del Espacio</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#noeuclidiana" data-section="noeuclidiana">Geometría No Euclideana</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#hiperbolica" data-section="hiperbolica">Geometría Hiperbólica</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#diferencial" data-section="diferencial">Geometría Diferencial</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#trigonometria" data-section="trigonometria">Trigonometría Plana y Esferica</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#plana" data-section="plana">Introduccion a la Geometria Plana</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#medidas" data-section="medidas">Medidas Geométricas</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#angulos" data-section="angulos">Angulos</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#triangulos" data-section="triangulos">Triangulos</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#teoremas-angulos" data-section="teoremas-angulos">Teorema Fundamental de los Triangulos</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#anguloscircunferencia" data-section="anguloscircunferencia">Angulos en Circunferencia</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#lineas-puntos-notables" data-section="lineas-puntos-notables">Lineas y Puntos Notables</a></li>
+        <li class="topic-item" onclick="selectTopic(this)"><a href="#teoremas-lados" data-section="teoremas-lados">Teoremas de los Lados del Triangulo</a></li>
+  
+      <div class="no-results" id="noResults">
+        No se encontraron resultados
+      </div>
+    </div>
+  </div>
+ 
+  
+
+  
+
+  <div class="flex flex-col">
+    <!-- Modificación: Eliminar sidebar y tabs-container -->
+
+    <!-- Contenido principal -->
+    <div class="content-wrapper flex-1">
+      <!-- Modificación: Quitar la clase 'hidden' de todas las secciones -->
+
+      <!-- Geometría Euclidiana -->
+      <section id="euclidiana" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Geometría Euclidiana</h1>
+
+        <p class="mb-4">La geometría euclidiana es un sistema matemático atribuido al matemático alejandrino Euclides,
+          descrito en su texto <em>Elementos</em>. Se trata de la geometría más intuitiva y común, que estudia las
+          propiedades del plano y el espacio tridimensional.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <p class="mb-2">La geometría euclidiana se basa en cinco postulados fundamentales:</p>
+          <div class="mathjax-wrapper">
+            <ol class="list-decimal pl-5 space-y-2">
+              <li>Por dos puntos distintos pasa una única línea recta.</li>
+              <li>Un segmento de línea recta se puede extender indefinidamente en una línea recta.</li>
+              <li>Dado un punto y una distancia, se puede trazar un círculo con centro en ese punto y la distancia dada
+                como radio.</li>
+              <li>Todos los ángulos rectos son iguales entre sí.</li>
+              <li>Si una línea recta interseca a dos líneas rectas formando ángulos interiores del mismo lado menores
+                que dos ángulos rectos, entonces las dos líneas rectas, si se extienden indefinidamente, se intersectan
+                en el lado en el que están los ángulos menores que dos ángulos rectos.</li>
+            </ol>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Conceptos Fundamentales</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Teorema de Pitágoras</h4>
+          <div class="mathjax-wrapper">
+            <p>En un triángulo rectángulo, el cuadrado de la longitud de la hipotenusa es igual a la suma de los
+              cuadrados de las longitudes de los otros dos lados:</p>
+            <p>$$a^2 + b^2 = c^2$$</p>
+            <p>Donde \(c\) es la hipotenusa y \(a\) y \(b\) son los catetos.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Triángulo Rectángulo</h4>
+          <img src="img/teorema de pitagoras.png"
+            alt="Teorema de Pitágoras" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Ilustración del Teorema de Pitágoras: La suma de las áreas de los cuadrados construidos sobre los catetos es igual al area del cuadrado construido sobre la hipotenusa.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Área de un Triángulo</h4>
+          <div class="mathjax-wrapper">
+            <p>$$A = \frac{1}{2} \cdot b \cdot h$$</p>
+            <p>Donde \(b\) es la base y \(h\) es la altura del triángulo.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Geometría Descriptiva -->
+      <section id="descriptiva" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Geometría Descriptiva</h1>
+
+        <p class="mb-4">La geometría descriptiva es la rama de la geometría que se ocupa de la representación de objetos
+          tridimensionales en un plano bidimensional, permitiendo resolver problemas espaciales de forma gráfica.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <p class="mb-2">La geometría descriptiva es un conjunto de técnicas de representación gráfica que permiten
+            representar el espacio tridimensional sobre una superficie bidimensional, y resolver en dos dimensiones
+            problemas espaciales, garantizando la reversibilidad del proceso mediante la aplicación de métodos
+            proyectivos.</p>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Sistemas de Representación</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Sistema Diédrico</h4>
+          <div class="mathjax-wrapper">
+            <p>El sistema diédrico se basa en la proyección ortogonal de un objeto sobre dos planos perpendiculares
+              entre sí, denominados plano horizontal (PH) y plano vertical (PV).</p>
+            <p>La representación de un punto P en el espacio viene dada por sus proyecciones:</p>
+            <p>$$P \rightarrow (P', P'')$$</p>
+            <p>Donde \(P'\) es la proyección horizontal y \(P''\) es la proyección vertical.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Proyección Diédrica</h4>
+          <img src="img/sistema-diedrico.png" alt="Sistema Diédrico"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Representación de un objeto tridimensional mediante sus proyecciones
+            ortogonales.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Sistema Axonométrico</h4>
+          <div class="mathjax-wrapper">
+            <p>El sistema axonométrico representa los objetos en un único plano, mostrando tres dimensiones a la vez. Se
+              basa en la proyección paralela sobre un plano de proyección, con respecto a tres ejes coordenados.</p>
+            <p>Los coeficientes de reducción en los ejes están relacionados por:</p>
+            <p>$$\frac{1}{e_x^2} + \frac{1}{e_y^2} + \frac{1}{e_z^2} = 2$$</p>
+            <p>Donde \(e_x\), \(e_y\) y \(e_z\) son los coeficientes de reducción en los ejes X, Y y Z respectivamente.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Geometría Analítica -->
+      <section id="analitica" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Geometría Analítica</h1>
+
+        <p class="mb-4">La geometría analítica es la rama de la geometría que utiliza sistemas de coordenadas y los
+          principios del álgebra y el análisis matemático para estudiar las figuras geométricas.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>La geometría analítica establece una correspondencia entre las figuras geométricas y las expresiones
+              algebraicas mediante el uso de un sistema coordenado, generalmente cartesiano, donde cada punto \(P\) del
+              plano se representa por un par ordenado \(P(x,y)\) y cada punto del espacio por una terna ordenada
+              \(P(x,y,z)\).</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Conceptos Fundamentales</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ecuación de la Recta</h4>
+          <div class="mathjax-wrapper">
+            <p>En el plano, una recta puede expresarse mediante la ecuación:</p>
+            <p>$$y = mx + b$$</p>
+            <p>Donde \(m\) es la pendiente de la recta y \(b\) es la ordenada al origen.</p>
+            <p>De forma general, la ecuación de la recta puede escribirse como:</p>
+            <p>$$Ax + By + C = 0$$</p>
+            <p>Donde \(A\), \(B\) y \(C\) son constantes y \(A\) y \(B\) no son simultáneamente nulos.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Coordenadas Cartesianas</h4>
+          <img src="img/coordenadas.png"
+            alt="Sistema de Coordenadas Cartesianas" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Sistema de coordenadas cartesianas mostrando puntos y funciones en el
+            plano.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ecuación de la Circunferencia</h4>
+          <div class="mathjax-wrapper">
+            <p>La ecuación de una circunferencia con centro en \((h,k)\) y radio \(r\) es:</p>
+            <p>$(x - h)^2 + (y - k)^2 = r^2$</p>
+            <p>En su forma expandida:</p>
+            <p>$$x^2 + y^2 + Dx + Ey + F = 0$$</p>
+            <p>Donde \(D = -2h\), \(E = -2k\) y \(F = h^2 + k^2 - r^2\).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Geometría Espacial -->
+      <section id="espacial" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Geometría Espacial</h1>
+
+        <p class="mb-4">La geometría espacial estudia las figuras geométricas cuyos puntos no están todos contenidos en
+          un mismo plano, es decir, figuras tridimensionales.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>La geometría espacial o tridimensional es la rama de la geometría que estudia las propiedades y medidas
+              de figuras geométricas que ocupan un lugar en el espacio tridimensional, incluyendo sus posiciones
+              relativas, formas, áreas superficiales y volúmenes.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Sólidos Geométricos</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Volumen de un Prisma</h4>
+          <div class="mathjax-wrapper">
+            <p>El volumen de un prisma se calcula mediante la fórmula:</p>
+            <p>$$V = A_b \cdot h$$</p>
+            <p>Donde \(A_b\) es el área de la base y \(h\) es la altura del prisma.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Sólidos Platónicos</h4>
+          <img src="img/solidos-platonicos.png"
+            alt="Sólidos Platónicos" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Los cinco sólidos platónicos: tetraedro, cubo, octaedro, dodecaedro e
+            icosaedro.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Volumen y Superficie de una Esfera</h4>
+          <div class="mathjax-wrapper">
+            <p>El volumen de una esfera de radio \(r\) es:</p>
+            <p>$$V = \frac{4}{3} \pi r^3$$</p>
+            <p>Y su área superficial es:</p>
+            <p>$$A = 4 \pi r^2$$</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Geometría No Euclidiana -->
+      <section id="noeuclidiana" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Geometría No Euclidiana</h1>
+
+        <p class="mb-4">Las geometrías no euclidianas son sistemas geométricos que difieren de la geometría euclidiana
+          clásica en la interpretación del quinto postulado de Euclides, conocido como el postulado de las paralelas.
+        </p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>Una geometría no euclidiana es cualquier forma de geometría que difiere de la geometría euclidiana en el
+              hecho de que el quinto postulado de Euclides, el postulado de las paralelas, no se cumple. Las principales
+              geometrías no euclidianas son la geometría hiperbólica y la geometría elíptica.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Variantes del Quinto Postulado</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Postulado de las Paralelas (Euclides)</h4>
+          <div class="mathjax-wrapper">
+            <p>Por un punto exterior a una recta, se puede trazar exactamente una recta paralela a la recta dada.</p>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Geometría Elíptica</h4>
+          <div class="mathjax-wrapper">
+            <p>Por un punto exterior a una recta, no existe ninguna recta paralela a la recta dada (todas las rectas se
+              intersectan).</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Superficie Esférica (Geometría Elíptica)</h4>
+          <img src="img/geo-eliptica.png" alt="Geometría Elíptica"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">En una superficie esférica, las "rectas" son círculos máximos que
+            siempre se intersectan en dos puntos antípodas.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Geometría Hiperbólica</h4>
+          <div class="mathjax-wrapper">
+            <p>Por un punto exterior a una recta, existen al menos dos rectas paralelas a la recta dada.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Geometría Hiperbólica -->
+      <section id="hiperbolica" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Geometría Hiperbólica</h1>
+
+        <p class="mb-4">La geometría hiperbólica es una geometría no euclidiana donde, por un punto exterior a una recta
+          dada, pasan infinitas rectas paralelas a la recta dada.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>La geometría hiperbólica es un tipo de geometría no euclidiana donde, dado un punto \(P\) exterior a una
+              recta \(L\), existen infinitas rectas que pasan por \(P\) y no intersectan a \(L\) (son paralelas a
+              \(L\)). Esta geometría se puede representar mediante modelos como el disco de Poincaré o el semiplano
+              superior de Poincaré.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Modelos de Geometría Hiperbólica</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Modelo del Disco de Poincaré</h4>
+          <div class="mathjax-wrapper">
+            <p>En el modelo del disco de Poincaré, el plano hiperbólico se representa mediante un disco abierto donde:
+            </p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Las "rectas" son arcos de círculos que intersectan ortogonalmente el borde del disco, o diámetros del
+                disco.</li>
+              <li>Los "puntos" son puntos dentro del disco.</li>
+              <li>La métrica está dada por:</li>
+            </ul>
+            <p>$$ds^2 = \frac{4(dx^2 + dy^2)}{(1 - x^2 - y^2)^2}$$</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Teselación Hiperbólica</h4>
+          <img src="img/teselacion.jpg" alt="Teselación Hiperbólica"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Teselación hiperbólica inspirada en los trabajos de M.C. Escher,
+            mostrando cómo las figuras se distorsionan al acercarse al borde del disco de Poincaré.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Área de un Triángulo Hiperbólico</h4>
+          <div class="mathjax-wrapper">
+            <p>En la geometría hiperbólica, el área de un triángulo está relacionada con la suma de sus ángulos
+              mediante:</p>
+            <p>$$A = \pi - (\alpha + \beta + \gamma)$$</p>
+            <p>Donde \(\alpha\), \(\beta\) y \(\gamma\) son los ángulos interiores del triángulo.</p>
+            <p>Observe que, a diferencia de la geometría euclidiana, la suma de los ángulos de un triángulo hiperbólico
+              es siempre menor que \(\pi\) radianes (180 grados).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Geometría Diferencial -->
+      <section id="diferencial" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Geometría Diferencial</h1>
+
+        <p class="mb-4">La geometría diferencial es una disciplina matemática que utiliza las técnicas del cálculo
+          diferencial y el cálculo integral para estudiar problemas de geometría.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>La geometría diferencial estudia las propiedades locales de curvas, superficies y variedades
+              diferenciables utilizando las herramientas del cálculo diferencial e integral. Las propiedades locales son
+              aquellas que dependen solo del comportamiento de la curva, superficie o variedad en un entorno de un
+              punto.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Curvas y Superficies</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Curvatura de una Curva Plana</h4>
+          <div class="mathjax-wrapper">
+            <p>Para una curva plana parametrizada por \(\gamma(t) = (x(t), y(t))\), la curvatura \(\kappa\) en un punto
+              es:</p>
+            <p>$$\kappa = \frac{|x'y'' - y'x''|}{(x'^2 + y'^2)^{3/2}}$$</p>
+            <p>Donde las primas indican derivadas con respecto al parámetro \(t\).</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Superficie Minimal</h4>
+          <img src="img/superficie-minimal.jpg"
+            alt="Superficie Minimal" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Las burbujas de jabón forman superficies minimales, que son superficies
+            con curvatura media igual a cero en todos sus puntos.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Primera Forma Fundamental</h4>
+          <div class="mathjax-wrapper">
+            <p>La primera forma fundamental de una superficie parametrizada por \(\mathbf{r}(u, v)\) está dada por:</p>
+            <p>$$I = E \, du^2 + 2F \, du \, dv + G \, dv^2$$</p>
+            <p>Donde:</p>
+            <p>$$E = \mathbf{r}_u \cdot \mathbf{r}_u$$</p>
+            <p>$$F = \mathbf{r}_u \cdot \mathbf{r}_v$$</p>
+            <p>$$G = \mathbf{r}_v \cdot \mathbf{r}_v$$</p>
+            <p>Y \(\mathbf{r}_u\) y \(\mathbf{r}_v\) son las derivadas parciales de \(\mathbf{r}\) con respecto a \(u\)
+              y \(v\), respectivamente.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trigonometría -->
+      <section id="trigonometria" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Trigonometría</h1>
+
+        <p class="mb-4"><a href="trigonometria.html">La Trigonometría</a> es una rama de las matemáticas que estudia las relaciones entre los ángulos y
+          los lados de los triángulos, especialmente las funciones trigonométricas.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>La trigonometría (del griego τρίγωνος "triángulo" y μέτρον "medida") es la rama de las matemáticas que
+              estudia las relaciones entre los ángulos y los lados de los triángulos. Se divide principalmente en
+              trigonometría plana, que se ocupa de figuras en un plano, y trigonometría esférica, que se ocupa de
+              triángulos sobre la superficie de una esfera.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Trigonometría Plana</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Funciones Trigonométricas Básicas</h4>
+          <div class="mathjax-wrapper">
+            <p>Para un ángulo \(\theta\) en un triángulo rectángulo con hipotenusa \(r\), cateto opuesto \(y\) y cateto
+              adyacente \(x\):</p>
+            <p>$$\sin \theta = \frac{y}{r}$$</p>
+            <p>$$\cos \theta = \frac{x}{r}$$</p>
+            <p>$$\tan \theta = \frac{y}{x} = \frac{\sin \theta}{\cos \theta}$$</p>
+            <p>Las funciones recíprocas son:</p>
+            <p>$$\csc \theta = \frac{1}{\sin \theta}$$</p>
+            <p>$$\sec \theta = \frac{1}{\cos \theta}$$</p>
+            <p>$$\cot \theta = \frac{1}{\tan \theta} = \frac{\cos \theta}{\sin \theta}$$</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Ciclo Trigonométrico</h4>
+          <img src="img/circunferencia unitaria.png" alt="Ciclo Trigonométrico"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Representación del ciclo trigonométrico mostrando las funciones seno y
+            coseno.</p>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Trigonometría Esférica</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ley de los Cosenos Esférica</h4>
+          <div class="mathjax-wrapper">
+            <p>Para un triángulo esférico con lados \(a\), \(b\) y \(c\) (medidos como ángulos centrales) y ángulos
+              opuestos \(A\), \(B\) y \(C\) (medidos como ángulos diédricos), la ley de los cosenos esférica establece:
+            </p>
+            <p>$$\cos a = \cos b \cos c + \sin b \sin c \cos A$$</p>
+            <p>$$\cos b = \cos a \cos c + \sin a \sin c \cos B$$</p>
+            <p>$$\cos c = \cos a \cos b + \sin a \sin b \cos C$$</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Triángulo Esférico</h4>
+          <img src="img/triangulo-esferico.png" alt="Triángulo Esférico"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Representación de un triángulo esférico sobre la superficie de una
+            esfera. A diferencia de los triángulos planos, la suma de los ángulos internos de un triángulo esférico es
+            siempre mayor a 180°.</p>
+        </div>
+      </section>
+
+      <!-- Introducción a la Geometría Plana -->
+      <section id="plana" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Introducción a la Geometría Plana</h1>
+
+        <p class="mb-4">La geometría plana estudia las figuras que pueden representarse en un plano bidimensional,
+          estableciendo los fundamentos sobre los que se construyen geometrías más complejas. Esta rama fundamental de
+          las matemáticas examina propiedades, relaciones y medidas de puntos, líneas, ángulos, triángulos,
+          cuadriláteros, polígonos y círculos en el plano euclidiano.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>La geometría plana, también conocida como geometría euclidiana bidimensional, es el estudio de las
+              figuras geométricas que existen en un plano. Se basa en los postulados de Euclides y permite analizar las
+              propiedades métricas y de posición de figuras como líneas, círculos y polígonos sin considerar el espacio
+              tridimensional.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Elementos Fundamentales</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ángulos y su Clasificación</h4>
+          <div class="mathjax-wrapper">
+            <p>Los ángulos se clasifican según su medida:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Ángulo agudo: mide menos de 90°</li>
+              <li>Ángulo recto: mide exactamente 90°</li>
+              <li>Ángulo obtuso: mide más de 90° pero menos de 180°</li>
+              <li>Ángulo llano: mide exactamente 180°</li>
+              <li>Ángulo cóncavo: mide más de 180° pero menos de 360°</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Construcciones con Regla y Compás</h4>
+          <img src="img/regla-compas.png"
+            alt="Construcciones Geométricas" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Las construcciones con regla y compás son métodos clásicos de la
+            geometría plana que permiten trazar figuras geométricas precisas utilizando únicamente estos dos
+            instrumentos.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Área de un Polígono Regular</h4>
+          <div class="mathjax-wrapper">
+            <p>El área de un polígono regular de \(n\) lados, con lado \(l\) y apotema \(a\) es:</p>
+            <p>$$A = \frac{1}{2} \cdot p \cdot a = \frac{1}{2} \cdot n \cdot l \cdot a$$</p>
+            <p>Donde \(p\) es el perímetro del polígono (\(p = n \cdot l\)).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Medidas Geométricas -->
+      <section id="medidas" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Medidas Geométricas: Áreas, Perímetros y Volúmenes</h1>
+
+        <p class="mb-4">Las medidas geométricas son fundamentales en el estudio de la geometría, permitiendo cuantificar
+          y comparar figuras y cuerpos en términos de su tamaño, extensión y capacidad. El cálculo de áreas, perímetros
+          y volúmenes tiene numerosas aplicaciones prácticas en campos como la arquitectura, ingeniería, física y
+          diseño, siendo esencial para resolver problemas que involucran optimización de recursos y análisis espacial.
+        </p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>Las medidas geométricas son valores numéricos que cuantifican diferentes aspectos de figuras y cuerpos
+              geométricos:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>El perímetro mide la longitud del contorno o frontera de una figura plana.</li>
+              <li>El área mide la extensión de la superficie de una figura plana.</li>
+              <li>El volumen mide la capacidad o espacio ocupado por un cuerpo tridimensional.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Figuras Planas</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Triángulo</h4>
+          <div class="mathjax-wrapper">
+            <p>Área:</p>
+            <p>$$A = \frac{1}{2} b \cdot h$$</p>
+            <p>Donde \(b\) es la base y \(h\) es la altura.</p>
+            <p>Perímetro:</p>
+            <p>$$P = a + b + c$$</p>
+            <p>Donde \(a\), \(b\) y \(c\) son las longitudes de los lados.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Triángulo</h4>
+          <img src="img/triangulo.png" alt="Triángulo"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un triángulo con sus elementos principales: base, altura y lados.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Cuadrado</h4>
+          <div class="mathjax-wrapper">
+            <p>Área:</p>
+            <p>$$A = l^2$$</p>
+            <p>Perímetro:</p>
+            <p>$$P = 4l$$</p>
+            <p>Donde \(l\) es la longitud del lado.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Cuadrado</h4>
+          <img src="img/cuadrado.png" alt="Cuadrado"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un cuadrado es un polígono regular de cuatro lados iguales y cuatro
+            ángulos rectos.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Círculo</h4>
+          <div class="mathjax-wrapper">
+            <p>Área:</p>
+            <p>$$A = \pi r^2$$</p>
+            <p>Perímetro (circunferencia):</p>
+            <p>$$P = 2\pi r$$</p>
+            <p>Donde \(r\) es el radio del círculo.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Círculo</h4>
+          <img src="img/circulo.png" alt="Círculo"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un círculo es el lugar geométrico de los puntos que se encuentran a la
+            misma distancia (radio) de un punto dado (centro).</p>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Cuerpos Geométricos</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Cubo</h4>
+          <div class="mathjax-wrapper">
+            <p>Volumen:</p>
+            <p>$$V = l^3$$</p>
+            <p>Área de la superficie:</p>
+            <p>$$A = 6l^2$$</p>
+            <p>Donde \(l\) es la longitud de la arista.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Cubo</h4>
+          <img src="img/cubo.png" alt="Cubo"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un cubo es un poliedro regular compuesto por seis caras cuadradas
+            congruentes.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Prisma Rectangular</h4>
+          <div class="mathjax-wrapper">
+            <p>Volumen:</p>
+            <p>$$V = l \cdot w \cdot h$$</p>
+            <p>Área de la superficie:</p>
+            <p>$$A = 2(lw + lh + wh)$$</p>
+            <p>Donde \(l\) es la longitud, \(w\) es el ancho y \(h\) es la altura.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Prisma Rectangular</h4>
+          <img src="img/prisma-rectangular.png" alt="Prisma Rectangular"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un prisma rectangular es un poliedro cuyas bases son rectángulos y cuyas
+            caras laterales son paralelogramos.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Cilindro</h4>
+          <div class="mathjax-wrapper">
+            <p>Volumen:</p>
+            <p>$$V = \pi r^2 h$$</p>
+            <p>Área de la superficie:</p>
+            <p>$$A = 2\pi r^2 + 2\pi r h$$</p>
+            <p>Donde \(r\) es el radio de la base y \(h\) es la altura.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Cilindro</h4>
+          <img src="img/cilindro.png" alt="Cilindro"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un cilindro es un cuerpo geométrico formado por una superficie lateral
+            curva cerrada y dos bases circulares paralelas.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Esfera</h4>
+          <div class="mathjax-wrapper">
+            <p>Volumen:</p>
+            <p>$$V = \frac{4}{3} \pi r^3$$</p>
+            <p>Área de la superficie:</p>
+            <p>$$A = 4 \pi r^2$$</p>
+            <p>Donde \(r\) es el radio de la esfera.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Esfera</h4>
+          <img src="img/esfera.png" alt="Esfera"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Una esfera es el lugar geométrico de los puntos del espacio que
+            equidistan de un punto fijo llamado centro.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Triángulo Irregular (Fórmula de Herón)</h4>
+          <div class="mathjax-wrapper">
+            <p>Para un triángulo con lados \(a\), \(b\) y \(c\), se define:</p>
+            <p>Perímetro:</p>
+            <p>$$p = a + b + c$$</p>
+            <p>Semiperímetro:</p>
+            <p>$$s = \frac{p}{2} = \frac{a + b + c}{2}$$</p>
+            <p>Área según la fórmula de Herón:</p>
+            <p>$$A = \sqrt{s(s-a)(s-b)(s-c)}$$</p>
+            <p>Esta fórmula permite calcular el área de cualquier triángulo conociendo únicamente las longitudes de sus
+              tres lados.</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Triángulo Irregular</h4>
+          <img src="img/triangulo-irregular.png" alt="Triángulo Irregular"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un triángulo irregular es aquel que tiene sus tres lados con longitudes
+            diferentes.</p>
+        </div>
+      </section>
+
+      <!-- Ángulos y sus Tipos y Formas -->
+      <section id="angulos" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Ángulos y sus Tipos y Formas</h1>
+
+        <p class="mb-4">Los ángulos son una medida de rotación o apertura entre dos semirrectas que comparten un origen
+          común, llamado vértice. Son elementos fundamentales en geometría que permiten describir relaciones espaciales
+          y forman la base de muchos teoremas y propiedades geométricas.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>Un ángulo es la figura formada por dos semirrectas que tienen el mismo origen o punto inicial. Este punto
+              se denomina vértice del ángulo, y las semirrectas son los lados del ángulo. La medida de un ángulo puede
+              expresarse en grados (°), radianes (rad) o grados centesimales (g).</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Tipos de Ángulos</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Clasificación por su Medida</h4>
+          <div class="mathjax-wrapper">
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Ángulo nulo:</strong> Mide 0°. Los dos lados del ángulo coinciden formando una semirrecta.
+              </li>
+              <li><strong>Ángulo agudo:</strong> Mide entre 0° y 90° (exclusivamente). Es menor que un ángulo recto.
+              </li>
+              <li><strong>Ángulo recto:</strong> Mide exactamente 90°. Sus lados son perpendiculares entre sí.</li>
+              <li><strong>Ángulo obtusángulo (obtuso):</strong> Mide entre 90° y 180° (exclusivamente). Es mayor que un
+                ángulo recto pero menor que un ángulo llano.</li>
+              <li><strong>Ángulo llano:</strong> Mide exactamente 180°. Sus lados forman una recta.</li>
+              <li><strong>Ángulo perigonal (completo):</strong> Mide 360°. Representa una rotación completa, volviendo
+                al punto de partida.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Tipos de Ángulos</h4>
+          <img src="img/tipos de angulo.png" alt="Tipos de Ángulos"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Representación visual de los diferentes tipos de ángulos según su
+            medida: agudo, recto, obtuso y llano.</p>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-3">Formas de Ángulos</h3>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ángulos Relacionados</h4>
+          <div class="mathjax-wrapper">
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Ángulos complementarios:</strong> Dos ángulos son complementarios cuando la suma de sus
+                medidas es 90°. Si los ángulos son α y β, entonces α + β = 90°.</li>
+              <li><strong>Ángulos suplementarios:</strong> Dos ángulos son suplementarios cuando la suma de sus medidas
+                es 180°. Si los ángulos son α y β, entonces α + β = 180°.</li>
+              <li><strong>Ángulos opuestos por el vértice:</strong> Se forman cuando dos rectas se cruzan. Los ángulos
+                opuestos por el vértice son iguales. Si tenemos los ángulos α, β, γ y δ formados por dos rectas que se
+                cruzan, entonces α = γ y β = δ.</li>
+              <li><strong>Ángulos alternos:</strong> Cuando una recta (transversal) corta a dos rectas paralelas, se
+                forman ángulos alternos. Los ángulos alternos internos son iguales entre sí, al igual que los ángulos
+                alternos externos.</li>
+              <li><strong>Ángulos correspondientes:</strong> Son ángulos que ocupan la misma posición relativa cuando
+                una recta transversal corta a dos rectas. Si las rectas son paralelas, los ángulos correspondientes son
+                iguales.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Ángulos Formados por Rectas Paralelas</h4>
+          <img src="img/angulos-entre-paralelas.jpg"
+            alt="Ángulos entre Paralelas" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Cuando una recta transversal corta a dos rectas paralelas, se forman
+            ángulos correspondientes, alternos internos y alternos externos que mantienen relaciones de igualdad.</p>
+        </div>
+
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Propiedades de los Ángulos en Polígonos</h4>
+          <div class="mathjax-wrapper">
+            <p>La suma de los ángulos internos de un polígono de n lados viene dada por la fórmula:</p>
+            <p>$$S = (n - 2) \cdot 180°$$</p>
+            <p>Por ejemplo:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Triángulo (n = 3): S = (3 - 2) · 180° = 180°</li>
+              <li>Cuadrilátero (n = 4): S = (4 - 2) · 180° = 360°</li>
+              <li>Pentágono (n = 5): S = (5 - 2) · 180° = 540°</li>
+            </ul>
+            <p>La medida de cada ángulo interno de un polígono regular de n lados es:</p>
+            <p>$$\alpha = \frac{(n - 2) \cdot 180°}{n}$$</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Ángulos en un Triángulo</h4>
+          <img src="img/angulos-triangulo.png"
+            alt="Ángulos en un Triángulo" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">En todo triángulo, la suma de los ángulos internos es siempre 180°,
+            independientemente de su forma o tamaño.</p>
+        </div>
+      </section>
+
+      <!-- Triángulos -->
+      <section id="triangulos" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Triángulos</h1>
+        <p class="mb-4">Los triángulos son figuras geométricas de tres lados y tres ángulos. Esto también se verá en
+          Trigonometría.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>Un triángulo es un polígono de tres lados. Según sus lados, se clasifica en:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Equilátero:</strong> Tres lados iguales.</li>
+              <li><strong>Isósceles:</strong> Dos lados iguales.</li>
+              <li><strong>Escaleno:</strong> Todos los lados diferentes.</li>
+            </ul>
+            <p class="mt-4">Según sus ángulos, se clasifica en:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Acutángulo:</strong> Todos sus ángulos son menores a 90°.</li>
+              <li><strong>Rectángulo:</strong> Posee un ángulo de 90°.</li>
+              <li><strong>Obtusángulo:</strong> Tiene un ángulo mayor a 90°.</li>
+              <li><strong>Oblicuángulo:</strong> Se subdivide en:
+                <ul class="list-disc pl-5 mt-1">
+                  <li><strong>Triángulos oblicuángulos agudos:</strong> Todos los ángulos son agudos.</li>
+                  <li><strong>Triángulos oblicuángulos obtusos:</strong> Tienen un ángulo obtuso.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Triángulos</h4>
+          <img src="img/Tipos-de-Triangulo.jpg" alt="Triángulos"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Una representación de triángulos ilustrando la clasificación según sus
+            lados y ángulos.</p>
+        </div>
+      </section>
+
+      <!-- Teoremas de los Ángulos de un Triángulo -->
+      <section id="teoremas-angulos" class="content-container">
+        <h1 class="text-3xl font-bold section-title">Teoremas de los Ángulos de un Triángulo</h1>
+        <p class="mb-4">En un triángulo, se cumplen ciertos teoremas fundamentales relacionados con los ángulos. Estos
+          teoremas permiten determinar la medida de los ángulos internos y externos con base en relaciones geométricas
+          esenciales.</p>
+
+        <div class="definition-box">
+          <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+          <div class="mathjax-wrapper">
+            <p>La suma de los ángulos internos de cualquier triángulo es siempre 180°:</p>
+            <p>$$\alpha + \beta + \gamma = 180°$$</p>
+            <p>Asimismo, la suma de los ángulos externos de un triángulo es 360°:</p>
+            <p>$$\alpha_{ext} + \beta_{ext} + \gamma_{ext} = 360°$$</p>
+            <p>Para hallar un ángulo interno, dado que se conocen los otros dos, se utiliza la fórmula:</p>
+            <p>$$\alpha = 180° - (\beta + \gamma)$$</p>
+          </div>
+        </div>
+
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Cálculo de un Ángulo Interno</h4>
+          <img src="img/angulos-internos.jpg"
+            alt="Triángulo con ángulos" class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Si en un triángulo se conocen dos ángulos de 50° y 60°, el tercer ángulo
+            se calcula como: \(180° - (50° + 60°) = 70°\).</p>
+        </div>
+      </section>
+
+      <!-- Ángulos en Circunferencia [NEW SECTION] -->
+      <section id="anguloscircunferencia" class="content-container">
+        <h3 class="text-xl font-semibold mt-6 mb-3">Tipos de Ángulos en Circunferencia</h3>
+        
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ángulo Central</h4>
+          <div class="mathjax-wrapper">
+            <p>Un ángulo central es aquel cuyo vértice está en el centro de la circunferencia y cuyos lados son radios de la
+              misma.</p>
+            <p>Propiedades:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Un ángulo central mide lo mismo que el arco que abarca.</li>
+              <li>Si un ángulo central θ abarca un arco de longitud L en una circunferencia de radio r, entonces:</li>
+            </ul>
+            <p>$$\theta = \frac{L}{r} \text{ (en radianes)}$$</p>
+          </div>
+        </div>
+        
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Ángulo Central</h4>
+          <img src="img/angulo-central.png" alt="Ángulo Central"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un ángulo central con su vértice en el centro de la circunferencia y sus lados
+            determinando un arco.</p>
+        </div>
+        
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ángulo Inscrito</h4>
+          <div class="mathjax-wrapper">
+            <p>Un ángulo inscrito es aquel cuyo vértice está sobre la circunferencia y cuyos lados son secantes o uno es secante
+              y el otro tangente a la circunferencia.</p>
+            <p>Teorema del ángulo inscrito:</p>
+            <p>La medida de un ángulo inscrito es igual a la mitad de la medida del ángulo central que abarca el mismo arco.</p>
+            <p>$$\alpha = \frac{\theta}{2}$$</p>
+            <p>Donde α es el ángulo inscrito y θ es el ángulo central que abarca el mismo arco.</p>
+          </div>
+        </div>
+        
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Ángulo Inscrito</h4>
+          <img src="img/angulo-inscrito.png" alt="Ángulo Inscrito"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un ángulo inscrito con su vértice sobre la circunferencia y sus lados
+            interceptando un arco.</p>
+        </div>
+        
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ángulo Semiinscrito</h4>
+          <div class="mathjax-wrapper">
+            <p>Un ángulo semiinscrito es aquel cuyo vértice está sobre la circunferencia, uno de sus lados es secante y el otro
+              es tangente a la circunferencia.</p>
+            <p>Teorema del ángulo semiinscrito:</p>
+            <p>La medida de un ángulo semiinscrito es igual a la mitad de la medida del ángulo central que abarca el mismo arco.
+            </p>
+            <p>$$\beta = \frac{\theta}{2}$$</p>
+            <p>Donde β es el ángulo semiinscrito y θ es el ángulo central que abarca el mismo arco.</p>
+          </div>
+        </div>
+        
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Ángulo Semiinscrito</h4>
+          <img src="img/angulo-semiinscrito.png" alt="Ángulo Semiinscrito"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un ángulo semiinscrito con su vértice sobre la circunferencia, un lado tangente
+            y otro secante.</p>
+        </div>
+        
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ángulo Interior</h4>
+          <div class="mathjax-wrapper">
+            <p>Un ángulo interior es aquel cuyo vértice está dentro de la circunferencia y cuyos lados son secantes a la
+              circunferencia.</p>
+            <p>Teorema del ángulo interior:</p>
+            <p>La medida de un ángulo interior es igual a la semisuma de los arcos comprendidos por sus lados y por las
+              prolongaciones de sus lados.</p>
+            <p>$$\gamma = \frac{\text{arco AB} + \text{arco CD}}{2}$$</p>
+            <p>Donde γ es el ángulo interior, AB es el arco comprendido por los lados del ángulo y CD es el arco comprendido por
+              las prolongaciones de los lados.</p>
+          </div>
+        </div>
+        
+        <div class="my-6">
+          <h4 class="text-lg font-medium mb-3">Ejemplo: Ángulo Interior</h4>
+          <img src="img/angulo-interno.png" alt="Ángulo Interior"
+            class="example-image">
+          <p class="text-sm text-gray-600 mt-2">Un ángulo interior con su vértice dentro de la circunferencia y sus lados
+            interceptando la circunferencia.</p>
+        </div>
+        
+        <div class="formula-box">
+          <h4 class="text-lg font-medium mb-2">Ángulo Exterior</h4>
+          <div class="mathjax-wrapper">
+            <p>Un ángulo exterior es aquel cuyo vértice está fuera de la circunferencia y cuyos lados son secantes o tangentes a
+              la circunferencia.</p>
+            <p>Teorema del ángulo exterior:</p>
+            <p>La medida de un ángulo exterior es igual a la semidiferencia de los arcos comprendidos por sus lados.</p>
+            <p>$$\delta = \frac{\text{arco AB} - \text{arco CD}}{2}$$</p>
+          </div>
+          </div>
+
+          <div class="my-6">
+            <h4 class="text-lg font-medium mb-3">Ejemplo: Ángulo Exterior</h4>
+            <img src="img/angulo-externo.png" alt="Ángulo Interior"
+              class="example-image">
+            <p class="text-sm text-gray-600 mt-2">Un ángulo exterior con su vértice fuera de la circunferencia y sus lados
+              interceptando la circunferencia.</p>
+            </div>
+          </section>
+
+        <!-- Líneas y Puntos Notables [NEW SECTION] -->
+        <section id="lineas-puntos-notables" class="content-container">
+          <h1 class="text-3xl font-bold section-title">Líneas y Puntos Notables</h1>
+
+          <p class="mb-4">En el estudio de los triángulos, existen ciertos puntos y líneas que tienen propiedades
+            especiales y son fundamentales para comprender la geometría del triángulo. Estos incluyen el baricentro,
+            incentro, ortocentro y circuncentro, así como los elementos asociados como medianas, bisectrices y alturas.
+          </p>
+
+          <div class="definition-box">
+            <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+            <div class="mathjax-wrapper">
+              <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Mediana:</strong> Segmento que va desde un vértice hasta el punto medio del lado opuesto.
+                </li>
+                <li><strong>Baricentro:</strong> Punto de intersección de las tres medianas. Divide a cada mediana en la
+                  razón 2:1 desde el vértice.</li>
+                <li><strong>Bisectriz:</strong> Semirrecta que parte de un vértice y divide al ángulo en dos partes
+                  iguales.</li>
+                <li><strong>Incentro:</strong> Punto de intersección de las tres bisectrices. Es el centro del círculo
+                  inscrito en el triángulo.</li>
+                <li><strong>Altura:</strong> Segmento perpendicular trazado desde un vértice al lado opuesto o su
+                  prolongación.</li>
+                <li><strong>Ortocentro:</strong> Punto de intersección de las tres alturas o sus prolongaciones.</li>
+                <li><strong>Mediatriz:</strong> Recta perpendicular a un lado que pasa por su punto medio.</li>
+                <li><strong>Circuncentro:</strong> Punto de intersección de las tres mediatrices. Es el centro del
+                  círculo circunscrito al triángulo.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="my-6">
+            <h4 class="text-lg font-medium mb-3">Ejemplo: Puntos Notables en un Triángulo</h4>
+            <img src="img/lineas-notables-del-triangulo.jpg"
+              alt="Puntos Notables en un Triángulo" class="example-image">
+            <p class="text-sm text-gray-600 mt-2">Representación visual de los cuatro puntos notables de un triángulo:
+              baricentro (G), incentro (I), ortocentro (H) y circuncentro (O). Estos puntos están alineados en la recta
+              de Euler cuando el triángulo no es equilátero.</p>
+          </div>
+        </section>
+      </section>
+
+      
+
+  
+  <!-- Líneas y Puntos Notables [NEW SECTION] -->
+  <section id="lineas-puntos-notables" class="content-container">
+    <h1 class="text-3xl font-bold section-title">Líneas y Puntos Notables</h1>
+  
+    <p class="mb-4">En el estudio de los circulos, existen ciertos puntos y líneas que tienen propiedades especiales y
+      son fundamentales para comprender la geometría del circulo. Estos incluyen el radio, centro, diametro, tangente, así como los elementos asociados como secante, cuerda y arco.</p>
+  
+    <div class="definition-box">
+      <h3 class="text-xl font-semibold mb-3">Definición Formal</h3>
+      <div class="mathjax-wrapper">
+        <ul class="list-disc pl-5 space-y-2">
+          <li><strong>Centro:</strong>Es el punto interior del círculo que está a igual distancia de todos los puntos de la circunferencia.</li>
+          <li><strong>Radio:</strong>Es cualquier segmento que une el centro del círculo con un punto cualquiera de la circunferencia .</li>
+          <li><strong>Diametro:</strong>Es un segmento que une dos puntos de la circunferencia pasando por el centro .
+          </li>
+          <li><strong>Cuerda:</strong>Es un segmento que une dos puntos cualesquiera de la circunferencia.
+            en el triángulo.</li>
+          <li><strong>Tangente:</strong>Es una recta que toca a la circunferencia en un solo punto .
+          </li>
+          <li><strong>Arco:</strong> Es una porción de la circunferencia comprendida entre dos puntos de ella.</li>
+          <li><strong>Secante:</strong> Es una recta que corta a la circunferencia en dos puntos distintos .</li>
+          <li><strong>Semicircunferencia:</strong> Es la mitad de la circunferencia.</li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="my-6">
+      <h4 class="text-lg font-medium mb-3">Ejemplo: Puntos Notables en un Circulo</h4>
+      <img src="img/segmentos-Notables-circulo.png"
+        alt="Rectas Notables de un Circulo" class="example-image">
+      
+    </div>
+  </section>
+  
+  <!-- Teoremas de los Lados de un Triángulo [NEW SECTION] -->
+  <section id="teoremas-lados" class="content-container">
+    <h1 class="text-3xl font-bold section-title">Teoremas de los Lados de un Triángulo</h1>
+  
+    <p class="mb-4">Los teoremas relacionados con los lados de un triángulo establecen relaciones fundamentales entre las
+      longitudes de los lados, permitiendo resolver problemas geométricos de distancia, congruencia y similitud.</p>
+  
+    <div class="definition-box">
+      <h3 class="text-xl font-semibold mb-3">Teorema de Pitágoras</h3>
+      <div class="mathjax-wrapper">
+        <p>En un triángulo rectángulo, la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa:</p>
+        <p>$$a^2 + b^2 = c^2$$</p>
+        <p>Donde \(c\) es la hipotenusa y \(a\) y \(b\) son los catetos.</p>
+      </div>
+    </div>
+  
+    <div class="my-6">
+      <h4 class="text-lg font-medium mb-3">Ejemplo: Teorema de Pitágoras</h4>
+      <img src="img/teorema-de-pitagoras.jpg" alt="Teorema de Pitágoras"
+        class="example-image">
+      <p class="text-sm text-gray-600 mt-2">Representación gráfica del Teorema de Pitágoras, mostrando la relación entre
+        la hipotenusa y los catetos de un triángulo rectángulo.</p>
+    </div>
+  
+    <div class="formula-box">
+      <h4 class="text-lg font-medium mb-2">Desigualdad Triangular</h4>
+      <div class="mathjax-wrapper">
+        <p>En cualquier triángulo, la longitud de cualquier lado es menor que la suma de las longitudes de los otros dos
+          lados y mayor que su diferencia:</p>
+        <p>$$|b - c| < a < b + c$$</p>
+            <p>$$|a - c| < b < a + c$$</p>
+                <p>$$|a - b| < c < a + b$$</p>
+                    <p>Esta propiedad garantiza que tres segmentos pueden formar un triángulo si y solo si cumplen la
+                      desigualdad triangular.</p>
+      </div>
+    </div>
+
+    <div class="formula-box mt-6">
+      <h4 class="text-lg font-medium mb-2">Teorema de Thales</h4>
+      <div class="mathjax-wrapper">
+        <p>Si una línea paralela a un lado de un triángulo intersecta a los otros dos lados, entonces divide a estos lados
+        proporcionalmente:</p>
+        <p>$$\frac{a}{A} = \frac{b}{B} = \frac{c}{C}$$</p>
+      </div>
+    </div>
+  
+    <div class="formula-box mt-6">
+      <h4 class="text-lg font-medium mb-2">Teorema de la Bisectriz</h4>
+      <div class="mathjax-wrapper">
+        <p>La bisectriz de un ángulo de un triángulo divide al lado opuesto en segmentos proporcionales a los lados
+          adyacentes al ángulo:</p>
+        <p>Si \(AD\) es la bisectriz del ángulo \(A\) en el triángulo \(ABC\), entonces:</p>
+        <p>$$\frac{BD}{DC} = \frac{AB}{AC}$$</p>
+      </div>
+    </div>
+  
+    <div class="formula-box mt-6">
+      <h4 class="text-lg font-medium mb-2">Ley de los Senos</h4>
+      <div class="mathjax-wrapper">
+        <p>En cualquier triángulo, la razón entre la longitud de un lado y el seno del ángulo opuesto es constante:</p>
+        <p>$$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$$</p>
+        <p>Donde \(R\) es el radio del círculo circunscrito al triángulo.</p>
+      </div>
+    </div>
+  
+    <div class="my-6">
+      <h4 class="text-lg font-medium mb-3">Ejemplo: Ley de los Senos</h4>
+      <img src="img/ley-de-senos.png" alt="Ley de los Senos"
+        class="example-image">
+      <p class="text-sm text-gray-600 mt-2">Aplicación de la Ley de los Senos en un triángulo oblicuángulo, relacionando
+        los lados con los senos de los ángulos opuestos.</p>
+    </div>
+  
+    <div class="formula-box">
+      <h4 class="text-lg font-medium mb-2">Ley de los Cosenos</h4>
+      <div class="mathjax-wrapper">
+        <p>La Ley de los Cosenos relaciona un lado de un triángulo con los otros dos lados y el coseno del ángulo
+          comprendido:</p>
+        <p>$$a^2 = b^2 + c^2 - 2bc\cos A$$</p>
+        <p>$$b^2 = a^2 + c^2 - 2ac\cos B$$</p>
+        <p>$$c^2 = a^2 + b^2 - 2ab\cos C$$</p>
+        <p>Esta ley es una generalización del Teorema de Pitágoras para triángulos no rectángulos.</p>
+      </div>
+    </div>
+
+    <div class="my-6">
+      <h4 class="text-lg font-medium mb-3">Ejemplo: Ley de los Cosenos</h4>
+      <img src="img/ley-de-cosenos.png" alt="Ley de los Cosenos"
+        class="example-image">
+      <p class="text-sm text-gray-600 mt-2">Aplicación de la Ley de los Cosenos en un triángulo oblicuángulo, relacionando
+        los lados con los cosenos de los ángulos opuestos.</p>
+    </div>
+  </section>
+
+  <footer class="bg-gray-100 py-8 border-t border-gray-200">
+    <div class="container mx-auto px-6 text-center text-gray-600">
+      <p>© 2025 Guía Descriptiva de Geometria. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Botón Scroll to Top -->
+  <div class="scroll-top" id="scroll-top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+     function toggleTab() {
+        const tab = document.getElementById('searchTab');
+        tab.classList.toggle('open');
+      }
+
+      function filterTopics() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const items = document.querySelectorAll('.topic-item');
+        const noResults = document.getElementById('noResults');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(filter)) {
+            item.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+
+        if (visibleCount === 0) {
+          noResults.classList.add('show');
+        } else {
+          noResults.classList.remove('show');
+        }
+      }
+
+      function selectTopic(el) {
+        alert('Has seleccionado: ' + el.textContent);
+        // Aquí puedes agregar la lógica para cargar el contenido del tema
+      }
+
+      // Cerrar tab al hacer clic fuera
+      document.addEventListener('click', function (e) {
+        const tab = document.getElementById('searchTab');
+        const tabButton = document.querySelector('.tab-button');
+
+        if (tab.classList.contains('open') &&
+          !tab.contains(e.target) &&
+          !tabButton.contains(e.target)) {
+          tab.classList.remove('open');
+        }
+      });
+
+    // Botón Scroll to Top
+      const scrollTopBtn = document.getElementById('scroll-top');
+
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          scrollTopBtn.classList.add('active');
+        } else {
+          scrollTopBtn.classList.remove('active');
+        }
+      });
+
+      scrollTopBtn.addEventListener('click', function () {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometría Analítica</title>
+    <link rel="website icon" type="png" href="../../img/SigMath.png" />
+
+    <link rel="stylesheet" href="geo-analitica.css">
+    <link rel="stylesheet" href="../../SigMATH.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Chart.js para gráficos interactivos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Math.js para cálculos matemáticos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+
+    <!-- Plotly.js para gráficos interactivos más avanzados -->
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+
+    <!-- Add Google Fonts link for Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <style>
+        /* Estilos específicos de la aplicación */
+ .formula-box {
+     background-color: #f8f9fa;
+     border-radius: 8px;
+     padding: 15px;
+     margin: 10px 0;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+ }
+
+ body{
+    font-family: 'Poppins', sans-serif;
+ }
+
+ .example-box {
+     background-color: #e9f5ff;
+     border-radius: 8px;
+     padding: 15px;
+     margin: 15px 0;
+     border-left: 4px solid #3b82f6;
+ }
+
+ .step-box {
+     background-color: #ffffff;
+     border-radius: 6px;
+     padding: 10px;
+     margin: 8px 0;
+     border: 1px solid #e5e7eb;
+ }
+
+ .interactive-container {
+     background-color: #ffffff;
+     border-radius: 8px;
+     padding: 20px;
+     margin: 15px 0;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+     min-height: 400px;
+ }
+
+ 
+ .content-section {
+     display: block;
+     margin-bottom: 3rem;
+     padding-top: 2rem;
+ }
+
+ .content-section:not(:last-child) {
+     border-bottom: 1px solid #e5e7eb;
+     padding-bottom: 2rem;
+ }
+
+ .slider-container {
+     margin: 15px 0;
+ }
+
+ .slider-label {
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 5px;
+ }
+
+ input[type="range"] {
+     width: 100%;
+     margin: 8px 0;
+ }
+
+ @media (max-width: 768px) {
+     .desktop-menu {
+         display: none;
+     }
+
+     .mobile-menu-button {
+         display: block;
+     }
+ }
+
+ @media (min-width: 769px) {
+     .desktop-menu {
+         display: flex;
+     }
+
+     .mobile-menu-button {
+         display: none;
+     }
+
+     .mobile-menu {
+         display: none !important;
+     }
+ }
+
+ /* Animación para la carga */
+ .loading-spinner {
+     border: 3px solid rgba(0, 0, 0, 0.1);
+     border-radius: 50%;
+     border-top: 3px solid #3b82f6;
+     width: 24px;
+     height: 24px;
+     animation: spin 1s linear infinite;
+     margin: 0 auto;
+ }
+
+ @keyframes spin {
+     0% {
+         transform: rotate(0deg);
+     }
+
+     100% {
+         transform: rotate(360deg);
+     }
+ }
+
+ /* Para la versión móvil */
+ .mobile-menu {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: white;
+     z-index: 40;
+     padding: 20px;
+     transform: translateX(-100%);
+     transition: transform 0.3s ease-in-out;
+ }
+
+ .mobile-menu.show {
+     transform: translateX(0);
+ }
+
+ /* Botón scroll to top */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+.scroll-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background-color: var(--secondary);
+    transform: translateY(-5px);
+}
+
+  .content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+    
+        h1 {
+           
+            margin-bottom: 20px;
+        }
+    
+        p {
+            
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+    
+        /* Tab de búsqueda */
+        .search-tab {
+            position: fixed;
+            right: -350px;
+            top: 0;
+            height: 100vh;
+            width: 350px;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .search-tab.open {
+            right: 0;
+        }
+    
+        .tab-button {
+            position: absolute;
+            left: -50px;
+            top: 100px;
+            width: 50px;
+            height: 120px;
+            background: white;
+            border: none;
+            border-radius: 10px 0 0 10px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+    
+        .tab-button:hover {
+            background: #f8f9fa;
+        }
+    
+        .search-content {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            direction: rtl;
+        }
+    
+        .search-content>* {
+            direction: ltr;
+        }
+    
+        .search-content::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        .search-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb:hover {
+            background: #5568d3;
+        }
+    
+        .search-header {
+            margin-bottom: 25px;
+        }
+    
+        .search-header h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+    
+        .search-header p {
+            color: #999;
+            font-size: 14px;
+        }
+    
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+    
+        .search-input {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+    
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+    
+        .topics-list {
+            list-style: none;
+        }
+    
+        .topic-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+    
+        .topic-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+    
+        .topic-item.hidden {
+            display: none;
+        }
+    
+        .no-results {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            display: none;
+        }
+    
+        .no-results.show {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+    
+                    <h1 class="sigma">Σ</h1>
+                    <h1 class="sig">Sig</h1>
+                    <h1 class="MATH">MATH</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">SigMATH</a></li>
+                    <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                    <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                    <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                </ul>
+                <button class="hamburger" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Descubre el fascinante mundo de la Geometría Analítica<span class="typed-text" id="typed-element"></span></h2>
+            <p>La geometría analítica es una rama de las matemáticas que combina la geometría con el álgebra y el análisis matemático.
+            Su principal objetivo es estudiar las figuras geométricas y sus propiedades utilizando un sistema de coordenadas y
+            métodos algebraicos .</p>
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <div class="search-tab" id="searchTab">
+        <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+    
+        <div class="search-content">
+            <div class="search-header">
+                <h2>Buscar Temas</h2>
+                <p>Encuentra lo que necesitas</p>
+            </div>
+    
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+                    oninput="filterTopics()">
+                <span class="search-icon">🔍</span>
+            </div>
+    
+            <ul class="topics-list" id="topicsList">
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#plano-cartesiano" data-section="plano-cartesiano">Plano Cartesiano</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#conceptos-adicionales" data-section="conceptos-adicionales">Conceptos Adicionales</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#recta" data-section="recta">La Recta</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#circunferencia" data-section="circunferencia">La Circunferencia</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#parabola" data-section="parabola">La parabola</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#elipse" data-section="elipse">La Elipse</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#hiperbola" data-section="hiperbola">La hiperbola</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#coordenadas-parametricas" data-section="coordenadas-parametricas">Coordenadas Polares y Ecuaciones Parametricas</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones" data-section="aplicaciones">Aplicaciones</a></li>
+            </ul>
+    
+            <div class="no-results" id="noResults">
+                No se encontraron resultados
+            </div>
+        </div>
+    </div>
+  
+    
+
+    <!-- Contenedor principal -->
+    <main class="container mx-auto px-4 py-6 max-w-6xl">
+        <!-- Plano Cartesiano -->
+        <section id="plano-cartesiano" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">El Plano Cartesiano</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Coordenadas en el plano</h3>
+                <p>Un punto en el plano cartesiano se representa como \(P(x,y)\) donde:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>\(x\) es la coordenada horizontal (abscisa)</li>
+                    <li>\(y\) es la coordenada vertical (ordenada)</li>
+                </ul>
+            </div>
+
+            <p class="my-4">
+                El plano cartesiano es un sistema de referencia que permite ubicar puntos en un espacio bidimensional.
+                Está formado por dos ejes perpendiculares: el eje horizontal X (abscisas) y el eje vertical Y
+                (ordenadas),
+                que se intersectan en el punto (0,0), llamado origen de coordenadas.
+            </p>
+
+            <p class="my-4">
+                El plano queda dividido en cuatro cuadrantes:
+            </p>
+            <ul class="list-disc ml-6">
+                <li>Primer cuadrante (I): \(x > 0\) y \(y > 0\)</li>
+                <li>Segundo cuadrante (II): \(x < 0\) y \(y> 0\)</li>
+                <li>Tercer cuadrante (III): \(x < 0\) y \(y < 0\)</li>
+                <li>Cuarto cuadrante (IV): \(x > 0\) y \(y < 0\)</li>
+            </ul>
+
+            <div class="example-box mt-6">
+                <h3 class="text-lg font-semibold mb-2">Ejemplo: Ubicación de puntos</h3>
+                <p>Ubiquemos los siguientes puntos en el plano cartesiano:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>\(A(3,4)\): 3 unidades a la derecha del origen y 4 unidades hacia arriba.</li>
+                    <li>\(B(-2,5)\): 2 unidades a la izquierda del origen y 5 unidades hacia arriba.</li>
+                    <li>\(C(-3,-1)\): 3 unidades a la izquierda del origen y 1 unidad hacia abajo.</li>
+                    <li>\(D(4,-3)\): 4 unidades a la derecha del origen y 3 unidades hacia abajo.</li>
+                </ul>
+            </div>
+
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Explorador interactivo del plano cartesiano</h3>
+                <p class="mb-4">Mueve los controles para ubicar un punto en el plano y observa sus coordenadas.</p>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Coordenada X:</span>
+                                <span id="x-value">0</span>
+                            </div>
+                            <input type="range" id="x-slider" min="-10" max="10" value="0" step="0.5" class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Coordenada Y:</span>
+                                <span id="y-value">0</span>
+                            </div>
+                            <input type="range" id="y-slider" min="-10" max="10" value="0" step="0.5" class="w-full">
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Coordenadas actuales:</p>
+                            <p class="text-center text-xl mt-2">P(<span id="coord-x">0</span>, <span
+                                    id="coord-y">0</span>)</p>
+                            <p class="mt-2 text-sm" id="cuadrante-info">El punto está en el origen.</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="plano-cartesiano-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conceptos Adicionales -->
+        <section id="conceptos-adicionales" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">Conceptos Adicionales</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Conceptos adicionales</h3>
+                <ul class="list-disc ml-6 mt-2">
+                    <li><strong>Pendiente (m):</strong> \(m = \frac{y_2 - y_1}{x_2 - x_1}\). Indica la inclinación de la
+                        recta.</li>
+                    <li><strong>Normal a la pendiente:</strong> La dirección normal a la recta tiene pendiente
+                        \(-\frac{1}{m}\) (si \(m \neq 0\)).</li>
+                    <li><strong>Ángulo de inclinación (\(\theta\)):</strong> Se relaciona con la pendiente por \(\theta
+                        = \arctan(m)\), donde \(\theta\) es el ángulo formado con el eje X.</li>
+                    <li><strong>Ecuación extendida:</strong> Una forma de representar la recta considerando estos
+                        conceptos es utilizando la forma general junto con la fórmula del ángulo: \(y = m x + b, \quad
+                        \theta = \arctan(m)\).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Recta -->
+        <section id="recta" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">La Recta</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Ecuaciones de la recta</h3>
+                <p>Existen varias formas de representar una recta:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Ecuación general: \(Ax + By + C = 0\)</li>
+                    <li>Forma punto-pendiente: \(y - y_1 = m(x - x_1)\)</li>
+                    <li>Forma pendiente-intercepto: \(y = mx + b\)</li>
+                    <li>Forma de interceptos: \(\frac{x}{a} + \frac{y}{b} = 1\)</li>
+                </ul>
+                <p class="mt-2">Donde \(m\) es la pendiente de la recta, \(b\) es el intercepto con el eje Y, y \((x_1,
+                    y_1)\) es un punto conocido de la recta.</p>
+
+                <!-- Nueva subsección para conceptos extendidos -->
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold">Conceptos adicionales</h4>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li><strong>Pendiente (m):</strong> \(m = \frac{y_2 - y_1}{x_2 - x_1}\). Indica la inclinación
+                            de la recta.</li>
+                        <li><strong>Normal a la pendiente:</strong> La dirección normal a la recta tiene pendiente
+                            \(-\frac{1}{m}\) (si \(m \neq 0\)).</li>
+                        <li><strong>Ángulo de inclinación (\(\theta\)):</strong> Se relaciona con la pendiente por
+                            \(\theta = \arctan(m)\), donde \(\theta\) es el ángulo formado con el eje X.</li>
+                        <li><strong>Ecuación extendida:</strong> Una forma de representar la recta considerando estos
+                            conceptos es utilizando la forma general junto con la fórmula del ángulo: \(y = m x + b,
+                            \quad \theta = \arctan(m)\).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="my-4">
+                La recta es el lugar geométrico de los puntos que siguen una dirección constante en el plano.<br>
+                La pendiente \(m\) mide la inclinación y se calcula como el cambio en \(y\) dividido por el cambio en
+                \(x\) entre dos puntos de la recta.
+            </p>
+
+            <div class="example-box mt-6">
+                <h3 class="text-lg font-semibold mb-2">Ejemplo: Encontrar la ecuación de una recta</h3>
+                <p>Encontremos la ecuación de la recta que pasa por los puntos \(A(2,3)\) y \(B(5,7)\).</p>
+
+                <div class="step-box">
+                    <p><strong>Paso 1:</strong> Calculamos la pendiente:</p>
+                    <p>\(m = \frac{y_2 - y_1}{x_2 - x_1} = \frac{7 - 3}{5 - 2} = \frac{4}{3} \approx 1.33\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 2:</strong> Utilizamos la forma punto-pendiente:</p>
+                    <p>\(y - 3 = \frac{4}{3}(x - 2)\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 3:</strong> Calculamos el ángulo de inclinación:</p>
+                    <p>\(\theta = \arctan\left(\frac{4}{3}\right)\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 4:</strong> La recta normal a esta, tendrá pendiente \(-\frac{3}{4}\).</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Resultado:</strong> La ecuación de la recta en forma pendiente-intercepto es:</p>
+                    <p>\(y = \frac{4}{3}x + \frac{1}{3}\)</p>
+                </div>
+
+                <!-- Nuevo ejemplo complementario -->
+                <div class="example-box mt-6">
+                    <h3 class="text-lg font-semibold mb-2">Ejemplo Complementario: Hallar pendiente, ángulo de
+                        inclinación, recta normal y ecuación general</h3>
+                    <p>Trabajemos con los puntos \(A(1,2)\) y \(B(4,6)\).</p>
+
+                    <div class="step-box">
+                        <p><strong>Paso 1:</strong> Identificamos los puntos dados:</p>
+                        <p>\(A(1,2)\) y \(B(4,6)\)</p>
+                    </div>
+
+                    <div class="step-box">
+                        <p><strong>Paso 2:</strong> Calculamos la pendiente utilizando la fórmula:</p>
+                        <p>\(m = \frac{y_2 - y_1}{x_2 - x_1} = \frac{6 - 2}{4 - 1} = \frac{4}{3} \approx 1.33\)</p>
+                    </div>
+
+                    <div class="step-box">
+                        <p><strong>Paso 3:</strong> Calculamos el ángulo de inclinación:</p>
+                        <p>\(\theta = \arctan(m) = \arctan\left(\frac{4}{3}\right) \approx 53.13°\)</p>
+                        <p>Este es el ángulo que forma la recta con el eje X positivo, medido en sentido antihorario.
+                        </p>
+                    </div>
+
+                    <div class="step-box">
+                        <p><strong>Paso 4:</strong> Hallamos la pendiente de la recta normal:</p>
+                        <p>\(m_{normal} = -\frac{1}{m} = -\frac{1}{\frac{4}{3}} = -\frac{3}{4} = -0.75\)</p>
+                        <p>Nota: Si la pendiente original fuera \(m = 0\) (recta horizontal), la normal sería una recta
+                            vertical (pendiente indefinida).</p>
+                    </div>
+
+                    <div class="step-box">
+                        <p><strong>Paso 5:</strong> Encontramos la ecuación en forma pendiente-intercepto:</p>
+                        <p>\(y - 2 = \frac{4}{3}(x - 1)\)</p>
+                        <p>\(y - 2 = \frac{4}{3}x - \frac{4}{3}\)</p>
+                        <p>\(y = \frac{4}{3}x - \frac{4}{3} + 2 = \frac{4}{3}x + \frac{2}{3}\)</p>
+                    </div>
+
+                    <div class="step-box">
+                        <p><strong>Paso 6:</strong> Escribimos la ecuación general:</p>
+                        <p>De \(y = \frac{4}{3}x + \frac{2}{3}\) obtenemos:</p>
+                        <p>\(\frac{4}{3}x - y + \frac{2}{3} = 0\)</p>
+                        <p>Multiplicando por 3 para eliminar fracciones:</p>
+                        <p>\(4x - 3y + 2 = 0\)</p>
+                    </div>
+
+                    <div class="step-box">
+                        <p><strong>Resultado:</strong> Para la recta que pasa por \(A(1,2)\) y \(B(4,6)\):</p>
+                        <p>Pendiente: \(m = \frac{4}{3}\)</p>
+                        <p>Ángulo de inclinación: \(\theta \approx 53.13°\)</p>
+                        <p>Pendiente de la recta normal: \(m_{normal} = -\frac{3}{4}\)</p>
+                        <p>Ecuación general: \(4x - 3y + 2 = 0\)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Explorador interactivo de rectas</h3>
+                <p class="mb-4">Ajusta los parámetros para ver cómo cambia la ecuación y la gráfica de la recta.</p>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Pendiente (m):</span>
+                                <span id="slope-value">1</span>
+                            </div>
+                            <input type="range" id="slope-slider" min="-5" max="5" value="1" step="0.1" class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Intercepto Y (b):</span>
+                                <span id="intercept-value">0</span>
+                            </div>
+                            <input type="range" id="intercept-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Ecuación de la recta:</p>
+                            <p class="text-center text-xl mt-2" id="line-equation">y = 1x + 0</p>
+
+                            <p class="font-semibold mt-4">Forma general:</p>
+                            <p class="text-center mt-1" id="general-form">1x - 1y + 0 = 0</p>
+
+                            <p class="mt-2 text-sm">Ángulo: \(\theta = \arctan(m)\)</p>
+                            <p class="mt-2 text-sm">Recta normal: Pendiente \(-1/m\)</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="recta-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Circunferencia -->
+        <section id="circunferencia" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">La Circunferencia</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Ecuación de la circunferencia</h3>
+                <p>Una circunferencia con centro en \((h,k)\) y radio \(r\) tiene la ecuación:</p>
+                <p class="text-center my-2">\((x - h)^2 + (y - k)^2 = r^2\)</p>
+                <p>Si el centro está en el origen \((0,0)\), la ecuación se simplifica a:</p>
+                <p class="text-center my-2">\(x^2 + y^2 = r^2\)</p>
+                <p>La forma general de la ecuación es:</p>
+                <p class="text-center my-2">\(x^2 + y^2 + Dx + Ey + F = 0\)</p>
+                <p>Donde el centro es \((-\frac{D}{2}, -\frac{E}{2})\) y el radio \(r = \sqrt{\frac{D^2 + E^2}{4} - F}\)
+                </p>
+            </div>
+
+            <p class="my-4">
+                La circunferencia es el lugar geométrico de los puntos del plano que equidistan de un punto fijo llamado
+                centro.
+                Esta distancia constante se denomina radio. Cada punto \((x,y)\) de la circunferencia cumple con la
+                condición
+                de que su distancia al centro \((h,k)\) es exactamente el radio \(r\).
+            </p>
+
+            <div class="example-box mt-6">
+                <h3 class="text-lg font-semibold mb-2">Ejemplo: Encontrar la ecuación de una circunferencia</h3>
+                <p>Encontrar la ecuación de la circunferencia con centro en \(C(3,-2)\) y radio \(r = 4\).</p>
+
+                <div class="step-box">
+                    <p><strong>Paso 1:</strong> Identificamos los valores:</p>
+                    <p>Centro: \((h,k) = (3,-2)\)</p>
+                    <p>Radio: \(r = 4\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 2:</strong> Sustituimos en la ecuación estándar:</p>
+                    <p>\((x - h)^2 + (y - k)^2 = r^2\)</p>
+                    <p>\((x - 3)^2 + (y - (-2))^2 = 4^2\)</p>
+                    <p>\((x - 3)^2 + (y + 2)^2 = 16\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 3:</strong> Desarrollamos la ecuación:</p>
+                    <p>\((x - 3)^2 + (y + 2)^2 = 16\)</p>
+                    <p>\(x^2 - 6x + 9 + y^2 + 4y + 4 = 16\)</p>
+                    <p>\(x^2 + y^2 - 6x + 4y + 9 + 4 - 16 = 0\)</p>
+                    <p>\(x^2 + y^2 - 6x + 4y - 3 = 0\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Resultado:</strong> La ecuación de la circunferencia es:</p>
+                    <p>\(x^2 + y^2 - 6x + 4y - 3 = 0\)</p>
+                </div>
+            </div>
+
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Explorador interactivo de circunferencias</h3>
+                <p class="mb-4">Ajusta los parámetros para ver cómo cambia la ecuación y la gráfica de la
+                    circunferencia.</p>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Centro X (h):</span>
+                                <span id="center-x-value">0</span>
+                            </div>
+                            <input type="range" id="center-x-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Centro Y (k):</span>
+                                <span id="center-y-value">0</span>
+                            </div>
+                            <input type="range" id="center-y-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Radio (r):</span>
+                                <span id="radius-value">3</span>
+                            </div>
+                            <input type="range" id="radius-slider" min="0.5" max="5" value="3" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Ecuación de la circunferencia:</p>
+                            <p class="text-center text-lg mt-2" id="circle-equation">(x - 0)² + (y - 0)² = 9</p>
+
+                            <p class="font-semibold mt-3">Forma general:</p>
+                            <p class="text-center mt-1" id="circle-general-form">x² + y² - 9 = 0</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="circunferencia-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parábola -->
+        <section id="parabola" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">La Parábola</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Ecuaciones de la parábola</h3>
+                <p>Una parábola es el lugar geométrico de los puntos que equidistan de un punto fijo (foco) y una recta
+                    fija (directriz).</p>
+                <p class="mt-2">Ecuaciones canónicas con vértice en el origen:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Eje focal en X: \(y^2 = 4px\) (abre hacia la derecha si \(p > 0\), hacia la izquierda si \(p <
+                            0\))</li>
+                    <li>Eje focal en Y: \(x^2 = 4py\) (abre hacia arriba si \(p > 0\), hacia abajo si \(p < 0\))</li>
+                </ul>
+                <p class="mt-2">Ecuaciones con vértice en \((h,k)\):</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Eje focal paralelo a X: \((y - k)^2 = 4p(x - h)\)</li>
+                    <li>Eje focal paralelo a Y: \((x - h)^2 = 4p(y - k)\)</li>
+                </ul>
+                <p class="mt-2">Donde \(p\) es la distancia del vértice al foco, y determina la "apertura" de la
+                    parábola.</p>
+            </div>
+
+            <p class="my-4">
+                La parábola tiene importantes aplicaciones en física, ingeniería y arquitectura, como en antenas
+                parabólicas, faros de automóviles, y diseño de puentes. Sus propiedades reflexivas hacen que todos
+                los rayos paralelos al eje de la parábola se reflejen pasando por el foco.
+            </p>
+
+            <div class="example-box mt-6">
+                <h3 class="text-lg font-semibold mb-2">Ejemplo: Encontrar la ecuación de una parábola</h3>
+                <p>Encontrar la ecuación de la parábola con vértice en \(V(2,1)\) y foco en \(F(2,3)\).</p>
+
+                <div class="step-box">
+                    <p><strong>Paso 1:</strong> Identificamos los valores:</p>
+                    <p>Vértice: \((h,k) = (2,1)\)</p>
+                    <p>Foco: \(F = (2,3)\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 2:</strong> Determinamos la orientación de la parábola y el valor de \(p\):</p>
+                    <p>Como el foco tiene la misma coordenada x que el vértice pero mayor coordenada y, la parábola abre
+                        hacia arriba.</p>
+                    <p>El valor de \(p\) es la distancia del vértice al foco: \(p = |3 - 1| = 2\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 3:</strong> Aplicamos la ecuación con eje focal paralelo al eje Y:</p>
+                    <p>\((x - h)^2 = 4p(y - k)\)</p>
+                    <p>\((x - 2)^2 = 4 \cdot 2 \cdot (y - 1)\)</p>
+                    <p>\((x - 2)^2 = 8(y - 1)\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Resultado:</strong> La ecuación de la parábola es:</p>
+                    <p>\((x - 2)^2 = 8(y - 1)\)</p>
+                </div>
+            </div>
+
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Explorador interactivo de parábolas</h3>
+                <p class="mb-4">Ajusta los parámetros para ver cómo cambia la ecuación y la forma de la parábola.</p>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Vértice X (h):</span>
+                                <span id="parabola-h-value">0</span>
+                            </div>
+                            <input type="range" id="parabola-h-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Vértice Y (k):</span>
+                                <span id="parabola-k-value">0</span>
+                            </div>
+                            <input type="range" id="parabola-k-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Parámetro p:</span>
+                                <span id="parabola-p-value">1</span>
+                            </div>
+                            <input type="range" id="parabola-p-slider" min="0.1" max="3" value="1" step="0.1"
+                                class="w-full">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="block mb-2">Orientación:</label>
+                            <select id="parabola-orientation" class="w-full p-2 border rounded">
+                                <option value="up">Abre hacia arriba</option>
+                                <option value="down">Abre hacia abajo</option>
+                                <option value="right">Abre hacia la derecha</option>
+                                <option value="left">Abre hacia la izquierda</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Ecuación de la parábola:</p>
+                            <p class="text-center text-lg mt-2" id="parabola-equation">(x - 0)² = 4(1)(y - 0)</p>
+
+                            <div class="mt-3">
+                                <p class="font-semibold">Elementos:</p>
+                                <p class="mt-1">Vértice: (<span id="parabola-vertex">0,0</span>)</p>
+                                <p class="mt-1">Foco: (<span id="parabola-focus">0,1</span>)</p>
+                                <p class="mt-1">Directriz: <span id="parabola-directrix">y = -1</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="parabola-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Elipse -->
+        <section id="elipse" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">La Elipse</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Ecuaciones de la elipse</h3>
+                <p>Una elipse es el lugar geométrico de los puntos cuya suma de distancias a dos puntos fijos (focos) es
+                    constante.</p>
+                <p class="mt-2">Ecuaciones canónicas con centro en el origen:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Eje mayor en X: \(\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1\) donde \(a > b\)</li>
+                    <li>Eje mayor en Y: \(\frac{x^2}{b^2} + \frac{y^2}{a^2} = 1\) donde \(a > b\)</li>
+                </ul>
+                <p class="mt-2">Ecuaciones con centro en \((h,k)\):</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Eje mayor paralelo a X: \(\frac{(x-h)^2}{a^2} + \frac{(y-k)^2}{b^2} = 1\)</li>
+                    <li>Eje mayor paralelo a Y: \(\frac{(x-h)^2}{b^2} + \frac{(y-k)^2}{a^2} = 1\)</li>
+                </ul>
+                <p class="mt-2">Donde:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>\(a\) es la longitud del semieje mayor</li>
+                    <li>\(b\) es la longitud del semieje menor</li>
+                    <li>\(c\) es la distancia del centro a cada foco, donde \(c^2 = a^2 - b^2\)</li>
+                </ul>
+            </div>
+
+            <p class="my-4">
+                La elipse tiene aplicaciones en astronomía (órbitas planetarias), física (movimiento de partículas),
+                arquitectura y acústica. Una propiedad importante es que cualquier rayo que pase por un foco se
+                reflejará hacia el otro foco, principio utilizado en las "galerías de susurros".
+            </p>
+
+            <div class="example-box mt-6">
+                <h3 class="text-lg font-semibold mb-2">Ejemplo: Encontrar la ecuación de una elipse</h3>
+                <p>Encontrar la ecuación de la elipse con centro en \(C(1,2)\), semieje mayor \(a=5\) a lo largo del eje
+                    X y semieje menor \(b=3\).</p>
+
+                <div class="step-box">
+                    <p><strong>Paso 1:</strong> Identificamos los valores:</p>
+                    <p>Centro: \((h,k) = (1,2)\)</p>
+                    <p>Semieje mayor: \(a = 5\) (a lo largo del eje X)</p>
+                    <p>Semieje menor: \(b = 3\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 2:</strong> Aplicamos la ecuación con centro en \((h,k)\) y eje mayor paralelo al
+                        eje X:</p>
+                    <p>\(\frac{(x-h)^2}{a^2} + \frac{(y-k)^2}{b^2} = 1\)</p>
+                    <p>\(\frac{(x-1)^2}{5^2} + \frac{(y-2)^2}{3^2} = 1\)</p>
+                    <p>\(\frac{(x-1)^2}{25} + \frac{(y-2)^2}{9} = 1\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 3:</strong> Calculamos la distancia focal \(c\):</p>
+                    <p>\(c^2 = a^2 - b^2 = 25 - 9 = 16\)</p>
+                    <p>\(c = 4\)</p>
+                    <p>Los focos están en: \(F_1(1-4,2) = F_1(-3,2)\) y \(F_2(1+4,2) = F_2(5,2)\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Resultado:</strong> La ecuación de la elipse es:</p>
+                    <p>\(\frac{(x-1)^2}{25} + \frac{(y-2)^2}{9} = 1\)</p>
+                </div>
+            </div>
+
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Explorador interactivo de elipses</h3>
+                <p class="mb-4">Ajusta los parámetros para ver cómo cambia la ecuación y la forma de la elipse.</p>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Centro X (h):</span>
+                                <span id="ellipse-h-value">0</span>
+                            </div>
+                            <input type="range" id="ellipse-h-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Centro Y (k):</span>
+                                <span id="ellipse-k-value">0</span>
+                            </div>
+                            <input type="range" id="ellipse-k-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Semieje mayor (a):</span>
+                                <span id="ellipse-a-value">4</span>
+                            </div>
+                            <input type="range" id="ellipse-a-slider" min="1" max="6" value="4" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Semieje menor (b):</span>
+                                <span id="ellipse-b-value">2</span>
+                            </div>
+                            <input type="range" id="ellipse-b-slider" min="0.5" max="6" value="2" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="block mb-2">Orientación:</label>
+                            <select id="ellipse-orientation" class="w-full p-2 border rounded">
+                                <option value="horizontal">Eje mayor horizontal</option>
+                                <option value="vertical">Eje mayor vertical</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Ecuación de la elipse:</p>
+                            <p class="text-center text-lg mt-2" id="ellipse-equation">\(\frac{(x-0)^2}{16} +
+                                \frac{(y-0)^2}{4} = 1\)</p>
+
+                            <div class="mt-3">
+                                <p class="font-semibold">Elementos:</p>
+                                <p class="mt-1">Centro: (<span id="ellipse-center">0,0</span>)</p>
+                                <p class="mt-1">Focos: (<span id="ellipse-focus1">-3.46,0</span>) y (<span
+                                        id="ellipse-focus2">3.46,0</span>)</p>
+                                <p class="mt-1">Excentricidad: <span id="ellipse-eccentricity">0.87</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="ellipse-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hipérbola -->
+        <section id="hiperbola" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">La Hipérbola</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Ecuaciones de la hipérbola</h3>
+                <p>Una hipérbola es el lugar geométrico de los puntos cuya diferencia de distancias a dos puntos fijos
+                    (focos) es constante.</p>
+                <p class="mt-2">Ecuaciones canónicas con centro en el origen:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Eje transverso en X: \(\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1\)</li>
+                    <li>Eje transverso en Y: \(\frac{y^2}{a^2} - \frac{x^2}{b^2} = 1\)</li>
+                </ul>
+                <p class="mt-2">Ecuaciones con centro en \((h,k)\):</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Eje transverso paralelo a X: \(\frac{(x-h)^2}{a^2} - \frac{(y-k)^2}{b^2} = 1\)</li>
+                    <li>Eje transverso paralelo a Y: \(\frac{(y-k)^2}{a^2} - \frac{(x-h)^2}{b^2} = 1\)</li>
+                </ul>
+                <p class="mt-2">Donde:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>\(a\) es la longitud del semieje transverso</li>
+                    <li>\(b\) es la longitud del semieje conjugado</li>
+                    <li>\(c\) es la distancia del centro a cada foco, donde \(c^2 = a^2 + b^2\)</li>
+                </ul>
+                <p class="mt-2">Las asíntotas de la hipérbola con eje transverso en X son: \(y = \pm \frac{b}{a}x\)</p>
+            </div>
+
+            <p class="my-4">
+                La hipérbola tiene aplicaciones en física (trayectorias de partículas), astronomía (órbitas de cometas),
+                navegación (sistemas LORAN) y acústica. Una propiedad importante es que cualquier rayo que se dirija
+                hacia un
+                foco se refleja como si proviniera del otro foco.
+            </p>
+
+            <div class="example-box mt-6">
+                <h3 class="text-lg font-semibold mb-2">Ejemplo: Encontrar la ecuación de una hipérbola</h3>
+                <p>Encontrar la ecuación de la hipérbola con centro en el origen, distancia entre vértices de 6 unidades
+                    a lo largo del eje X, y distancia entre focos de 10 unidades.</p>
+
+                <div class="step-box">
+                    <p><strong>Paso 1:</strong> Identificamos los valores:</p>
+                    <p>Centro: \((0,0)\)</p>
+                    <p>Distancia entre vértices = \(2a = 6\), por lo tanto \(a = 3\)</p>
+                    <p>Distancia entre focos = \(2c = 10\), por lo tanto \(c = 5\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 2:</strong> Calculamos el valor de \(b\) usando la relación \(c^2 = a^2 + b^2\):</p>
+                    <p>\(c^2 = a^2 + b^2\)</p>
+                    <p>\(5^2 = 3^2 + b^2\)</p>
+                    <p>\(25 = 9 + b^2\)</p>
+                    <p>\(b^2 = 16\)</p>
+                    <p>\(b = 4\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 3:</strong> Como el eje transverso está a lo largo del eje X, usamos la ecuación:
+                    </p>
+                    <p>\(\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1\)</p>
+                    <p>\(\frac{x^2}{3^2} - \frac{y^2}{4^2} = 1\)</p>
+                    <p>\(\frac{x^2}{9} - \frac{y^2}{16} = 1\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 4:</strong> Las asíntotas son:</p>
+                    <p>\(y = \pm \frac{b}{a}x = \pm \frac{4}{3}x\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Resultado:</strong> La ecuación de la hipérbola es:</p>
+                    <p>\(\frac{x^2}{9} - \frac{y^2}{16} = 1\)</p>
+                </div>
+            </div>
+
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Explorador interactivo de hipérbolas</h3>
+                <p class="mb-4">Ajusta los parámetros para ver cómo cambia la ecuación y la forma de la hipérbola.</p>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Centro X (h):</span>
+                                <span id="hyperbola-h-value">0</span>
+                            </div>
+                            <input type="range" id="hyperbola-h-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Centro Y (k):</span>
+                                <span id="hyperbola-k-value">0</span>
+                            </div>
+                            <input type="range" id="hyperbola-k-slider" min="-5" max="5" value="0" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Semieje transverso (a):</span>
+                                <span id="hyperbola-a-value">3</span>
+                            </div>
+                            <input type="range" id="hyperbola-a-slider" min="1" max="5" value="3" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Semieje conjugado (b):</span>
+                                <span id="hyperbola-b-value">2</span>
+                            </div>
+                            <input type="range" id="hyperbola-b-slider" min="0.5" max="4" value="2" step="0.5"
+                                class="w-full">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="block mb-2">Orientación:</label>
+                            <select id="hyperbola-orientation" class="w-full p-2 border rounded">
+                                <option value="horizontal">Eje transverso horizontal</option>
+                                <option value="vertical">Eje transverso vertical</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Ecuación de la hipérbola:</p>
+                            <p class="text-center text-lg mt-2" id="hyperbola-equation">\(\frac{(x-0)^2}{9} -
+                                \frac{(y-0)^2}{4} = 1\)</p>
+
+                            <div class="mt-3">
+                                <p class="font-semibold">Elementos:</p>
+                                <p class="mt-1">Centro: (<span id="hyperbola-center">0,0</span>)</p>
+                                <p class="mt-1">Focos: (<span id="hyperbola-focus1">-3.61,0</span>) y (<span
+                                        id="hyperbola-focus2">3.61,0</span>)</p>
+                                <p class="mt-1">Vértices: (<span id="hyperbola-vertex1">-3,0</span>) y (<span
+                                        id="hyperbola-vertex2">3,0</span>)</p>
+                                <p class="mt-1">Asíntotas: <span id="hyperbola-asymptotes">y = ±0.67x</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="hyperbola-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coordenadas Paramétricas -->
+        <section id="coordenadas-parametricas" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">Coordenadas Polares/Paramétricas</h2>
+
+            <div class="formula-box">
+                <h3 class="text-lg font-semibold mb-2">Coordenadas polares</h3>
+                <p>Las coordenadas polares representan un punto en el plano utilizando una distancia \(r\) y un ángulo
+                    \(\theta\) con respecto al origen.</p>
+                <p class="mt-2">La relación entre coordenadas polares \((r, \theta)\) y cartesianas \((x, y)\) es:</p>
+                <p class="mt-2">\(x = r \cos(\theta)\)</p>
+                <p class="mt-2">\(y = r \sin(\theta)\)</p>
+            </div>
+
+            <p class="my-4">
+                Las coordenadas polares son útiles para representar figuras que tienen simetría radial o que se pueden
+                describir fácilmente en términos de ángulos y distancias.
+            </p>
+
+            <div class="example-box mt-6">
+                <h3 class="text-lg font-semibold mb-2">Ejemplo: Convertir coordenadas cartesianas a polares</h3>
+                <p>Convertir el punto \(P(3,4)\) de coordenadas cartesianas a polares.</p>
+
+                <div class="step-box">
+                    <p><strong>Paso 1:</strong> Calculamos \(r\):</p>
+                    <p>\(r = \sqrt{x^2 + y^2} = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Paso 2:</strong> Calculamos \(\theta\):</p>
+                    <p>\(\theta = \arctan\left(\frac{y}{x}\right) = \arctan\left(\frac{4}{3}\right) \approx 53.13°\)</p>
+                </div>
+
+                <div class="step-box">
+                    <p><strong>Resultado:</strong> Las coordenadas polares del punto \(P(3,4)\) son:</p>
+                    <p>\((r, \theta) = (5, 53.13°)\)</p>
+                </div>
+            </div>
+
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Explorador interactivo de coordenadas polares</h3>
+                <p class="mb-4">Ajusta los parámetros para ver cómo cambia la representación de un punto en coordenadas
+                    polares.</p>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Coordenada X (x):</span>
+                                <span id="x-value">0</span>
+                            </div>
+                            <input type="range" id="x-slider" min="-10" max="10" value="0" step="0.5" class="w-full">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Coordenada Y (y):</span>
+                                <span id="y-value">0</span>
+                            </div>
+                            <input type="range" id="y-slider" min="-10" max="10" value="0" step="0.5" class="w-full">
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Coordenadas actuales:</p>
+                            <p class="text-center text-xl mt-2">P(<span id="coord-x">0</span>, <span
+                                    id="coord-y">0</span>)</p>
+                            <p class="mt-2 text-sm" id="cuadrante-info">El punto está en el origen.</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="coordenadas-polares-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aplicaciones de la Geometría Analítica -->
+        <section id="aplicaciones" class="content-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">Aplicaciones de la Geometría Analítica</h2>
+        
+            <p class="my-4">
+                La geometría analítica no es solo un conjunto de ecuaciones y gráficas; es una herramienta
+                poderosa que se aplica en numerosos campos de la ciencia, la ingeniería y la vida cotidiana.
+                A continuación, exploramos algunas de sus aplicaciones más relevantes.
+            </p>
+        
+            <!-- Subsección: Aplicaciones en la vida real -->
+            <div class="mt-8">
+                <h3 class="text-xl font-bold mb-3 text-blue-600">Aplicaciones en la vida real</h3>
+        
+                <div class="formula-box">
+                    <h4 class="text-lg font-semibold mb-2">Construcción y arquitectura</h4>
+                    <p>Los principios de la geometría analítica son fundamentales en el diseño estructural:</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Las parábolas aparecen en puentes colgantes y arcos arquitectónicos</li>
+                        <li>Las elipses se utilizan en diseños acústicos para anfiteatros</li>
+                        <li>Las transformaciones de coordenadas permiten modelar estructuras en 3D</li>
+                    </ul>
+                    <p class="mt-2">Ejemplo: Un arco parabólico puede modelarse como \(y = -a x^2 + h\), donde \(h\) es la
+                        altura máxima.</p>
+                </div>
+        
+                <div class="example-box mt-6">
+                    <h4 class="text-lg font-semibold mb-2">Ejemplo: Diseño de un puente colgante</h4>
+                    <p>Un puente colgante tiene forma parabólica. Si la altura del puente en el centro es de 50 metros y
+                        la distancia entre los dos pilares es de 200 metros, ¿cuál es la ecuación de la parábola?</p>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 1:</strong> Establecemos el sistema de coordenadas con el origen en el centro del
+                            puente.</p>
+                        <p>El puente se extiende desde \(x = -100\) hasta \(x = 100\).</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 2:</strong> Sabemos que la parábola pasa por (0, 50), (-100, 0) y (100, 0).</p>
+                        <p>Usamos la forma \(y = a x^2 + b x + c\).</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 3:</strong> Aplicamos las condiciones:</p>
+                        <p>En \(x = 0\): \(50 = a \cdot 0^2 + b \cdot 0 + c\), por lo tanto \(c = 50\)</p>
+                        <p>En \(x = 100\): \(0 = a \cdot 100^2 + b \cdot 100 + 50\)</p>
+                        <p>En \(x = -100\): \(0 = a \cdot (-100)^2 + b \cdot (-100) + 50\)</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 4:</strong> De las últimas dos ecuaciones:</p>
+                        <p>\(0 = 10000a + 100b + 50\)</p>
+                        <p>\(0 = 10000a - 100b + 50\)</p>
+                        <p>Sumando: \(0 = 20000a + 100\), por lo tanto \(a = -0.005\)</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 5:</strong> Sustituyendo \(a\) en una de las ecuaciones:</p>
+                        <p>\(0 = 10000 \cdot (-0.005) + 100b + 50\)</p>
+                        <p>\(0 = -50 + 100b + 50\)</p>
+                        <p>\(0 = 100b\)</p>
+                        <p>\(b = 0\)</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Resultado:</strong> La ecuación de la parábola es:</p>
+                        <p>\(y = -0.005 x^2 + 50\)</p>
+                        <p>Esta ecuación modela la forma del puente colgante.</p>
+                    </div>
+                </div>
+        
+                <div class="formula-box mt-6">
+                    <h4 class="text-lg font-semibold mb-2">Electricidad</h4>
+                    <p>La geometría analítica es esencial en el análisis y diseño de sistemas eléctricos:</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Los campos eléctricos se representan mediante vectores en el plano o espacio</li>
+                        <li>Las líneas equipotenciales forman curvas que pueden analizarse analíticamente</li>
+                        <li>La ley de Ohm puede interpretarse geométricamente como \(V = IR\), donde la pendiente representa la
+                            resistencia</li>
+                    </ul>
+                    <p class="mt-2">La relación entre campo eléctrico y potencial: \(\vec{E} = -\nabla V\)</p>
+                </div>
+        
+                <div class="formula-box mt-6">
+                    <h4 class="text-lg font-semibold mb-2">Astronomía</h4>
+                    <p>Las cónicas tienen aplicaciones directas en la astronomía:</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Las órbitas planetarias son elipses con el Sol en uno de los focos (Leyes de Kepler)</li>
+                        <li>Las órbitas de cometas pueden ser parábolas o hipérbolas</li>
+                        <li>La ecuación de la elipse \(\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1\) se utiliza para calcular las
+                            órbitas</li>
+                    </ul>
+                    <p class="mt-2">La excentricidad \(e = \frac{c}{a}\) determina el tipo de órbita:</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>\(0 \leq e < 1\): Elipse (planetas)</li>
+                        <li>\(e = 1\): Parábola</li>
+                        <li>\(e > 1\): Hipérbola (algunos cometas)</li>
+                    </ul>
+                </div>
+            </div>
+        
+            <!-- Subsección: Aplicaciones en la Física -->
+            <div class="mt-8">
+                <h3 class="text-xl font-bold mb-3 text-blue-600">Aplicaciones en la Física</h3>
+        
+                <div class="formula-box">
+                    <h4 class="text-lg font-semibold mb-2">Movimiento en dos dimensiones</h4>
+                    <p>Las ecuaciones paramétricas describen trayectorias en el plano:</p>
+                    <p class="mt-2">Movimiento de proyectiles:</p>
+                    <p>\(x(t) = v_0 \cos(\theta) \cdot t\)</p>
+                    <p>\(y(t) = v_0 \sin(\theta) \cdot t - \frac{1}{2}gt^2\)</p>
+                    <p class="mt-2">La trayectoria resultante es una parábola:</p>
+                    <p>\(y = x\tan(\theta) - \frac{gx^2}{2(v_0\cos(\theta))^2}\)</p>
+                </div>
+        
+                <div class="example-box mt-6">
+                    <h4 class="text-lg font-semibold mb-2">Ejemplo: Trayectoria de un proyectil</h4>
+                    <p>Un proyectil es lanzado desde el origen con velocidad inicial de 50 m/s y un ángulo de 30° respecto a la
+                        horizontal.
+                        Encontrar la ecuación de la trayectoria y determinar la altura máxima y el alcance horizontal.</p>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 1:</strong> Identificamos los valores:</p>
+                        <p>\(v_0 = 50\) m/s</p>
+                        <p>\(\theta = 30°\)</p>
+                        <p>\(g = 9.8\) m/s²</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 2:</strong> Calculamos los componentes de la velocidad inicial:</p>
+                        <p>\(v_{0x} = v_0 \cos(\theta) = 50 \cos(30°) = 50 \cdot 0.866 = 43.3\) m/s</p>
+                        <p>\(v_{0y} = v_0 \sin(\theta) = 50 \sin(30°) = 50 \cdot 0.5 = 25\) m/s</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 3:</strong> Aplicamos las ecuaciones paramétricas:</p>
+                        <p>\(x(t) = v_{0x} \cdot t = 43.3t\)</p>
+                        <p>\(y(t) = v_{0y} \cdot t - \frac{1}{2}gt^2 = 25t - 4.9t^2\)</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 4:</strong> Determinamos la ecuación de la trayectoria eliminando el parámetro t:</p>
+                        <p>\(t = \frac{x}{43.3}\)</p>
+                        <p>\(y = 25 \cdot \frac{x}{43.3} - 4.9 \cdot \left(\frac{x}{43.3}\right)^2\)</p>
+                        <p>\(y = 0.577x - 0.0026x^2\)</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 5:</strong> Calculamos la altura máxima:</p>
+                        <p>La altura máxima ocurre cuando \(v_y = 0\), es decir, cuando \(\frac{dy}{dt} = 0\)</p>
+                        <p>\(\frac{dy}{dt} = v_{0y} - gt = 25 - 9.8t = 0\)</p>
+                        <p>\(t = \frac{25}{9.8} = 2.55\) s</p>
+                        <p>\(y_{max} = y(2.55) = 25 \cdot 2.55 - 4.9 \cdot 2.55^2 = 63.75 - 31.87 = 31.88\) m</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Paso 6:</strong> Calculamos el alcance horizontal:</p>
+                        <p>El alcance horizontal es el valor de x cuando y = 0 (impacto con el suelo):</p>
+                        <p>\(0 = 0.577x - 0.0026x^2\)</p>
+                        <p>\(x(0.577 - 0.0026x) = 0\)</p>
+                        <p>\(x = 0\) o \(x = \frac{0.577}{0.0026} = 221.92\) m</p>
+                    </div>
+        
+                    <div class="step-box">
+                        <p><strong>Resultado:</strong></p>
+                        <p>Ecuación de la trayectoria: \(y = 0.577x - 0.0026x^2\)</p>
+                        <p>Altura máxima: 31.88 metros</p>
+                        <p>Alcance horizontal: 221.92 metros</p>
+                    </div>
+                </div>
+        
+                <div class="formula-box mt-6">
+                    <h4 class="text-lg font-semibold mb-2">Óptica geométrica</h4>
+                    <p>Las cónicas son fundamentales en el diseño de sistemas ópticos:</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Espejos parabólicos: todos los rayos paralelos al eje se reflejan pasando por el foco</li>
+                        <li>Espejos elípticos: los rayos que parten de un foco se reflejan pasando por el otro foco</li>
+                        <li>Espejos hiperbólicos: los rayos dirigidos hacia un foco se reflejan como si vinieran del otro foco
+                        </li>
+                    </ul>
+                    <p class="mt-2">La ley de reflexión establece que el ángulo de incidencia es igual al ángulo de reflexión.
+                    </p>
+                </div>
+            </div>
+        
+            <div class="interactive-container mt-6">
+                <h3 class="text-lg font-semibold mb-4">Simulador de trayectoria de proyectiles</h3>
+                <p class="mb-4">Ajusta los parámetros para explorar cómo cambia la trayectoria de un proyectil.</p>
+        
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Velocidad inicial (m/s):</span>
+                                <span id="velocity-value">50</span>
+                            </div>
+                            <input type="range" id="velocity-slider" min="10" max="100" value="50" step="5" class="w-full">
+                        </div>
+        
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Ángulo de lanzamiento (°):</span>
+                                <span id="angle-value">30</span>
+                            </div>
+                            <input type="range" id="angle-slider" min="0" max="90" value="30" step="5" class="w-full">
+                        </div>
+        
+                        <div class="mt-4 p-3 bg-gray-100 rounded-md">
+                            <p class="font-semibold">Resultados:</p>
+                            <p class="mt-2">Altura máxima: <span id="max-height">31.9</span> m</p>
+                            <p class="mt-1">Alcance horizontal: <span id="max-range">221.9</span> m</p>
+                            <p class="mt-1">Tiempo de vuelo: <span id="flight-time">5.1</span> s</p>
+        
+                            <p class="font-semibold mt-3">Ecuación de la trayectoria:</p>
+                            <p class="text-center mt-1" id="trajectory-equation">y = 0.577x - 0.0026x²</p>
+                        </div>
+        
+                        <button id="simulate-button"
+                            class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md w-full hover:bg-blue-700">
+                            Simular trayectoria
+                        </button>
+                    </div>
+
+                   
+        
+                    <div class="w-full md:w-2/3 h-80">
+                        <div id="projectile-plot" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <div class="float-buttons">
+    
+        <div class="float-button" id="topBtn">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+        
+        <footer class="bg-gray-100 py-8 border-t border-gray-200">
+            <div class="container mx-auto px-6 text-center text-gray-600">
+                <p>© 2025 Guía Descriptiva de Geometria Analítica. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </main>
+
+    <div class="float-buttons">
+    
+        <div class="float-button" id="topBtn">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+    <script>
+         function toggleTab() {
+                const tab = document.getElementById('searchTab');
+                tab.classList.toggle('open');
+            }
+
+            function filterTopics() {
+                const input = document.getElementById('searchInput');
+                const filter = input.value.toLowerCase();
+                const items = document.querySelectorAll('.topic-item');
+                const noResults = document.getElementById('noResults');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.add('show');
+                } else {
+                    noResults.classList.remove('show');
+                }
+            }
+
+            function selectTopic(el) {
+                alert('Has seleccionado: ' + el.textContent);
+                // Aquí puedes agregar la lógica para cargar el contenido del tema
+            }
+
+            // Cerrar tab al hacer clic fuera
+            document.addEventListener('click', function (e) {
+                const tab = document.getElementById('searchTab');
+                const tabButton = document.querySelector('.tab-button');
+
+                if (tab.classList.contains('open') &&
+                    !tab.contains(e.target) &&
+                    !tabButton.contains(e.target)) {
+                    tab.classList.remove('open');
+                }
+            });
+
+          // Botón Scroll to Top
+            const scrollTopBtn = document.getElementById('scroll-top');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('active');
+                } else {
+                    scrollTopBtn.classList.remove('active');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update navigation tab behavior to scroll to sections
+            const navTabs = document.querySelectorAll('.nav-tab, .mobile-nav-tab');
+
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const targetId = this.getAttribute('data-target');
+                    const targetSection = document.getElementById(targetId);
+
+                    // Update active tab styling
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.mobile-nav-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll(`[data-target="${targetId}"]`).forEach(t => t.classList.add('active'));
+
+                    // Close mobile menu if open
+                    document.getElementById('mobileMenu').classList.remove('show');
+
+                    // Smooth scroll to the section
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="website icon" type="png" href="img/SigMath.png" />
+  <title>SigMATH</title>
+  
+  <!-- Preconexiones a CDN para optimización -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Fuente Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
+  <!-- MathJax para fórmulas matemáticas -->
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+    --primary: #03045e;
+    --secondary: blue;
+    --accent: #f05252;
+    --light: #f3f4f6;
+    --dark: #111827;
+    --success: #0e9f6e;
+    --warning: #ff5a1f;
+    --gray-100: #f9fafb;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-800: #1f2937;
+    --transition: all 0.3s ease;
+}
+
+.sigma{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 7rem;
+}
+
+.sig{
+    color: cyan;
+}
+
+section {
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark);
+    background-color: var(--light);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Header y navegación */
+header {
+    font-family: 'Poppins', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.container {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.navbar {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.marquee-container {
+    background-color: #03045e;
+    color: whitesmoke;
+    padding: 0.5rem 0;
+    overflow: hidden;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 0.5rem;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links a {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--dark);
+}
+
+/* Banner principal */
+.hero {
+    margin-top: 76px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.3s forwards;
+}
+
+.hero .btn {
+    opacity: 0;
+    animation: fadeIn 1s ease 0.6s forwards;
+}
+
+.typed-text {
+    font-weight: 600;
+    color: #fff;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('https://cdn.pixabay.com/photo/2017/03/10/22/48/abstract-2134823_1280.png');
+    background-size: 1000px 100px;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: white;
+    color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--gray-100);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #6929d0;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--gray-300);
+    color: var(--dark);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Sección de tarjetas temáticas */
+.section {
+    padding: 5rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.section-header p {
+    color: var(--gray-500);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img {
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.card:hover .card-img img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.card-content p {
+    color: var(--gray-500);
+    margin-bottom: 1.5rem;
+}
+
+.greek{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.math-formula {
+    background-color: var(--gray-100);
+    padding: 1rem;
+    border-radius: 0.375rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+/* Encuestas */
+.survey-preview {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.survey-preview h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--dark);
+}
+
+.survey-preview p {
+    margin-bottom: 1.5rem;
+    color: var(--gray-500);
+}
+
+.progress-container {
+    width: 100%;
+    background-color: var(--gray-200);
+    border-radius: 1rem;
+    height: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 1rem;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 1s ease;
+}
+
+/* Libros recomendados */
+.books-container {
+    margin-top: 2rem;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.book-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.book-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.book-info {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.book-info p {
+    color: var(--gray-500);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.book-info .book-rating {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+}
+
+.book-info .stars {
+    color: #ffc107;
+    margin-right: 0.5rem;
+}
+
+.recommended {
+    border-top: 4px solid var(--success);
+}
+
+.not-recommended {
+    border-top: 4px solid var(--accent);
+}
+
+/* Cajas de información */
+.info-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.info-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+}
+
+.info-box-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.info-box h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.info-box p {
+    color: var(--gray-500);
+    margin-bottom: 1rem;
+}
+
+/* Línea del tiempo */
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--gray-300);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: -12px;
+    background-color: white;
+    border: 4px solid var(--primary);
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    left: 50%;
+}
+
+.left::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: 30px;
+    border: medium solid var(--gray-300);
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent white;
+}
+
+.right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: 30px;
+    border: medium solid var(--gray-300);
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+}
+
+.right::after {
+    left: -12px;
+}
+
+.timeline-content {
+    padding: 20px 30px;
+    background-color: white;
+    position: relative;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+    color: var(--gray-500);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-date {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark);
+    color: white;
+    padding: 4rem 0 2rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.footer-logo img {
+    height: 40px;
+    margin-right: 0.5rem;
+}
+
+.footer-logo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.footer-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: var(--gray-400);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-social {
+    display: flex;
+    margin-top: 1.5rem;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    margin-right: 0.75rem;
+    transition: var(--transition);
+}
+
+.footer-social a:hover {
+    background-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+/* Botón scroll to top */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+.scroll-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background-color: var(--secondary);
+    transform: translateY(-5px);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 76px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 0.5rem 1.5rem;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .timeline::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .timeline-item::before {
+        left: 60px;
+        border: medium solid var(--gray-300);
+        border-width: 10px 10px 10px 0;
+        border-color: transparent white transparent transparent;
+    }
+
+    .left::after,
+    .right::after {
+        left: 19px;
+    }
+
+    .right {
+        left: 0%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .section {
+        padding: 3rem 0;
+    }
+
+    .info-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 3rem 0;
+    }
+
+    .hero h2 {
+        font-size: 1.75rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .book-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info-box ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+.info-box ul li {
+    margin-bottom: 1rem;
+}
+
+.info-box ul li:last-child {
+    margin-bottom: 0;
+}
+
+/* Add styles for .survey-sample containers */
+.survey-sample {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: var(--gray-100);
+    border-radius: 0.5rem;
+}
+
+.survey-sample h3 {
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.survey-sample form>div {
+    margin-bottom: 1.5rem;
+}
+
+.survey-sample label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.survey-sample p[style*="font-weight: 600"] {
+    font-weight: 600;
+}
+
+.survey-sample textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 4px;
+}
+  </style>
+  
+  <!-- AOS para animaciones de scroll -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #03045e;
+    --secondary: blue;
+    --accent: #f05252;
+    --light: #f3f4f6;
+    --dark: #111827;
+    --success: #0e9f6e;
+    --warning: #ff5a1f;
+    --gray-100: #f9fafb;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-800: #1f2937;
+    --transition: all 0.3s ease;
+}
+
+.sigma{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 7rem;
+}
+
+.sig{
+    color: cyan;
+}
+
+section {
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark);
+    background-color: var(--light);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Header y navegación */
+header {
+    font-family: 'Poppins', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.container {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.navbar {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.marquee-container {
+    background-color: #03045e;
+    color: whitesmoke;
+    padding: 0.5rem 0;
+    overflow: hidden;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 0.5rem;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links a {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--dark);
+}
+
+/* Banner principal */
+.hero {
+    margin-top: 76px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.3s forwards;
+}
+
+.hero .btn {
+    opacity: 0;
+    animation: fadeIn 1s ease 0.6s forwards;
+}
+
+.typed-text {
+    font-weight: 600;
+    color: #fff;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('https://cdn.pixabay.com/photo/2017/03/10/22/48/abstract-2134823_1280.png');
+    background-size: 1000px 100px;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: white;
+    color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--gray-100);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #6929d0;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--gray-300);
+    color: var(--dark);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Sección de tarjetas temáticas */
+.section {
+    padding: 5rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.section-header p {
+    color: var(--gray-500);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img {
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.card:hover .card-img img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.card-content p {
+    color: var(--gray-500);
+    margin-bottom: 1.5rem;
+}
+
+.greek{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.math-formula {
+    background-color: var(--gray-100);
+    padding: 1rem;
+    border-radius: 0.375rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+/* Encuestas */
+.survey-preview {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.survey-preview h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--dark);
+}
+
+.survey-preview p {
+    margin-bottom: 1.5rem;
+    color: var(--gray-500);
+}
+
+.progress-container {
+    width: 100%;
+    background-color: var(--gray-200);
+    border-radius: 1rem;
+    height: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 1rem;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 1s ease;
+}
+
+/* Libros recomendados */
+.books-container {
+    margin-top: 2rem;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.book-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.book-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.book-info {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.book-info p {
+    color: var(--gray-500);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.book-info .book-rating {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+}
+
+.book-info .stars {
+    color: #ffc107;
+    margin-right: 0.5rem;
+}
+
+.recommended {
+    border-top: 4px solid var(--success);
+}
+
+.not-recommended {
+    border-top: 4px solid var(--accent);
+}
+
+/* Cajas de información */
+.info-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.info-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+}
+
+.info-box-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.info-box h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.info-box p {
+    color: var(--gray-500);
+    margin-bottom: 1rem;
+}
+
+/* Línea del tiempo */
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--gray-300);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: -12px;
+    background-color: white;
+    border: 4px solid var(--primary);
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    left: 50%;
+}
+
+.left::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: 30px;
+    border: medium solid var(--gray-300);
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent white;
+}
+
+.right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: 30px;
+    border: medium solid var(--gray-300);
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+}
+
+.right::after {
+    left: -12px;
+}
+
+.timeline-content {
+    padding: 20px 30px;
+    background-color: white;
+    position: relative;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+    color: var(--gray-500);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-date {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark);
+    color: white;
+    padding: 4rem 0 2rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.footer-logo img {
+    height: 40px;
+    margin-right: 0.5rem;
+}
+
+.footer-logo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.footer-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: var(--gray-400);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-social {
+    display: flex;
+    margin-top: 1.5rem;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    margin-right: 0.75rem;
+    transition: var(--transition);
+}
+
+.footer-social a:hover {
+    background-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+/* Botón scroll to top */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+.scroll-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background-color: var(--secondary);
+    transform: translateY(-5px);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 76px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 0.5rem 1.5rem;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .timeline::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .timeline-item::before {
+        left: 60px;
+        border: medium solid var(--gray-300);
+        border-width: 10px 10px 10px 0;
+        border-color: transparent white transparent transparent;
+    }
+
+    .left::after,
+    .right::after {
+        left: 19px;
+    }
+
+    .right {
+        left: 0%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .section {
+        padding: 3rem 0;
+    }
+
+    .info-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 3rem 0;
+    }
+
+    .hero h2 {
+        font-size: 1.75rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .book-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info-box ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+.info-box ul li {
+    margin-bottom: 1rem;
+}
+
+.info-box ul li:last-child {
+    margin-bottom: 0;
+}
+
+/* Add styles for .survey-sample containers */
+.survey-sample {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: var(--gray-100);
+    border-radius: 0.5rem;
+}
+
+.survey-sample h3 {
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.survey-sample form>div {
+    margin-bottom: 1.5rem;
+}
+
+.survey-sample label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.survey-sample p[style*="font-weight: 600"] {
+    font-weight: 600;
+}
+
+.survey-sample textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 4px;
+}
+</style>
+
+ </head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="logo">
+          
+          <h1 class="sigma">Σ</h1><h1 class="sig">Sig</h1><h1 class="MATH">MATH</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+          <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+          <li><a href="https://sigma-91.github.io/Factores-de-Reprobacion/">Factores de Reprobacion</a></li>
+          <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+        </ul>
+        <button class="hamburger" id="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner Principal -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h2>Descubre el fascinante mundo de las <span class="typed-text" id="typed-element"></span></h2>
+      <p>SigMATH es una plataforma educativa diseñada para facilitar el aprendizaje y la enseñanza de las matemáticas. Accede a recursos de calidad, ejercicios interactivos y contenido especializado.</p>
+     
+    </div>
+    <div class="wave"></div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Marquee Welcome Message -->
+  <div class="marquee-container">
+    <div class="container">
+      <marquee behavior="scroll" direction="left">
+        Preparate para ser un matemático experto dominando la formalidad y generalidad.
+      </marquee>
+    </div>
+  </div>
+
+  <!-- Tarjetas Temáticas -->
+  <section class="section" id="temas">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Explora Nuestros Temas</h2>
+        <p>Navega por nuestras diferentes áreas temáticas y descubre contenido especializado para todos los niveles.</p>
+      </div>
+
+      
+
+      <div class="card-grid">
+
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-img">
+            <img src="img/Aritmetica.jpg" alt="Aritmetica">
+          </div>
+          <div class="card-content">
+            <h3>Aritmetica</h3>
+            <p>Operaciones Basicas, Fracciones, Sucesiones.</p>
+            <div class="math-formula">
+              <p>$ 2+ 2 = 4$</p>
+            </div>
+            <a href="ramas-matematicas/aritmetica.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-img">
+            <img src="img/algebra.jpg" alt="Álgebra">
+          </div>
+          <div class="card-content">
+            <h3>Álgebra</h3>
+            <p>Fundamentos de álgebra, ecuaciones, funciones y sistemas lineales.</p>
+            <div class="math-formula">
+              <p>$ ax^2 + bx + c = 0$</p>
+            </div>
+            <a href="ramas-matematicas/algebra.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+    
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-img">
+            <img src="img/geometria.jpg" alt="Geometría">
+          </div>
+          <div class="card-content">
+            <h3>Geometría</h3>
+            <p>Figuras planas, sólidos, teoremas, angulos y sistemas.</p>
+            <div class="math-formula">
+              <p>$A = \pi r^2$</p>
+            </div>
+            <a href="ramas-matematicas/geometria.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+
+
+
+        <div class="card" data-aos="fade-up" data-aos-delay="150">
+          <div class="card-img">
+            <img src="img/trigonometria.jpg" alt="Trigonometría">
+          </div>
+          <div class="card-content">
+            <h3>Trigonometría</h3>
+            <p>Exploración de funciones trigonométricas, ángulos, y sus aplicaciones.</p>
+            <div class="math-formula">
+              <p>$\sin^2\theta + \cos^2\theta = 1$</p>
+            </div>
+            <a href="ramas-matematicas/trigonometria.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+        
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-img">
+            <img src="img/analitica.jpg" alt="Geometría Analítica">
+          </div>
+          <div class="card-content">
+            <h3>Geometría Analítica</h3>
+            <p>Análisis de coordenadas, rectas, y cónicas en el plano.</p>
+            <div class="math-formula">
+              <p>$y = mx + b$</p>
+            </div>
+            <a href="ramas-matematicas/geo-analitica.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-img">
+            <img src="img/diferencial.jpg" alt="Cálculo Diferencial">
+          </div>
+          <div class="card-content">
+            <h3>Cálculo Diferencial</h3>
+            <p>Estudio de límites, derivadas y aplicaciones de la tasa de cambio.</p>
+            <div class="math-formula">
+              <p>$f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}$</p>
+            </div>
+            <a href="ramas-matematicas/calculo-diferencial.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+        
+        <div class="card" data-aos="fade-up" data-aos-delay="350">
+          <div class="card-img">
+            <img src="img/integral.jpg" alt="Cálculo Integral">
+          </div>
+          <div class="card-content">
+            <h3>Cálculo Integral</h3>
+            <p>Integral indefinida, metodos de integracion, integral definida, aplicaciones y ecuaciones diferenciales.</p>
+            <div class="math-formula">
+              <p>$\int_a^b f(x)\,dx$</p>
+            </div>
+            <a href="ramas-matematicas/calculo-integral.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+        
+        <div class="card" data-aos="fade-up" data-aos-delay="450">
+          <div class="card-img">
+            <img src="img/probabilidad.jpg" alt="Probabilidad">
+          </div>
+          <div class="card-content">
+            <h3>Probabilidad</h3>
+            <p>Estudio de eventos aleatorios, distribución de probabilidad y análisis estadístico.</p>
+            <div class="math-formula">
+              <p>$P(A)=\frac{n(A)}{n(S)}$</p>
+            </div>
+            <a href="ramas-matematicas/probabilidad.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
+          <div class="card-img">
+            <img src="img/estadistica.jpg" alt="Estadística">
+          </div>
+          <div class="card-content">
+            <h3>Estadística</h3>
+            <p>Análisis de datos, graficas, distribuciones y estadística inferencial.</p>
+            <div class="math-formula">
+              <p>$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$</p>
+            </div>
+            <a href="ramas-matematicas/estadistica.html" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Libros Recomendados -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Bibliografía Recomendada</h2>
+        <p>Selección de los mejores libros para profundizar en tus estudios matemáticos.</p>
+      </div>
+      <div class="books-container">
+        <h3 data-aos="fade-up">Libros Recomendados</h3>
+        <div class="book-list" data-aos="fade-up" data-aos-delay="100">
+          <div class="book-card recommended">
+            <img src="img/Portada 1.jpg" alt="Cálculo diferencial e Integral">
+            <div class="book-info">
+              <h4>Cálculo diferencial e integral</h4>
+              <p>William Anthony Granville</p>
+              <div class="book-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span>5/5</span>
+              </div>
+            </div>
+          </div>
+          <div class="book-card recommended">
+            <img src="img/Portada 7.jpg" alt="Trigonometria Plana y Esferica">
+            <div class="book-info">
+              <h4>Trigonometria Plana y Esferica</h4>
+              <p> William Anthony Granville</p>
+              <div class="book-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span>4.9/5</span>
+              </div>
+            </div>
+          </div>
+          <div class="book-card recommended">
+            <img src="img/Portada 2.jpg" alt="Geometria Analitica">
+            <div class="book-info">
+              <h4>Geometria Analitica</h4>
+              <p>Charles H. Lehmann</p>
+              <div class="book-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+                <span>4/5</span>
+              </div>
+            </div>
+          </div>
+          <div class="book-card recommended">
+            <img src="img/calculo de una variable.jpg" alt="Geometria Analitica">
+            <div class="book-info">
+              <h4>Calculo de una Variable</h4>
+              <p>James Stewart</p>
+              <div class="book-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+                <span>3.9/5</span>
+              </div>
+            </div>
+          </div>
+          <div class="book-card recommended">
+            <img src="img/calculo diferencial e integral Ayres.jpg" alt="Calculo McGraw Hill">
+            <div class="book-info">
+              <h4>Calculo Diferencial e Integral </h4>
+              <p>Frank Ayres Jr.</p>
+              <div class="book-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+                <span>3.8/5</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        <h3 data-aos="fade-up" style="margin-top: 3rem;">Libros No Recomendados</h3>
+        <div class="book-list" data-aos="fade-up" data-aos-delay="100">
+          <div class="book-card not-recommended">
+            <img src="img/Portada 4.jpg" alt="Matemáticas Simplificadas">
+            <div class="book-info">
+              <h4>Matemáticas Simplificadas</h4>
+              <p>CONAMAT</p>
+              <div class="book-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+                <span>2.0/5</span>
+              </div>
+            </div>
+          </div>
+          <div class="book-card not-recommended">
+            <img src="img/Portada 5.jpg" alt="Geometria y Trigonometria">
+            <div class="book-info">
+              <h4>Geometria y Trigonometria</h4>
+              <p>CONAMAT</p>
+              <div class="book-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+                <span>1.0/5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Autores en Matemáticas (NUEVA SECCIÓN) -->
+  <section class="section" style="background-color: var(--gray-100);">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Autores en Matemáticas</h2>
+        <p>Conoce a los matemáticos más influyentes cuyas obras han transformado la enseñanza y comprensión de esta ciencia.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-img">
+            <img src="img/William A. Granville.JPG" alt="Granville">
+          </div>
+          <div class="card-content">
+            <h3>William Anthony Granville</h3>
+            <p>Conocido por sus trabajos en cálculo diferencial e integral y su enfoque pedagógico innovador.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-img">
+            <img src="img/Aurelio Baldor.jpg" alt="Baldor">
+          </div>
+          <div class="card-content">
+            <h3>Aurelio Baldor</h3>
+            <p>Su álgebra es una de las obras más influyentes en la enseñanza matemática en Latinoamérica.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-img">
+            <img src="img/Lehmann.jpg" alt="Lehmann">
+          </div>
+          <div class="card-content">
+            <h3>Charles H. Lehmann</h3>
+            <p>Destacado por sus contribuciones a la teoría matemática y métodos de enseñanza modernos.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
+          <div class="card-img">
+            <img src="img/ayres.jpg" alt="Smith">
+          </div>
+          <div class="card-content">
+            <h3>Frank Ayres Jr.</h3>
+            <p>Fue un profesor de matemáticas y autor de Schaum's Outlines de los libros de matematicas de la editorial McGraw Hill.</p>
+          
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="500">
+          <div class="card-img">
+            <img src="img/taro.jpg" alt="Smith">
+          </div>
+          <div class="card-content">
+            <h3>Taro Yamane</h3>
+            <p>Taro Yamane, un estadístico matemático, ideó una fórmula para estimar o determinar el tamaño de la muestra con respecto
+            a la población en estudio.</p>
+        
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="600">
+          <div class="card-img">
+            <img src="img/mcGraw.jpg" alt="James H. McGraw">
+          </div>
+          <div class="card-content">
+            <h3>James H. McGraw</h3>
+            <p>McGraw, profesor del norte de Nueva York. Sus primeras áreas de especialización fueron la ingeniería y la ciencia,
+            siendo a mediados de 1930.</p>
+        
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="600">
+          <div class="card-img">
+            <img src="#" alt="">
+          </div>
+          <div class="card-content">
+            <h3>John A. Hill</h3>
+            <p>John Alexander Hill fue cofundador de McGraw-Hill Book Company, la corporación predecesora de las actuales S&P Global y McGraw-Hill Education.</p>
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Misión y Visión (NUEVA SECCIÓN) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Misión y Visión</h2>
+        <p>Conoce nuestros objetivos y lo que aspiramos a lograr con nuestra aplicación educativa.</p>
+      </div>
+      <div class="info-boxes" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="info-box" data-aos="fade-up">
+          <div class="info-box-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3>Misión</h3>
+          <p>Desarrollar una aplicación innovadora que facilite el aprendizaje de las matemáticas al proporcionar, de manera automática y detallada, la fórmula adecuada para resolver distintos tipos de problemas. Nuestra app busca ser una herramienta accesible y eficiente para estudiantes de todos los niveles, promoviendo la comprensión lógica de los procedimientos matemáticos y fomentando la autonomía en el estudio.</p>
+        </div>
+        <div class="info-box" data-aos="fade-up" data-aos-delay="100">
+          <div class="info-box-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3>Visión</h3>
+          <p>Ser una aplicación líder en el apoyo educativo digital, reconocida por su capacidad de transformar la enseñanza de las matemáticas mediante el uso de inteligencia artificial y algoritmos avanzados. Aspiramos a contribuir a una educación más equitativa, accesible y personalizada, donde cada estudiante pueda fortalecer sus habilidades matemáticas y desarrollar confianza en la resolución de problemas.</p>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aplicaciones de las Matemáticas a la Vida Real -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Aplicaciones de las Matemáticas a la Vida Real</h2>
+        <p>Descubre cómo las matemáticas están presentes en casi todos los aspectos de nuestra vida cotidiana y profesional.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-img">
+            <img src="img/ingenieria.jpg" alt="Ingeniería">
+          </div>
+          <div class="card-content">
+            <h3>Ingeniería</h3>
+            <p>Las matemáticas son la base del diseño y cálculo de estructuras, sistemas mecánicos y análisis de resistencia de materiales.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="150">
+          <div class="card-img">
+            <img src="img/construccion.jpg" alt="Construcción">
+          </div>
+          <div class="card-content">
+            <h3>Construcción</h3>
+            <p>Geometría, trigonometría y cálculo son esenciales para diseñar edificios seguros y estables que resistan el paso del tiempo.</p>
+          
+          </div>
+         
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-img">
+            <img src="https://cdn.pixabay.com/photo/2016/11/24/20/30/architecture-1857175_1280.jpg" alt="Arquitectura">
+          </div>
+          <div class="card-content">
+            <h3>Arquitectura</h3>
+            <p>Geometría y trigonometría son fundamentales para diseñar planos para proyectos de contruccion.</p>
+        
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="250">
+          <div class="card-img">
+            <img src="https://cdn.pixabay.com/photo/2016/11/27/21/42/stock-1863880_1280.jpg" alt="Economía y Finanzas">
+          </div>
+          <div class="card-content">
+            <h3>Economía y Finanzas</h3>
+            <p>El análisis estadístico y los modelos matemáticos permiten predecir tendencias del mercado y optimizar inversiones.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-img">
+            <img src="img/deportes.jpg" alt="Deportes">
+          </div>
+          <div class="card-content">
+            <h3>Deportes</h3>
+            <p>Estadísticas, probabilidad y física matemática se utilizan para analizar rendimiento, estrategias y trayectorias en competiciones.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="350">
+          <div class="card-img">
+            <img src="https://cdn.pixabay.com/photo/2019/06/18/01/06/ecg-4281208_1280.jpg" alt="Medicina">
+          </div>
+          <div class="card-content">
+            <h3>Medicina</h3>
+            <p>Las matemáticas ayudan a interpretar datos de diagnóstico, determinar dosificaciones y modelar propagación de enfermedades.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
+          <div class="card-img">
+            <img src="https://cdn.pixabay.com/photo/2018/07/15/10/44/dna-3539309_1280.jpg" alt="Biología">
+          </div>
+          <div class="card-content">
+            <h3>Biología</h3>
+            <p>Patrones matemáticos en el crecimiento de poblaciones, genética y estructuras naturales como la secuencia de Fibonacci.</p>
+          
+          </div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="450">
+          <div class="card-img">
+            <img src="img/fisica.jpg" alt="Física">
+          </div>
+          <div class="card-content">
+            <h3>Física</h3>
+            <p>Ecuaciones diferenciales y cálculo avanzado para describir fenómenos naturales, desde la mecánica hasta la teoría cuántica.</p>
+          
+          </div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="500">
+          <div class="card-img">
+            <img src="img/electricidad.jpg" alt="Electricidad">
+          </div>
+          <div class="card-content">
+            <h3>Electricidad</h3>
+            <p>Cálculos de circuitos, ondas y transformaciones que permiten el diseño de sistemas eléctricos y electrónicos eficientes.</p>
+          
+          </div>
+        </div>
+
+        
+    </div>
+  </section>
+
+  <!-- Carreras con Mayor Exigencia Matemática -->
+  <section class="section" style="background-color: var(--gray-100);">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Carreras con Mayor Exigencia Matemática</h2>
+        <p>Conoce las profesiones donde el dominio de las matemáticas es fundamental para el éxito académico y profesional.</p>
+      </div>
+      <div class="info-boxes" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="info-box" data-aos="fade-up">
+          <div class="info-box-icon">
+            <i class="fas fa-hard-hat"></i>
+          </div>
+          <h3>Ingeniería y Ciencias Fisico Matemáticas</h3>
+          <ul>
+            <li><strong>Ingeniería Civil:</strong> Cálculo estructural, análisis de fuerzas, resistencia de materiales.</li>
+            <li><strong>Ingeniería Mecánica:</strong> Ecuaciones diferenciales, termodinámica, cinemática y dinámica.</li>
+            <li><strong>Ingeniería Eléctrica:</strong> Análisis de circuitos, electromagnetismo, procesamiento de señales.</li>
+            <li><strong>Ingeniería Aeroespacial:</strong> Mecánica de fluidos, sistemas dinámicos, métodos numéricos.</li>
+            <li><strong>Ingeniería Industrial:</strong> Investigación operativa, estadística, optimización de procesos.</li>
+            <li><strong>Ingeniería de Software:</strong> Lógica matemática, algoritmos, teoría de grafos, criptografía.</li>
+            <li><strong>Arquitectura:</strong> Geometría, trigonometría, cálculo espacial y estructural para diseño y construcción.</li>
+            <li><strong>Ingeniería Minera:</strong> Modelado geológico, optimización de recursos, análisis estadístico de yacimientos.</li>
+            <li><strong>Ingeniería Electrónica:</strong> Teoría de circuitos, procesamiento de señales, sistemas de control.</li>
+            <li><strong>Ingeniería Mecatrónica:</strong> Integración de sistemas mecánicos y electrónicos, control automático, robótica.</li>
+            <li><strong>Aeronáutica:</strong> Aerodinámica, mecánica de vuelo, diseño de estructuras y propulsión.</li>
+            <li><strong>Ingeniería en Matemáticas:</strong> Modelado matemático, optimización, análisis numérico y simulación.</li>
+            <li><strong>Física:</strong> Modelado de fenómenos naturales, mecánica cuántica, relatividad, física estadística.</li>
+            <li><strong>Ingeniería Química:</strong> Balances de materia y energía, cinética química, procesos de transferencia.</li>
+            <li><strong>Ingeniería Biomédica:</strong> Modelado de sistemas biológicos, procesamiento de señales fisiológicas, diseño de dispositivos médicos.</li>
+          </ul>
+         
+        </div>
+        <div class="info-box" data-aos="fade-up" data-aos-delay="100">
+          <div class="info-box-icon">
+            <i class="fas fa-stethoscope"></i>
+          </div>
+          <h3>Ciencias Medico Biologicas y Ciencias Sociales y Administrativas</h3>
+          <ul style="list-style-type: none; padding-left: 0; margin-bottom: 1.5rem;">
+            <li style="margin-bottom: 1rem;"><strong>Medicina:</strong> Bioestadística, epidemiología, dosificación farmacológica, interpretación de pruebas diagnósticas.</li>
+            <li style="margin-bottom: 1rem;"><strong>Economía:</strong> Modelos econométricos, estadística, cálculo multivariado, teoría de juegos.</li>
+            <li style="margin-bottom: 1rem;"><strong>Administración:</strong> Matemáticas financieras, investigación operativa, análisis de datos empresariales.</li>
+            <li style="margin-bottom: 1rem;"><strong>Psicología:</strong> Estadística aplicada, diseño experimental, análisis factorial, interpretación de pruebas psicométricas.</li>
+            <li style="margin-bottom: 1rem;"><strong>Actuaría:</strong> Cálculo de probabilidades, estadística avanzada, análisis de riesgos, matemáticas financieras.</li>
+            <li><strong>Ciencias Ambientales:</strong> Modelado matemático de ecosistemas, estadística aplicada, análisis de impacto ambiental.</li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Cajas de Información -->
+  <section class="section" style="background-color: var(--gray-100);">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Recursos Adicionales</h2>
+        <p>Complementa tu aprendizaje con estos recursos especiales.</p>
+      </div>
+      <div class="info-boxes">
+        <div class="info-box" data-aos="fade-up">
+          <div class="info-box-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>Videotutoriales</h3>
+          <p>Accede a nuestra colección de videos explicativos generales de MateFacil y Profe Alex sobre diversos temas
+            matemáticos.</p>
+          <a href="https://youtube.com/@sigmath-project?si=1Tat_fQNVxn2WLLc" class="btn btn-outline">Ver Colección</a>
+        </div>
+        <div class="info-box" data-aos="fade-up" data-aos-delay="100">
+          <div class="info-box-icon">
+            <i class="fas fa-file-pdf"></i>
+          </div>
+          <h3>Mathematik Bibliothek MX</h3>
+          <p>Descarga los libros y bibliografias que se utilizaron para el desarrollo de SigMATH.</p>
+          <a href="https://sigma-91.github.io/Mathematik-Bibliothek-MX/" class="btn btn-outline">Biblioteca</a>
+        </div>
+        <div class="info-box" data-aos="fade-up" data-aos-delay="200">
+          <div class="info-box-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <h3>Herramientas</h3>
+          <p>Utiliza nuestras calculadoras y herramientas interactivas para resolver problemas.</p>
+          <a href="https://www.geogebra.org/graphing" class="btn btn-outline">Calculadora Grafica de Geogebra</a>
+        </div>
+  
+  
+  
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <h2>SigMATH</h2>
+          </div>
+          <p>Plataforma educativa dedicada a facilitar el aprendizaje y la enseñanza de las matemáticas a través de recursos de calidad.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/share/12K8jJA2kHZ/"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.threads.net/@polytechnicspider"><i class="fab fa-threads"></i></a>
+            <a href="https://www.instagram.com/_sigmath_project_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@SigMATH-project"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Enlaces Rápidos</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="#temas">Temas</a></li>
+            <!-- Removed the "Encuestas" link -->
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Recursos</h3>
+          <ul class="footer-links">
+            <li><a href="https://www.instagram.com/sigma.education.91?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">Sigma Education MX</a></li>
+            
+            
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contacto</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-envelope"></i> sigmathproject@gmail.com</li>
+            <li><i class="fas fa-phone"></i> +52 56 6136 1607</li>
+            <li><i class="fas fa-map-marker-alt"></i> Ciudad de Mexico, MX</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 SigMATH - Todos los derechos reservados | Diseñado con <i class="fas fa-heart" style="color: var(--accent);"></i> para amantes de las matemáticas</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botón Scroll to Top -->
+  <div class="scroll-top" id="scroll-top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    // Inicialización del efecto de texto animado
+      document.addEventListener('DOMContentLoaded', function () {
+        // Inicializar AOS (Animate On Scroll)
+        AOS.init({
+          duration: 800,
+          easing: 'ease',
+          once: true,
+          offset: 100
+        });
+
+
+        // Menú móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', function () {
+          navLinks.classList.toggle('show');
+          const icon = this.querySelector('i');
+          if (icon.classList.contains('fa-bars')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+
+        // Botón Scroll to Top
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        window.addEventListener('scroll', function () {
+          if (window.pageYOffset > 300) {
+            scrollTopBtn.classList.add('active');
+          } else {
+            scrollTopBtn.classList.remove('active');
+          }
+        });
+
+        scrollTopBtn.addEventListener('click', function () {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+
+        // LocalStorage para formularios (simulado)
+        const formFields = document.querySelectorAll('input, textarea');
+        formFields.forEach(field => {
+          // Recuperar datos guardados si existen
+          const savedValue = localStorage.getItem(`sigmath_${field.id}`);
+          if (savedValue) {
+            field.value = savedValue;
+          }
+
+          // Guardar datos al cambiar
+          field.addEventListener('change', function () {
+            localStorage.setItem(`sigmath_${field.id}`, field.value);
+          });
+        });
+      });
+
+    // Inicialización del efecto de texto animado
+      document.addEventListener('DOMContentLoaded', function () {
+        // Inicializar AOS (Animate On Scroll)
+        AOS.init({
+          duration: 800,
+          easing: 'ease',
+          once: true,
+          offset: 100
+        });
+
+        // Typed.js para texto en movimiento
+        const typed = new Typed('#typed-element', {
+          strings: ['MATEMATICAS', 'álgebra', 'geometria', 'trigonometria', 'cálculo', 'probabilidad', 'estadística'],
+          typeSpeed: 70,
+          backSpeed: 50,
+          backDelay: 1500,
+          loop: true,
+          showCursor: true
+        });
+
+        // Menú móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', function () {
+          navLinks.classList.toggle('show');
+          const icon = this.querySelector('i');
+          if (icon.classList.contains('fa-bars')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+
+        // Botón Scroll to Top
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        window.addEventListener('scroll', function () {
+          if (window.pageYOffset > 300) {
+            scrollTopBtn.classList.add('active');
+          } else {
+            scrollTopBtn.classList.remove('active');
+          }
+        });
+
+        scrollTopBtn.addEventListener('click', function () {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+
+        // LocalStorage para formularios (simulado)
+        const formFields = document.querySelectorAll('input, textarea');
+        formFields.forEach(field => {
+          // Recuperar datos guardados si existen
+          const savedValue = localStorage.getItem(`sigmath_${field.id}`);
+          if (savedValue) {
+            field.value = savedValue;
+          }
+
+          // Guardar datos al cambiar
+          field.addEventListener('change', function () {
+            localStorage.setItem(`sigmath_${field.id}`, field.value);
+          });
+        });
+      });
+  </script>
+
+  
+</body>
+</html>

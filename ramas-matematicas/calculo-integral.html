@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cálculo Integral</title>
+    <link rel="website icon" type="png" href="../../img/SigMath.png" />
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="../../SigMATH.css">
+    <link rel="stylesheet" href="integral.css">
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+    --primary-blue: #1e40af;
+    --secondary-blue: #3b82f6;
+    --light-blue: #93c5fd;
+    --bg-blue: #f0f7ff;
+}
+
+body {
+    background-color: var(--bg-blue);
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    color: var(--primary-blue);
+    border-bottom: 2px solid var(--secondary-blue);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+    color: var(--secondary-blue);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.math-box {
+    background-color: white;
+    border-left: 4px solid var(--secondary-blue);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.example-box {
+    background-color: #e6f0ff;
+    border: 1px solid var(--light-blue);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.float-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.float-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.float-button:hover {
+    background-color: var(--secondary-blue);
+    transform: translateY(-2px);
+}
+
+.index-panel {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.index-panel.active {
+    right: 0;
+}
+
+.index-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.index-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.index-item:hover {
+    color: var(--secondary-blue);
+}
+
+.index-subitem {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+ .content {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            }
+        
+            h1 {
+                
+                margin-bottom: 20px;
+            }
+        
+            p {
+               
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+        
+            /* Tab de búsqueda */
+            .search-tab {
+                position: fixed;
+                right: -350px;
+                top: 0;
+                height: 100vh;
+                width: 350px;
+                background: white;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                transition: right 0.3s ease;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+            }
+        
+            .search-tab.open {
+                right: 0;
+            }
+        
+            .tab-button {
+                position: absolute;
+                left: -50px;
+                top: 100px;
+                width: 50px;
+                height: 120px;
+                background: white;
+                border: none;
+                border-radius: 10px 0 0 10px;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                writing-mode: vertical-rl;
+                font-weight: bold;
+                color: darkblue;
+                font-size: 16px;
+                transition: background 0.3s ease;
+            }
+        
+            .tab-button:hover {
+                background: #f8f9fa;
+            }
+        
+            .search-content {
+                padding: 30px;
+                overflow-y: auto;
+                flex: 1;
+                direction: rtl;
+            }
+        
+            .search-content>* {
+                direction: ltr;
+            }
+        
+            .search-content::-webkit-scrollbar {
+                width: 8px;
+            }
+        
+            .search-content::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+        
+            .search-content::-webkit-scrollbar-thumb {
+                background: #667eea;
+                border-radius: 10px;
+            }
+        
+            .search-content::-webkit-scrollbar-thumb:hover {
+                background: #5568d3;
+            }
+        
+            .search-header {
+                margin-bottom: 25px;
+            }
+        
+            .search-header h2 {
+                color: #333;
+                margin-bottom: 10px;
+                font-size: 24px;
+            }
+        
+            .search-header p {
+                color: #999;
+                font-size: 14px;
+            }
+        
+            .search-box {
+                position: relative;
+                margin-bottom: 20px;
+            }
+        
+            .search-input {
+                width: 100%;
+                padding: 15px 45px 15px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                font-size: 16px;
+                transition: border-color 0.3s ease;
+            }
+        
+            .search-input:focus {
+                outline: none;
+                border-color: #667eea;
+            }
+        
+            .search-icon {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+            }
+        
+            .topics-list {
+                list-style: none;
+            }
+        
+            .topic-item {
+                padding: 12px 15px;
+                margin-bottom: 8px;
+                background: #f8f9fa;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: #333;
+            }
+        
+            .topic-item:hover {
+                background: #667eea;
+                color: white;
+                transform: translateX(5px);
+            }
+        
+            .topic-item.hidden {
+                display: none;
+            }
+        
+            .no-results {
+                text-align: center;
+                color: #999;
+                padding: 20px;
+                display: none;
+            }
+        
+            .no-results.show {
+                display: block;
+            }
+    </style>
+    
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+    
+                    <h1 class="sigma">Σ</h1>
+                    <h1 class="sig">Sig</h1>
+                    <h1 class="MATH">MATH</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">SigMATH</a></li>
+                    <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                    <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                    <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                </ul>
+                <button class="hamburger" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Descubre el fascinante mundo del Calculo Integral<span class="typed-text" id="typed-element"></span></h2>
+            <p>El cálculo integral es una rama fundamental de las matemáticas que se ocupa de dos conceptos
+                relacionados: la <strong>antiderivada</strong> y la <strong>integral definida</strong>. Mientras que el
+                cálculo diferencial se centra en el estudio de las tasas de cambio y las pendientes de las curvas, el
+                cálculo integral se enfoca en la acumulación de cantidades y el área bajo las curvas.</p>
+            
+            <p class="mt-4">El desarrollo del cálculo integral está estrechamente ligado al trabajo de matemáticos como
+                Isaac Newton y Gottfried Wilhelm Leibniz en el siglo XVII, quienes de manera independiente desarrollaron
+                los fundamentos del cálculo.</p>
+        </div>
+        <div class="wave"></div>
+        </section>
+
+        <div class="search-tab" id="searchTab">
+            <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+        
+            <div class="search-content">
+                <div class="search-header">
+                    <h2>Buscar Temas</h2>
+                    <p>Encuentra lo que necesitas</p>
+                </div>
+        
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+                        oninput="filterTopics()">
+                    <span class="search-icon">🔍</span>
+                </div>
+        
+                <ul class="topics-list" id="topicsList">
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#diferenciales" data-section="diferenciales">Diferenciales</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#antiderivada" data-section="antiderivada">Funcion Primitiva o Antiderivada</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#integral-indefinida" data-section="integral-indefinida">La Integral Indefinida</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#tabla-integrales" data-section="tabla-integrales">Tabla de Integrales</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#metodos-integracion" data-section="metodos-integracion">Metodos de Integracion</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#artificios-integracion" data-section="artificios-integracion">Artificios de Integracion</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#integral-definida" data-section="integral-definida">La Integral Definida</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones-geometricas" data-section="aplicaciones-geometricas">Aplicaciones Geométricas</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#formulas-reduccion" data-section="formulas-reduccion">Formulas de Reduccion</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones-vida-real" data-section="aplicaciones-vida-real">Aplicaciones a la Vida Real</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones-fisica" data-section="aplicaciones-fisica">Aplicaciones a la Fisica</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#integrales-impropias" data-section="integrales-impropias">La Integral Impropia</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#series-potencias" data-section="series-potencias">La Serie Potencia</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#integrales-multiples" data-section="integrales-multiples">La Integral Multiple</a></li>
+                    <li class="topic-item" onclick="selectTopic(this)"><a href="#ecuaciones-diferenciales" data-section="ecuaciones-diferenciales">Ecuaciones Diferenciales Ordinarias</a></li>
+                </ul>
+        
+                <div class="no-results" id="noResults">
+                    No se encontraron resultados
+                </div>
+            </div>
+        </div>
+      
+
+
+
+    <div class="container mx-auto px-4 py-8">
+        <section id="introduccion">
+           
+        </section>
+
+        <section id="diferenciales">
+            <h2 class="text-3xl section-title">Diferenciales</h2>
+            <p>Un diferencial es una cantidad infinitesimal que representa el cambio en una variable. En el contexto del
+                cálculo integral, los diferenciales juegan un papel fundamental en la definición de la integral.</p>
+
+            <div class="math-box">
+                <p>Si \(y = f(x)\), entonces el diferencial de \(y\) con respecto a \(x\) se denota como \(dy\) y se
+                    relaciona con \(dx\) mediante:</p>
+                <p>\[dy = f'(x) \, dx\]</p>
+            </div>
+
+            <p class="mt-4">Esta notación es especialmente útil en el contexto de la integración, donde escribimos:</p>
+
+            <div class="math-box">
+                <p>\[\int f(x) \, dx\]</p>
+            </div>
+
+            <p>Los diferenciales nos permiten formalizar el proceso de integración como la suma de cantidades
+                infinitesimales.</p>
+        </section>
+
+        <section id="antiderivada">
+            <h2 class="text-3xl section-title">Función Primitiva o Antiderivada</h2>
+            <p>La antiderivada o función primitiva de una función \(f(x)\) es otra función \(F(x)\) cuya derivada es
+                igual a \(f(x)\).</p>
+
+            <div class="math-box">
+                <p>Si \(F'(x) = f(x)\), entonces \(F(x)\) es una antiderivada de \(f(x)\).</p>
+            </div>
+
+            <p class="mt-4">Es importante destacar que si \(F(x)\) es una antiderivada de \(f(x)\), entonces \(F(x) +
+                C\), donde \(C\) es cualquier constante, también es una antiderivada de \(f(x)\). Esto se debe a que la
+                derivada de una constante es cero.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Encontrar la antiderivada de \(f(x) = 2x\)</p>
+                <p>Buscamos una función \(F(x)\) tal que \(F'(x) = 2x\)</p>
+                <p>Sabemos que la derivada de \(x^2\) es \(2x\), por lo tanto:</p>
+                <p>\[F(x) = x^2 + C\]</p>
+                <p>donde \(C\) es la constante de integración.</p>
+            </div>
+        </section>
+
+        <section id="integral-indefinida">
+            <h2 class="text-3xl section-title">Integral Indefinida</h2>
+            <p>La integral indefinida de una función \(f(x)\) representa el conjunto de todas las antiderivadas de
+                \(f(x)\) y se denota por:</p>
+
+            <div class="math-box">
+                <p>\[\int f(x) \, dx = F(x) + C\]</p>
+                <p>donde \(F'(x) = f(x)\) y \(C\) es la constante de integración.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Constante de Integración</h3>
+            <p>La constante de integración \(C\) representa el hecho de que hay infinitas antiderivadas para una función
+                dada, que difieren entre sí por una constante. Determinar el valor específico de esta constante
+                generalmente requiere información adicional, como condiciones iniciales.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int 3x^2 \, dx\)</p>
+                <p>Buscamos una función cuya derivada sea \(3x^2\)</p>
+                <p>Sabemos que la derivada de \(x^3\) es \(3x^2\), por lo tanto:</p>
+                <p>\[\int 3x^2 \, dx = x^3 + C\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Propiedades básicas de la integral indefinida</h3>
+            <div class="math-box">
+                <p>\[\int k \cdot f(x) \, dx = k \cdot \int f(x) \, dx\]</p>
+                <p>\[\int [f(x) \pm g(x)] \, dx = \int f(x) \, dx \pm \int g(x) \, dx\]</p>
+            </div>
+        </section>
+
+        <section id="tabla-integrales">
+            <h2 class="text-3xl section-title">Tabla de Integrales</h2>
+
+            <h3 class="text-2xl subsection-title">Integrales Lineales Básicas</h3>
+            <div class="math-box">
+                <p>\[\int k \, dx = kx + C\]</p>
+                <p>\[\int x^n \, dx = \frac{x^{n+1}}{n+1} + C, \quad n \neq -1\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Integrales Algebraicas</h3>
+            <div class="math-box">
+                <p>\[\int \frac{1}{x} \, dx = \ln|x| + C\]</p>
+                <p>\[\int \frac{1}{ax+b} \, dx = \frac{1}{a} \ln|ax+b| + C\]</p>
+                <p>\[\int \frac{1}{x^2+a^2} \, dx = \frac{1}{a} \arctan\left(\frac{x}{a}\right) + C\]</p>
+                <p>\[\int \frac{1}{x^2-a^2} \, dx = \frac{1}{2a} \ln\left|\frac{x-a}{x+a}\right| + C\]</p>
+                <p>\[\int \frac{1}{\sqrt{a^2-x^2}} \, dx = \arcsin\left(\frac{x}{a}\right) + C\]</p>
+                <p>\[\int \frac{1}{\sqrt{x^2+a^2}} \, dx = \ln|x + \sqrt{x^2+a^2}| + C\]</p>
+                <p>\[\int \frac{1}{\sqrt{x^2-a^2}} \, dx = \ln|x + \sqrt{x^2-a^2}| + C\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Integrales Trascendentales</h3>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Logarítmicas</h4>
+            <div class="math-box">
+                <p>\[\int \ln(x) \, dx = x\ln(x) - x + C\]</p>
+                <p>\[\int x^n \ln(x) \, dx = \frac{x^{n+1}}{n+1}\ln(x) - \frac{x^{n+1}}{(n+1)^2} + C, \quad n \neq -1\]
+                </p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Exponenciales</h4>
+            <div class="math-box">
+                <p>\[\int e^x \, dx = e^x + C\]</p>
+                <p>\[\int a^x \, dx = \frac{a^x}{\ln(a)} + C\]</p>
+                <p>\[\int x^n e^x \, dx = x^n e^x - n\int x^{n-1}e^x \, dx\]</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Trigonométricas</h4>
+            <div class="math-box">
+                <p>\[\int \sin(x) \, dx = -\cos(x) + C\]</p>
+                <p>\[\int \cos(x) \, dx = \sin(x) + C\]</p>
+                <p>\[\int \tan(x) \, dx = -\ln|\cos(x)| + C = \ln|\sec(x)| + C\]</p>
+                <p>\[\int \cot(x) \, dx = \ln|\sin(x)| + C\]</p>
+                <p>\[\int \sec(x) \, dx = \ln|\sec(x) + \tan(x)| + C\]</p>
+                <p>\[\int \csc(x) \, dx = \ln|\csc(x) - \cot(x)| + C\]</p>
+                <p>\[\int \sec^2(x) \, dx = \tan(x) + C\]</p>
+                <p>\[\int \csc^2(x) \, dx = -\cot(x) + C\]</p>
+                <p>\[\int \sec(x)\tan(x) \, dx = \sec(x) + C\]</p>
+                <p>\[\int \csc(x)\cot(x) \, dx = -\csc(x) + C\]</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Trigonométricas Inversas</h4>
+            <div class="math-box">
+                <p>\[\int \arcsin(x) \, dx = x\arcsin(x) + \sqrt{1-x^2} + C\]</p>
+                <p>\[\int \arccos(x) \, dx = x\arccos(x) - \sqrt{1-x^2} + C\]</p>
+                <p>\[\int \arctan(x) \, dx = x\arctan(x) - \frac{1}{2}\ln(1+x^2) + C\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Integrales de Funciones Hiperbólicas</h3>
+            <div class="math-box">
+                <p>\[\int \sinh(x) \, dx = \cosh(x) + C\]</p>
+                <p>\[\int \cosh(x) \, dx = \sinh(x) + C\]</p>
+                <p>\[\int \tanh(x) \, dx = \ln(\cosh(x)) + C\]</p>
+                <p>\[\int \coth(x) \, dx = \ln|\sinh(x)| + C\]</p>
+                <p>\[\int \text{sech}(x) \, dx = \arctan(\sinh(x)) + C\]</p>
+                <p>\[\int \text{csch}(x) \, dx = \ln|\tanh(x/2)| + C\]</p>
+                <p>\[\int \text{sech}^2(x) \, dx = \tanh(x) + C\]</p>
+                <p>\[\int \text{csch}^2(x) \, dx = -\coth(x) + C\]</p>
+            </div>
+        </section>
+
+        <section id="metodos-integracion">
+            <h2 class="text-3xl section-title">Métodos de Integración</h2>
+
+            <h3 class="text-2xl subsection-title">Cambio de Variable o Sustitución</h3>
+            <p>El método de cambio de variable se basa en el teorema que establece que si \(u = g(x)\) y \(f\) es una
+                función continua, entonces:</p>
+
+            <div class="math-box">
+                <p>\[\int f(g(x))g'(x) \, dx = \int f(u) \, du\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int x\cos(x^2) \, dx\)</p>
+                <p>Hacemos la sustitución \(u = x^2\), entonces \(du = 2x \, dx\)</p>
+                <p>\[\int x\cos(x^2) \, dx = \int \frac{1}{2}\cos(u) \, du = \frac{1}{2}\sin(u) + C =
+                    \frac{1}{2}\sin(x^2) + C\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Integración por Partes</h3>
+            <p>La fórmula de integración por partes se deriva de la regla del producto para la diferenciación:</p>
+
+            <div class="math-box">
+                <p>\[\int u(x)v'(x) \, dx = u(x)v(x) - \int v(x)u'(x) \, dx\]</p>
+            </div>
+
+            <p>Esta técnica es particularmente útil cuando la integral contiene productos de funciones.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int x\sin(x) \, dx\)</p>
+                <p>Tomamos \(u = x\) y \(dv = \sin(x) \, dx\)</p>
+                <p>Entonces \(du = dx\) y \(v = -\cos(x)\)</p>
+                <p>\[\int x\sin(x) \, dx = -x\cos(x) - \int (-\cos(x)) \, dx = -x\cos(x) + \int \cos(x) \, dx =
+                    -x\cos(x) + \sin(x) + C\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Integración de Potencias Trigonométricas</h3>
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Potencias de Seno y Coseno: \(\sin^m(x)\cos^n(x)\)</h4>
+
+            <div class="math-box">
+                <p>Si \(m\) es impar, \(m = 2k+1\):</p>
+                <p>\[\int \sin^m(x)\cos^n(x) \, dx = \int \sin^{2k+1}(x)\cos^n(x) \, dx\]</p>
+                <p>\[= \int \sin^{2k}(x)\sin(x)\cos^n(x) \, dx = \int (1-\cos^2(x))^k \sin(x)\cos^n(x) \, dx\]</p>
+                <p>Se hace la sustitución \(u = \cos(x)\), \(du = -\sin(x) \, dx\)</p>
+                <p>Si \(n\) es impar, se sigue un procedimiento similar.</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Potencias de Tangente y Secante: \(\tan^m(x)\sec^n(x)\)
+            </h4>
+
+            <div class="math-box">
+                <p>Se utilizan las identidades:</p>
+                <p>\[\sec^2(x) = 1 + \tan^2(x)\]</p>
+                <p>\[\tan^2(x) = \sec^2(x) - 1\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Sustitución Trigonométrica</h3>
+            <p>La sustitución trigonométrica es útil para integrales que contienen expresiones de la forma
+                \(\sqrt{a^2-x^2}\), \(\sqrt{a^2+x^2}\) o \(\sqrt{x^2-a^2}\).</p>
+
+            <div class="math-box">
+                <p>Para \(\sqrt{a^2-x^2}\), se hace \(x = a\sin(\theta)\)</p>
+                <p>Para \(\sqrt{a^2+x^2}\), se hace \(x = a\tan(\theta)\)</p>
+                <p>Para \(\sqrt{x^2-a^2}\), se hace \(x = a\sec(\theta)\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int \frac{1}{\sqrt{4-x^2}} \, dx\)</p>
+                <p>Hacemos \(x = 2\sin(\theta)\), entonces \(dx = 2\cos(\theta) \, d\theta\) y \(\sqrt{4-x^2} =
+                    \sqrt{4-4\sin^2(\theta)} = 2\cos(\theta)\)</p>
+                <p>\[\int \frac{1}{\sqrt{4-x^2}} \, dx = \int \frac{2\cos(\theta)}{2\cos(\theta)} \, d\theta = \int \,
+                    d\theta = \theta + C = \arcsin\left(\frac{x}{2}\right) + C\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Integración por Fracciones Parciales</h3>
+            <p>La integración por fracciones parciales es una técnica utilizada para integrar funciones racionales
+                (cocientes de polinomios). El método consiste en descomponer la función racional en una suma de
+                fracciones más simples.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int \frac{3x+2}{(x+1)(x-2)} \, dx\)</p>
+                <p>Descomponemos en fracciones parciales:</p>
+                <p>\[\frac{3x+2}{(x+1)(x-2)} = \frac{A}{x+1} + \frac{B}{x-2}\]</p>
+                <p>Multiplicando por \((x+1)(x-2)\):</p>
+                <p>\[3x+2 = A(x-2) + B(x+1)\]</p>
+                <p>Para \(x = -1\): \(3(-1)+2 = -1 = B(-1+1) = 0\) (contradicción)</p>
+                <p>Para \(x = 2\): \(3(2)+2 = 8 = A(2-2) + B(2+1) = 3B\), por lo tanto \(B = \frac{8}{3}\)</p>
+                <p>Para \(x = 0\): \(2 = A(-2) + B(1)\), por lo tanto \(-2A + B = 2\)</p>
+                <p>Sustituyendo \(B = \frac{8}{3}\): \(-2A + \frac{8}{3} = 2\), por lo tanto \(A = \frac{1}{3}\)</p>
+                <p>Entonces:</p>
+                <p>\[\int \frac{3x+2}{(x+1)(x-2)} \, dx = \int \left(\frac{1/3}{x+1} + \frac{8/3}{x-2}\right) \, dx =
+                    \frac{1}{3}\ln|x+1| + \frac{8}{3}\ln|x-2| + C\]</p>
+            </div>
+        </section>
+
+        <section id="artificios-integracion">
+            <h2 class="text-3xl section-title">Artificios de Integración</h2>
+
+            <h3 class="text-2xl subsection-title">Fracciones Racionales</h3>
+            <p>Además del método de fracciones parciales, existen otros artificios para integrar fracciones racionales
+                complejas.</p>
+
+            <div class="math-box">
+                <p>Para integrales de la forma \(\int \frac{P(x)}{Q(x)} \, dx\) donde \(P(x)\) y \(Q(x)\) son
+                    polinomios, se puede utilizar la división polinomial si el grado de \(P\) es mayor o igual al grado
+                    de \(Q\).</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Potencias Fraccionarias de x</h3>
+            <p>Para integrales que contienen potencias fraccionarias, a menudo es útil realizar sustituciones que
+                simplifiquen la expresión.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int \sqrt{x}(1+x) \, dx\)</p>
+                <p>Escribimos \(\sqrt{x} = x^{1/2}\)</p>
+                <p>\[\int \sqrt{x}(1+x) \, dx = \int x^{1/2}(1+x) \, dx = \int (x^{1/2} + x^{3/2}) \, dx = \int x^{1/2}
+                    \, dx + \int x^{3/2} \, dx\]</p>
+                <p>\[= \frac{x^{3/2}}{\frac{3}{2}} + \frac{x^{5/2}}{\frac{5}{2}} + C = \frac{2}{3}x^{3/2} +
+                    \frac{2}{5}x^{5/2} + C\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Transformación de Diferenciales Trigonométricas</h3>
+            <p>Algunas integrales que contienen funciones trigonométricas pueden simplificarse mediante identidades
+                trigonométricas.</p>
+
+            <div class="math-box">
+                <p>Por ejemplo, usando \(\sin^2(x) = \frac{1-\cos(2x)}{2}\) y \(\cos^2(x) = \frac{1+\cos(2x)}{2}\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Diferenciales Binomias</h3>
+            <p>Una diferencial binomia tiene la forma \(x^m(a+bx^n)^p \, dx\), donde \(m\), \(n\), \(p\) son números
+                racionales.</p>
+
+            <div class="math-box">
+                <p>La integral \(\int x^m(a+bx^n)^p \, dx\) puede resolverse mediante sustituciones cuando:</p>
+                <ul class="list-disc ml-8">
+                    <li>\(p\) es un entero</li>
+                    <li>\(\frac{m+1}{n}\) es un entero</li>
+                    <li>\(p + \frac{m+1}{n}\) es un entero</li>
+                </ul>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Condiciones de Racionalización de las Diferenciales Binomias</h3>
+            <p>La racionalización es un proceso que permite transformar una expresión irracional en una expresión
+                racional, facilitando su integración.</p>
+
+            <div class="math-box">
+                <p>Para racionalizar expresiones de la forma \(\sqrt{ax+b}\), se puede usar la sustitución \(u^2 =
+                    ax+b\).</p>
+                <p>Para racionalizar expresiones de la forma \(\sqrt{ax^2+bx+c}\), se pueden usar sustituciones
+                    trigonométricas o hiperbólicas dependiendo de la naturaleza de las raíces del polinomio.</p>
+            </div>
+        </section>
+
+        <section id="integral-definida">
+            <h2 class="text-3xl section-title">Integral Definida</h2>
+            <p>La integral definida de una función \(f(x)\) en el intervalo \([a,b]\) se define como el límite de una
+                suma:</p>
+
+            <div class="math-box">
+                <p>\[\int_a^b f(x) \, dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i^*) \Delta x\]</p>
+                <p>donde \(\Delta x = \frac{b-a}{n}\) y \(x_i^*\) es un punto en el \(i\)-ésimo subintervalo \([x_{i-1},
+                    x_i]\).</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Resolución de Integrales Definidas por Definición</h3>
+            <p>Aunque la definición de la integral definida como un límite de sumas es fundamental, rara vez se utiliza
+                para calcular integrales en la práctica. En su lugar, se utiliza el Teorema Fundamental del Cálculo.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int_0^1 x^2 \, dx\) usando la definición.</p>
+                <p>Dividimos el intervalo \([0,1]\) en \(n\) subintervalos iguales de longitud \(\Delta x =
+                    \frac{1}{n}\)</p>
+                <p>Los puntos extremos son \(x_i = \frac{i}{n}\) para \(i = 0, 1, 2, \ldots, n\)</p>
+                <p>Tomando \(x_i^* = \frac{i}{n}\):</p>
+                <p>\[\int_0^1 x^2 \, dx = \lim_{n \to \infty} \sum_{i=1}^{n} \left(\frac{i}{n}\right)^2 \cdot
+                    \frac{1}{n} = \lim_{n \to \infty} \frac{1}{n^3} \sum_{i=1}^{n} i^2\]</p>
+                <p>Usando la fórmula \(\sum_{i=1}^{n} i^2 = \frac{n(n+1)(2n+1)}{6}\):</p>
+                <p>\[\lim_{n \to \infty} \frac{1}{n^3} \cdot \frac{n(n+1)(2n+1)}{6} = \lim_{n \to \infty}
+                    \frac{(n+1)(2n+1)}{6n^2} = \frac{1}{3}\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Teorema Fundamental del Cálculo</h3>
+            <p>El Teorema Fundamental del Cálculo establece la relación entre la derivación y la integración, y
+                proporciona un método para calcular integrales definidas.</p>
+
+            <div class="math-box">
+                <p><strong>Primera Parte:</strong> Si \(f\) es continua en \([a,b]\) y \(F\) es una antiderivada de
+                    \(f\) en \([a,b]\), entonces:</p>
+                <p>\[\int_a^b f(x) \, dx = F(b) - F(a)\]</p>
+                <p><strong>Segunda Parte:</strong> Si \(f\) es continua en un intervalo \(I\) que contiene a \(a\),
+                    entonces la función \(g\) definida por:</p>
+                <p>\[g(x) = \int_a^x f(t) \, dt\]</p>
+                <p>es una antiderivada de \(f\) en \(I\), es decir, \(g'(x) = f(x)\) para todo \(x\) en \(I\).</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int_0^2 x^3 \, dx\)</p>
+                <p>Una antiderivada de \(f(x) = x^3\) es \(F(x) = \frac{x^4}{4}\)</p>
+                <p>\[\int_0^2 x^3 \, dx = F(2) - F(0) = \frac{2^4}{4} - \frac{0^4}{4} = 4\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Área Bajo la Curva por Defecto y por Exceso</h3>
+            <p>Al aproximar el área bajo una curva mediante sumas de Riemann, podemos tomar los valores de la función en
+                el extremo izquierdo (suma por defecto) o en el extremo derecho (suma por exceso) de cada subintervalo.
+            </p>
+
+            <div class="math-box">
+                <p><strong>Suma por defecto:</strong> \(S_n = \sum_{i=1}^{n} f(x_{i-1}) \Delta x\)</p>
+                <p><strong>Suma por exceso:</strong> \(S_n = \sum_{i=1}^{n} f(x_i) \Delta x\)</p>
+            </div>
+
+            <p>Si \(f\) es creciente en \([a,b]\), la suma por defecto subestima el área y la suma por exceso la
+                sobrestima. Si \(f\) es decreciente, ocurre lo contrario.</p>
+        </section>
+
+        <section id="aplicaciones-geometricas">
+            <h2 class="text-3xl section-title">Aplicaciones Geométricas</h2>
+
+            <h3 class="text-2xl subsection-title">Área Bajo la Curva por el Teorema Fundamental</h3>
+            <p>El área bajo la gráfica de una función \(f(x)\) no negativa en un intervalo \([a,b]\) viene dada por la
+                integral definida:</p>
+
+            <div class="math-box">
+                <p>\[\text{Área} = \int_a^b f(x) \, dx\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular el área bajo la curva \(f(x) = x^2\) en el intervalo \([0,3]\)</p>
+                <p>\[\text{Área} = \int_0^3 x^2 \, dx = \left[ \frac{x^3}{3} \right]_0^3 = \frac{3^3}{3} - \frac{0^3}{3}
+                    = 9\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Área Entre Dos Curvas</h3>
+            <p>El área entre las gráficas de dos funciones \(f(x)\) y \(g(x)\), donde \(f(x) \geq g(x)\) para todo \(x\)
+                en \([a,b]\), viene dada por:</p>
+
+            <div class="math-box">
+                <p>\[\text{Área} = \int_a^b [f(x) - g(x)] \, dx\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular el área entre las curvas \(f(x) = x^2\) y \(g(x) = x\) en el
+                    intervalo \([0,1]\)</p>
+                <p>Verificamos que \(g(x) \geq f(x)\) para \(0 \leq x \leq 1\) (excepto en \(x=0\) y \(x=1\) donde son
+                    iguales)</p>
+                <p>\[\text{Área} = \int_0^1 [x - x^2] \, dx = \left[ \frac{x^2}{2} - \frac{x^3}{3} \right]_0^1 =
+                    \frac{1}{2} - \frac{1}{3} = \frac{1}{6}\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Volumen de Sólidos de Revolución</h3>
+            <p>El volumen de un sólido generado al rotar la región bajo la gráfica de una función \(f(x)\) en el
+                intervalo \([a,b]\) alrededor del eje x (método del disco) viene dado por:</p>
+
+            <div class="math-box">
+                <p>\[V = \pi \int_a^b [f(x)]^2 \, dx\]</p>
+            </div>
+
+            <p>Si la rotación es alrededor del eje y (método de la cáscara cilíndrica):</p>
+
+            <div class="math-box">
+                <p>\[V = 2\pi \int_a^b x \cdot f(x) \, dx\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular el volumen del sólido generado al rotar la región bajo la curva
+                    \(f(x) = \sqrt{x}\) en el intervalo \([0,4]\) alrededor del eje x.</p>
+                <p>\[V = \pi \int_0^4 [\sqrt{x}]^2 \, dx = \pi \int_0^4 x \, dx = \pi \left[ \frac{x^2}{2} \right]_0^4 =
+                    \pi \cdot \frac{16}{2} = 8\pi\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Longitud de Arco de una Curva</h3>
+            <p>La longitud de arco de una curva \(y = f(x)\) en el intervalo \([a,b]\) viene dada por:</p>
+
+            <div class="math-box">
+                <p>\[L = \int_a^b \sqrt{1 + [f'(x)]^2} \, dx\]</p>
+            </div>
+
+            <p>Para una curva dada en coordenadas polares \(r = f(\theta)\) en el intervalo \([\alpha,\beta]\):</p>
+
+            <div class="math-box">
+                <p>\[L = \int_\alpha^\beta \sqrt{[f(\theta)]^2 + [f'(\theta)]^2} \, d\theta\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular la longitud de arco de la curva \(f(x) = x^{3/2}\) en el intervalo
+                    \([0,1]\)</p>
+                <p>\(f'(x) = \frac{3}{2}x^{1/2}\)</p>
+                <p>\[L = \int_0^1 \sqrt{1 + \left(\frac{3}{2}x^{1/2}\right)^2} \, dx = \int_0^1 \sqrt{1 + \frac{9}{4}x}
+                    \, dx\]</p>
+                <p>Esta integral requiere sustitución trigonométrica u otros métodos avanzados para su resolución.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Áreas de Superficies de Revolución</h3>
+            <p>El área de la superficie generada al rotar la gráfica de una función \(y = f(x)\) en el intervalo
+                \([a,b]\) alrededor del eje x viene dada por:</p>
+
+            <div class="math-box">
+                <p>\[A = 2\pi \int_a^b f(x) \sqrt{1 + [f'(x)]^2} \, dx\]</p>
+            </div>
+
+            <p>Si la rotación es alrededor del eje y:</p>
+
+            <div class="math-box">
+                <p>\[A = 2\pi \int_a^b x \sqrt{1 + [f'(x)]^2} \, dx\]</p>
+            </div>
+        </section>
+
+        <section id="formulas-reduccion">
+            <h2 class="text-3xl section-title">Fórmulas de Reducción</h2>
+            <p>Las fórmulas de reducción permiten expresar una integral en términos de otra integral más simple. Son
+                particularmente útiles para integrar potencias de funciones trigonométricas.</p>
+
+            <div class="math-box">
+                <p>Algunas fórmulas de reducción comunes son:</p>
+                <p>\[\int \sin^n(x) \, dx = -\frac{\sin^{n-1}(x) \cos(x)}{n} + \frac{n-1}{n} \int \sin^{n-2}(x) \, dx,
+                    \quad n > 1\]</p>
+                <p>\[\int \cos^n(x) \, dx = \frac{\cos^{n-1}(x) \sin(x)}{n} + \frac{n-1}{n} \int \cos^{n-2}(x) \, dx,
+                    \quad n > 1\]</p>
+                <p>\[\int \tan^n(x) \, dx = \frac{\tan^{n-1}(x)}{n-1} - \int \tan^{n-2}(x) \, dx, \quad n > 1\]</p>
+                <p>\[\int x^n e^x \, dx = x^n e^x - n \int x^{n-1} e^x \, dx\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int \sin^3(x) \, dx\)</p>
+                <p>Usando la fórmula de reducción:</p>
+                <p>\[\int \sin^3(x) \, dx = -\frac{\sin^2(x) \cos(x)}{3} + \frac{2}{3} \int \sin(x) \, dx\]</p>
+                <p>\[= -\frac{\sin^2(x) \cos(x)}{3} - \frac{2}{3} \cos(x) + C\]</p>
+                <p>\[= -\frac{\sin^2(x) \cos(x)}{3} - \frac{2\cos(x)}{3} + C\]</p>
+                <p>También podemos usar la identidad \(\sin^3(x) = \sin(x) \cdot \sin^2(x) = \sin(x) \cdot
+                    (1-\cos^2(x))\)</p>
+            </div>
+        </section>
+
+        <section id="aplicaciones-vida-real">
+            <h2 class="text-3xl section-title">Aplicaciones a la Vida Real</h2>
+
+            <h3 class="text-2xl subsection-title">Construcción</h3>
+            <p>El cálculo integral tiene numerosas aplicaciones en la ingeniería civil y la arquitectura.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Cálculo del volumen de estructuras complejas</p>
+                <p>Para calcular el volumen de una columna con radio variable \(r(h)\) a lo largo de su altura \(H\):
+                </p>
+                <p>\[V = \pi \int_0^H [r(h)]^2 \, dh\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Electricidad</h3>
+            <p>El cálculo integral es fundamental en la teoría electromagnética y los circuitos eléctricos.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Cálculo de la carga total en un capacitor</p>
+                <p>Si la corriente \(i(t)\) fluye a través de un capacitor durante un intervalo de tiempo \([0,T]\), la
+                    carga total acumulada es:</p>
+                <p>\[Q = \int_0^T i(t) \, dt\]</p>
+            </div>
+        </section>
+
+        <section id="aplicaciones-fisica">
+            <h2 class="text-3xl section-title">Aplicaciones a la Física</h2>
+
+            <h3 class="text-2xl subsection-title">Mecánica</h3>
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Cinemática</h4>
+            <p>El cálculo integral es esencial para describir el movimiento de partículas y cuerpos rígidos.</p>
+
+            <div class="math-box">
+                <p>Si \(a(t)\) es la aceleración de una partícula, su velocidad \(v(t)\) y posición \(s(t)\) pueden
+                    calcularse mediante:</p>
+                <p>\[v(t) = v(0) + \int_0^t a(\tau) \, d\tau\]</p>
+                <p>\[s(t) = s(0) + \int_0^t v(\tau) \, d\tau\]</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Dinámica</h4>
+            <p>El trabajo realizado por una fuerza variable \(F(x)\) a lo largo de un desplazamiento de \(a\) a \(b\)
+                viene dado por:</p>
+
+            <div class="math-box">
+                <p>\[W = \int_a^b F(x) \, dx\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Centro de Gravedad</h3>
+            <p>El centro de gravedad de un cuerpo es el punto donde actúa la resultante de las fuerzas gravitacionales
+                sobre todas las partículas del cuerpo.</p>
+
+            <div class="math-box">
+                <p>Para una lámina plana con densidad uniforme, cuya forma está delimitada por la curva \(y = f(x)\) en
+                    el intervalo \([a,b]\), las coordenadas del centro de gravedad son:</p>
+                <p>\[\bar{x} = \frac{\int_a^b x \cdot f(x) \, dx}{\int_a^b f(x) \, dx}\]</p>
+                <p>\[\bar{y} = \frac{\int_a^b \frac{1}{2} [f(x)]^2 \, dx}{\int_a^b f(x) \, dx}\]</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Centro de Gravedad de un Sólido de Revolución</h4>
+            <div class="math-box">
+                <p>Para un sólido de revolución generado al rotar la región bajo la curva \(y = f(x)\) en el intervalo
+                    \([a,b]\) alrededor del eje x, la coordenada x del centro de gravedad es:</p>
+                <p>\[\bar{x} = \frac{\int_a^b x \cdot \pi [f(x)]^2 \, dx}{\int_a^b \pi [f(x)]^2 \, dx}\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Presión de Líquidos</h3>
+            <p>La fuerza ejercida por un fluido sobre una superficie sumergida depende de la profundidad y del área de
+                la superficie.</p>
+
+            <div class="math-box">
+                <p>La fuerza ejercida por un fluido sobre una placa vertical sumergida con ancho \(w(y)\) y profundidad
+                    que varía desde \(y = a\) hasta \(y = b\) es:</p>
+                <p>\[F = \rho g \int_a^b y \cdot w(y) \, dy\]</p>
+                <p>donde \(\rho\) es la densidad del fluido y \(g\) es la aceleración debida a la gravedad.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Trabajo y Valor Medio</h3>
+            <p>El valor medio de una función \(f(x)\) en el intervalo \([a,b]\) viene dado por:</p>
+
+            <div class="math-box">
+                <p>\[f_{\text{medio}} = \frac{1}{b-a} \int_a^b f(x) \, dx\]</p>
+            </div>
+
+            <p>Este concepto es útil en diversos contextos, como el cálculo de la potencia media de una señal o la
+                temperatura media en un período.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular la temperatura media durante un día si la temperatura en grados
+                    Celsius en función del tiempo \(t\) (en horas) viene dada por \(T(t) = 20 + 5\sin\left(\frac{\pi
+                    t}{12}\right)\).</p>
+                <p>\[T_{\text{medio}} = \frac{1}{24} \int_0^{24} \left(20 + 5\sin\left(\frac{\pi t}{12}\right)\right) \,
+                    dt = \frac{1}{24} \left[20t - \frac{60}{\pi} \cos\left(\frac{\pi t}{12}\right)\right]_0^{24} = 20\]
+                </p>
+            </div>
+        </section>
+
+        <section id="integrales-impropias">
+            <h2 class="text-3xl section-title">Integrales Impropias</h2>
+            <p>Las integrales impropias son aquellas que involucran límites infinitos o funciones que tienen
+                discontinuidades en el intervalo de integración.</p>
+
+            <h3 class="text-2xl subsection-title">Tipos de Integrales Impropias</h3>
+            <div class="math-box">
+                <p><strong>Tipo 1:</strong> Integrales con límites infinitos</p>
+                <p>\[\int_a^{\infty} f(x) \, dx = \lim_{b \to \infty} \int_a^b f(x) \, dx\]</p>
+                <p>\[\int_{-\infty}^b f(x) \, dx = \lim_{a \to -\infty} \int_a^b f(x) \, dx\]</p>
+                <p>\[\int_{-\infty}^{\infty} f(x) \, dx = \int_{-\infty}^c f(x) \, dx + \int_c^{\infty} f(x) \, dx\]</p>
+                <p>para cualquier valor real \(c\).</p>
+            </div>
+
+            <div class="math-box">
+                <p><strong>Tipo 2:</strong> Integrales de funciones que tienen discontinuidades en el intervalo de
+                    integración</p>
+                <p>Si \(f\) tiene una discontinuidad en \(c\), donde \(a < c < b\):</p>
+                        <p>\[\int_a^b f(x) \, dx = \int_a^c f(x) \, dx + \int_c^b f(x) \, dx\]</p>
+                        <p>donde</p>
+                        <p>\[\int_a^c f(x) \, dx = \lim_{t \to c^-} \int_a^t f(x) \, dx\]</p>
+                        <p>\[\int_c^b f(x) \, dx = \lim_{t \to c^+} \int_t^b f(x) \, dx\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\int_1^{\infty} \frac{1}{x^2} \, dx\)</p>
+                <p>\[\int_1^{\infty} \frac{1}{x^2} \, dx = \lim_{b \to \infty} \int_1^b \frac{1}{x^2} \, dx = \lim_{b
+                    \to \infty} \left[ -\frac{1}{x} \right]_1^b = \lim_{b \to \infty} \left( -\frac{1}{b} + 1 \right) =
+                    1\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Series</h3>
+            <p>Las series son sumas infinitas de términos que siguen un patrón definido.</p>
+
+            <div class="math-box">
+                <p>Una serie se denota como:</p>
+                <p>\[\sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \ldots\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Series Geométricas</h3>
+            <p>Una serie geométrica tiene la forma:</p>
+
+            <div class="math-box">
+                <p>\[\sum_{n=0}^{\infty} ar^n = a + ar + ar^2 + ar^3 + \ldots\]</p>
+                <p>donde \(a\) es el primer término y \(r\) es la razón.</p>
+                <p>La serie converge a \(\frac{a}{1-r}\) si \(|r| < 1\) y diverge si \(|r| \geq 1\).</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular la suma de la serie \(\sum_{n=0}^{\infty} \frac{1}{2^n} = 1 +
+                    \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \ldots\)</p>
+                <p>Esta es una serie geométrica con \(a = 1\) y \(r = \frac{1}{2}\).</p>
+                <p>Como \(|r| = \frac{1}{2} < 1\), la serie converge a
+                        \(\frac{1}{1-\frac{1}{2}}=\frac{1}{\frac{1}{2}}=2\).</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Series Divergentes y Convergentes</h3>
+            <p>Una serie \(\sum_{n=1}^{\infty} a_n\) es convergente si la sucesión de sumas parciales \(S_n =
+                \sum_{i=1}^{n} a_i\) tiene un límite finito cuando \(n\) tiende a infinito. En caso contrario, la serie
+                es divergente.</p>
+
+            <h3 class="text-2xl subsection-title">Teoremas Generales de las Series</h3>
+            <div class="math-box">
+                <p><strong>Condición necesaria de convergencia:</strong> Si \(\sum_{n=1}^{\infty} a_n\) converge,
+                    entonces \(\lim_{n \to \infty} a_n = 0\).</p>
+                <p><strong>Nota:</strong> Lo contrario no es necesariamente cierto. Por ejemplo, la serie armónica
+                    \(\sum_{n=1}^{\infty} \frac{1}{n}\) diverge, aunque \(\lim_{n \to \infty} \frac{1}{n} = 0\).</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Criterios de Comparación</h3>
+            <p>Estos criterios permiten determinar la convergencia o divergencia de una serie mediante la comparación
+                con otra serie cuyo comportamiento es conocido.</p>
+
+            <div class="math-box">
+                <p><strong>Criterio de comparación directo:</strong> Sean \(\sum a_n\) y \(\sum b_n\) series con
+                    términos positivos.</p>
+                <ul class="list-disc ml-8">
+                    <li>Si \(a_n \leq b_n\) para todo \(n \geq N\) (algún \(N\)) y \(\sum b_n\) converge, entonces
+                        \(\sum a_n\) también converge.</li>
+                    <li>Si \(a_n \geq b_n\) para todo \(n \geq N\) y \(\sum b_n\) diverge, entonces \(\sum a_n\) también
+                        diverge.</li>
+                </ul>
+            </div>
+
+            <div class="math-box">
+                <p><strong>Criterio de comparación del límite:</strong> Sean \(\sum a_n\) y \(\sum b_n\) series con
+                    términos positivos. Si \(\lim_{n \to \infty} \frac{a_n}{b_n} = L\), donde \(0 < L < \infty\),
+                        entonces ambas series convergen o ambas divergen.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Criterio de D'Alembert (Razón)</h3>
+            <p>Este criterio es especialmente útil para series con términos que involucran factoriales o potencias.</p>
+
+            <div class="math-box">
+                <p>Sea \(\sum a_n\) una serie con términos positivos. Si \(\lim_{n \to \infty} \frac{a_{n+1}}{a_n} =
+                    L\), entonces:</p>
+                <ul class="list-disc ml-8">
+                    <li>Si \(L < 1\), la serie converge.</li>
+                    <li>Si \(L > 1\) o \(L = \infty\), la serie diverge.</li>
+                    <li>Si \(L = 1\), el criterio no es concluyente.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Determinar la convergencia de la serie \(\sum_{n=1}^{\infty}
+                    \frac{n}{2^n}\)</p>
+                <p>\[\lim_{n \to \infty} \frac{a_{n+1}}{a_n} = \lim_{n \to \infty}
+                    \frac{\frac{n+1}{2^{n+1}}}{\frac{n}{2^n}} = \lim_{n \to \infty} \frac{n+1}{n} \cdot \frac{1}{2} =
+                    \frac{1}{2}\]</p>
+                <p>Como \(L = \frac{1}{2} < 1\), la serie converge por el criterio de D'Alembert.</p>
+            </div>
+        </section>
+
+        <section id="series-potencias">
+            <h2 class="text-3xl section-title">Series de Potencias</h2>
+            <p>Una serie de potencias es una expresión de la forma:</p>
+
+            <div class="math-box">
+                <p>\[\sum_{n=0}^{\infty} a_n(x-c)^n = a_0 + a_1(x-c) + a_2(x-c)^2 + \ldots\]</p>
+                <p>donde \(c\) y \(a_n\) son constantes.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Serie Binómica</h3>
+            <p>La serie binómica permite expresar \((1+x)^{\alpha}\) como una serie de potencias, donde \(\alpha\) puede
+                ser cualquier número real.</p>
+
+            <div class="math-box">
+                <p>\[(1+x)^{\alpha} = \sum_{n=0}^{\infty} \binom{\alpha}{n} x^n\]</p>
+                <p>donde \(\binom{\alpha}{n} = \frac{\alpha(\alpha-1)(\alpha-2)\ldots(\alpha-n+1)}{n!}\)</p>
+                <p>Esta serie converge para \(|x| < 1\), y también para \(x=1\) si \(\alpha> 0\), y para \(x = -1\) si
+                        \(\alpha > 0\) y \(\alpha\) es un entero.</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Desarrollo de Funciones en Serie de Potencias</h3>
+            <p>Muchas funciones comunes pueden representarse como series de potencias.</p>
+
+            <div class="math-box">
+                <p>\[e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots\]</p>
+                <p>\[\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!}
+                    - \ldots\]</p>
+                <p>\[\cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} -
+                    \ldots\]</p>
+                <p>\[\ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1}x^n}{n} = x - \frac{x^2}{2} + \frac{x^3}{3} -
+                    \ldots, \quad |x| < 1\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Series de Taylor</h3>
+            <p>Si una función \(f(x)\) tiene derivadas de todos los órdenes en un entorno de \(x = c\), su serie de
+                Taylor centrada en \(c\) es:</p>
+
+            <div class="math-box">
+                <p>\[f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(c)}{n!}(x-c)^n\]</p>
+                <p>\[= f(c) + f'(c)(x-c) + \frac{f''(c)}{2!}(x-c)^2 + \frac{f'''(c)}{3!}(x-c)^3 + \ldots\]</p>
+            </div>
+
+            <p>Si \(c = 0\), la serie se llama serie de Maclaurin.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Desarrollar \(f(x) = e^x\) en serie de Maclaurin.</p>
+                <p>\(f(0) = e^0 = 1\)</p>
+                <p>\(f'(x) = e^x\), por lo que \(f'(0) = 1\)</p>
+                <p>\(f''(x) = e^x\), por lo que \(f''(0) = 1\)</p>
+                <p>Y así sucesivamente, \(f^{(n)}(0) = 1\) para todo \(n\).</p>
+                <p>\[e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Desarrollo de Funciones</h3>
+            <p>El desarrollo en series de Taylor es una herramienta poderosa para aproximar funciones y realizar
+                cálculos numéricos.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Desarrollar \(f(x) = \ln(1+x)\) en serie de Maclaurin.</p>
+                <p>\(f(0) = \ln(1) = 0\)</p>
+                <p>\(f'(x) = \frac{1}{1+x}\), por lo que \(f'(0) = 1\)</p>
+                <p>\(f''(x) = -\frac{1}{(1+x)^2}\), por lo que \(f''(0) = -1\)</p>
+                <p>\(f'''(x) = \frac{2}{(1+x)^3}\), por lo que \(f'''(0) = 2\)</p>
+                <p>\(f^{(4)}(x) = -\frac{6}{(1+x)^4}\), por lo que \(f^{(4)}(0) = -6\)</p>
+                <p>En general, \(f^{(n)}(0) = (-1)^{n+1}(n-1)!\) para \(n \geq 1\).</p>
+                <p>\[\ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1}x^n}{n} = x - \frac{x^2}{2} + \frac{x^3}{3} -
+                    \frac{x^4}{4} + \ldots, \quad |x| < 1\]</p>
+            </div>
+        </section>
+
+        <section id="integrales-multiples">
+            <h2 class="text-3xl section-title">Integrales Dobles y Triples</h2>
+            <p>Las integrales múltiples son una extensión del concepto de integral definida a funciones de varias
+                variables.</p>
+
+            <h3 class="text-2xl subsection-title">Integral Doble</h3>
+            <p>La integral doble de una función \(f(x,y)\) sobre una región \(R\) del plano se denota por:</p>
+
+            <div class="math-box">
+                <p>\[\iint_R f(x,y) \, dA = \iint_R f(x,y) \, dx \, dy\]</p>
+            </div>
+
+            <p>Para evaluar una integral doble, a menudo se utiliza la integración iterada:</p>
+
+            <div class="math-box">
+                <p>Si \(R = \{(x,y) | a \leq x \leq b, g_1(x) \leq y \leq g_2(x)\}\), entonces:</p>
+                <p>\[\iint_R f(x,y) \, dA = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y) \, dy \, dx\]</p>
+                <p>Alternativamente, si \(R = \{(x,y) | h_1(y) \leq x \leq h_2(y), c \leq y \leq d\}\), entonces:</p>
+                <p>\[\iint_R f(x,y) \, dA = \int_c^d \int_{h_1(y)}^{h_2(y)} f(x,y) \, dx \, dy\]</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\iint_R (x+y) \, dA\), donde \(R = \{(x,y) | 0 \leq x \leq 1, 0
+                    \leq y \leq 1\}\).</p>
+                <p>\[\iint_R (x+y) \, dA = \int_0^1 \int_0^1 (x+y) \, dy \, dx = \int_0^1 \left[ xy + \frac{y^2}{2}
+                    \right]_{y=0}^{y=1} \, dx\]</p>
+                <p>\[= \int_0^1 \left( x \cdot 1 + \frac{1^2}{2} - x \cdot 0 - \frac{0^2}{2} \right) \, dx = \int_0^1
+                    \left( x + \frac{1}{2} \right) \, dx\]</p>
+                <p>\[= \left[ \frac{x^2}{2} + \frac{x}{2} \right]_{x=0}^{x=1} = \frac{1}{2} + \frac{1}{2} - 0 - 0 = 1\]
+                </p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Integral Triple</h3>
+            <p>La integral triple de una función \(f(x,y,z)\) sobre una región \(E\) del espacio se denota por:</p>
+
+            <div class="math-box">
+                <p>\[\iiint_E f(x,y,z) \, dV = \iiint_E f(x,y,z) \, dx \, dy \, dz\]</p>
+            </div>
+
+            <p>De manera similar a las integrales dobles, las integrales triples se pueden evaluar mediante integración
+                iterada.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\iiint_E xyz \, dV\), donde \(E = \{(x,y,z) | 0 \leq x \leq 1, 0
+                    \leq y \leq 1, 0 \leq z \leq 1\}\).</p>
+                <p>\[\iiint_E xyz \, dV = \int_0^1 \int_0^1 \int_0^1 xyz \, dz \, dy \, dx\]</p>
+                <p>\[= \int_0^1 \int_0^1 xy \left[ \frac{z^2}{2} \right]_{z=0}^{z=1} \, dy \, dx = \int_0^1 \int_0^1
+                    \frac{xy}{2} \, dy \, dx\]</p>
+                <p>\[= \int_0^1 x \left[ \frac{y^2}{4} \right]_{y=0}^{y=1} \, dx = \int_0^1 \frac{x}{4} \, dx = \left[
+                    \frac{x^2}{8} \right]_{x=0}^{x=1} = \frac{1}{8}\]</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Cambio de Variables en Integrales Múltiples</h3>
+            <p>El cambio de variables en integrales múltiples involucra el Jacobiano de la transformación.</p>
+
+            <div class="math-box">
+                <p>Si \(T\) es una transformación de coordenadas que mapea una región \(S\) a una región \(R\),
+                    entonces:</p>
+                <p>\[\iint_R f(x,y) \, dx \, dy = \iint_S f(T(u,v)) \left| \frac{\partial(x,y)}{\partial(u,v)} \right|
+                    \, du \, dv\]</p>
+                <p>donde \(\left| \frac{\partial(x,y)}{\partial(u,v)} \right|\) es el valor absoluto del Jacobiano de la
+                    transformación.</p>
+            </div>
+
+            <p>Los sistemas de coordenadas más comunes incluyen las coordenadas polares, cilíndricas y esféricas.</p>
+
+            <div class="math-box">
+                <p><strong>Coordenadas polares:</strong> \(x = r\cos(\theta)\), \(y = r\sin(\theta)\), \(dA = r \, dr \,
+                    d\theta\)</p>
+                <p><strong>Coordenadas cilíndricas:</strong> \(x = r\cos(\theta)\), \(y = r\sin(\theta)\), \(z = z\),
+                    \(dV = r \, dr \, d\theta \, dz\)</p>
+                <p><strong>Coordenadas esféricas:</strong> \(x = \rho\sin(\phi)\cos(\theta)\), \(y =
+                    \rho\sin(\phi)\sin(\theta)\), \(z = \rho\cos(\phi)\), \(dV = \rho^2\sin(\phi) \, d\rho \, d\phi \,
+                    d\theta\)</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Calcular \(\iint_R e^{-(x^2+y^2)} \, dA\), donde \(R = \{(x,y) | x^2 + y^2
+                    \leq 1\}\).</p>
+                <p>Usando coordenadas polares: \(x = r\cos(\theta)\), \(y = r\sin(\theta)\), \(dA = r \, dr \, d\theta\)
+                </p>
+                <p>La región \(R\) se transforma en \(S = \{(r,\theta) | 0 \leq r \leq 1, 0 \leq \theta \leq 2\pi\}\)
+                </p>
+                <p>\[\iint_R e^{-(x^2+y^2)} \, dA = \int_0^{2\pi} \int_0^1 e^{-r^2} \cdot r \, dr \, d\theta\]</p>
+                <p>\[= \int_0^{2\pi} \left[ -\frac{e^{-r^2}}{2} \right]_{r=0}^{r=1} \, d\theta = \int_0^{2\pi}
+                    \frac{1-e^{-1}}{2} \, d\theta = \pi(1-e^{-1})\]</p>
+            </div>
+        </section>
+
+        <section id="ecuaciones-diferenciales">
+            <h2 class="text-3xl section-title">Ecuaciones Diferenciales Ordinarias</h2>
+            <p>Una ecuación diferencial ordinaria (EDO) es una ecuación que involucra una función desconocida y sus
+                derivadas.</p>
+
+            <h3 class="text-2xl subsection-title">Ecuaciones de Primer Orden</h3>
+            <p>Una ecuación diferencial de primer orden tiene la forma general:</p>
+
+            <div class="math-box">
+                <p>\[F(x, y, y') = 0\]</p>
+                <p>o, de manera equivalente, \(y' = f(x, y)\).</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Ecuaciones Separables</h4>
+            <p>Una ecuación de la forma \(y' = g(x)h(y)\) se puede reescribir como \(\frac{dy}{h(y)} = g(x)dx\), lo que
+                permite integrar ambos lados.</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Resolver \(y' = xy\)</p>
+                <p>Reescribimos como \(\frac{dy}{y} = x \, dx\)</p>
+                <p>Integrando ambos lados: \(\ln|y| = \frac{x^2}{2} + C\)</p>
+                <p>Por lo tanto, \(y = \pm e^{\frac{x^2}{2} + C} = Ce^{\frac{x^2}{2}}\), donde \(C = \pm e^C\) es una
+                    constante arbitraria.</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Ecuaciones Exactas</h4>
+            <p>Una ecuación de la forma \(M(x,y) \, dx + N(x,y) \, dy = 0\) es exacta si existe una función \(F(x,y)\)
+                tal que \(\frac{\partial F}{\partial x} = M(x,y)\) y \(\frac{\partial F}{\partial y} = N(x,y)\).</p>
+
+            <div class="math-box">
+                <p>La condición necesaria y suficiente para que la ecuación sea exacta es:</p>
+                <p>\[\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}\]</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Ecuaciones Lineales</h4>
+            <p>Una ecuación diferencial lineal de primer orden tiene la forma:</p>
+
+            <div class="math-box">
+                <p>\[y' + P(x)y = Q(x)\]</p>
+            </div>
+
+            <p>La solución se obtiene mediante el uso de un factor integrante \(\mu(x) = e^{\int P(x) \, dx}\).</p>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Resolver \(y' + 2y = e^{-x}\)</p>
+                <p>Aquí, \(P(x) = 2\) y \(Q(x) = e^{-x}\)</p>
+                <p>El factor integrante es \(\mu(x) = e^{\int 2 \, dx} = e^{2x}\)</p>
+                <p>Multiplicando la ecuación original por \(\mu(x)\):</p>
+                <p>\[e^{2x}y' + 2e^{2x}y = e^{2x} \cdot e^{-x} = e^x\]</p>
+                <p>El lado izquierdo es la derivada de \(e^{2x}y\):</p>
+                <p>\[\frac{d}{dx}(e^{2x}y) = e^x\]</p>
+                <p>Integrando ambos lados:</p>
+                <p>\[e^{2x}y = e^x + C\]</p>
+                <p>Por lo tanto, \(y = e^{-2x}(e^x + C) = e^{-x} + Ce^{-2x}\)</p>
+            </div>
+
+            <h3 class="text-2xl subsection-title">Ecuaciones de Segundo Orden</h3>
+            <p>Una ecuación diferencial de segundo orden tiene la forma general:</p>
+
+            <div class="math-box">
+                <p>\[F(x, y, y', y'') = 0\]</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Ecuaciones Lineales Homogéneas con Coeficientes
+                Constantes</h4>
+            <p>Una ecuación de la forma \(ay'' + by' + cy = 0\), donde \(a\), \(b\) y \(c\) son constantes, se resuelve
+                encontrando las raíces de la ecuación característica \(ar^2 + br + c = 0\).</p>
+
+            <div class="math-box">
+                <p>Si las raíces son \(r_1\) y \(r_2\):</p>
+                <ul class="list-disc ml-8">
+                    <li>Si \(r_1 \neq r_2\), la solución general es \(y = C_1e^{r_1x} + C_2e^{r_2x}\)</li>
+                    <li>Si \(r_1 = r_2\), la solución general es \(y = (C_1 + C_2x)e^{r_1x}\)</li>
+                    <li>Si las raíces son complejas conjugadas \(r_1 = \alpha + i\beta\) y \(r_2 = \alpha - i\beta\), la
+                        solución general es \(y = e^{\alpha x}(C_1\cos(\beta x) + C_2\sin(\beta x))\)</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Resolver \(y'' - y' - 2y = 0\)</p>
+                <p>La ecuación característica es \(r^2 - r - 2 = 0\), que factorizada es \((r-2)(r+1) = 0\)</p>
+                <p>Las raíces son \(r_1 = 2\) y \(r_2 = -1\)</p>
+                <p>Por lo tanto, la solución general es \(y = C_1e^{2x} + C_2e^{-x}\)</p>
+            </div>
+
+            <h4 class="text-xl mt-4 font-semibold text-blue-700">Ecuaciones Lineales No Homogéneas</h4>
+            <p>Una ecuación de la forma \(ay'' + by' + cy = f(x)\) se resuelve encontrando primero la solución general
+                de la ecuación homogénea correspondiente y luego una solución particular de la ecuación completa.</p>
+
+            <div class="math-box">
+                <p>La solución general de la ecuación no homogénea es:</p>
+                <p>\[y = y_h + y_p\]</p>
+                <p>donde \(y_h\) es la solución general de la ecuación homogénea y \(y_p\) es una solución particular de
+                    la ecuación completa.</p>
+            </div>
+
+            <p>Para encontrar \(y_p\), a menudo se utiliza el método de coeficientes indeterminados o el método de
+                variación de parámetros.</p>
+
+            <h3 class="text-2xl subsection-title">Ecuaciones Diferenciales Heterogéneas y Homogéneas</h3>
+            <p>Una ecuación diferencial de la forma \(y' = f(x,y)\) es homogénea si \(f(tx,ty) = f(x,y)\) para todo \(t
+                > 0\).</p>
+
+            <div class="math-box">
+                <p>Equivalentemente, \(f(x,y) = g\left(\frac{y}{x}\right)\) para alguna función \(g\).</p>
+                <p>En este caso, la sustitución \(v = \frac{y}{x}\) (o \(y = vx\)) transforma la ecuación en una
+                    ecuación separable.</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Ejemplo:</strong> Resolver \(y' = \frac{x+y}{x}\)</p>
+                <p>Verificamos si la ecuación es homogénea:</p>
+                <p>\[f(tx,ty) = \frac{tx+ty}{tx} = \frac{t(x+y)}{tx} = \frac{x+y}{x} = f(x,y)\]</p>
+                <p>Por lo tanto, la ecuación es homogénea. Hacemos la sustitución \(y = vx\), de donde \(y' = v +
+                    x\frac{dv}{dx}\)</p>
+                <p>Sustituyendo en la ecuación original:</p>
+                <p>\[v + x\frac{dv}{dx} = \frac{x+vx}{x} = 1 + v\]</p>
+                <p>\[x\frac{dv}{dx} = 1\]</p>
+                <p>\[\frac{dv}{dx} = \frac{1}{x}\]</p>
+                <p>Integrando ambos lados:</p>
+                <p>\[v = \ln|x| + C\]</p>
+                <p>Sustituyendo \(v = \frac{y}{x}\):</p>
+                <p>\[\frac{y}{x} = \ln|x| + C\]</p>
+                <p>\[y = x\ln|x| + Cx\]</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="bg-gray-100 py-8 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>© 2025 Guía Descriptiva de Calculo Integral. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="float-buttons">
+       
+        <div class="float-button" id="topBtn">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script id="app-script">
+         function toggleTab() {
+                const tab = document.getElementById('searchTab');
+                tab.classList.toggle('open');
+            }
+
+            function filterTopics() {
+                const input = document.getElementById('searchInput');
+                const filter = input.value.toLowerCase();
+                const items = document.querySelectorAll('.topic-item');
+                const noResults = document.getElementById('noResults');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.add('show');
+                } else {
+                    noResults.classList.remove('show');
+                }
+            }
+
+            function selectTopic(el) {
+                alert('Has seleccionado: ' + el.textContent);
+                // Aquí puedes agregar la lógica para cargar el contenido del tema
+            }
+
+            // Cerrar tab al hacer clic fuera
+            document.addEventListener('click', function (e) {
+                const tab = document.getElementById('searchTab');
+                const tabButton = document.querySelector('.tab-button');
+
+                if (tab.classList.contains('open') &&
+                    !tab.contains(e.target) &&
+                    !tabButton.contains(e.target)) {
+                    tab.classList.remove('open');
+                }
+            });
+
+        // Inicialización del efecto de texto animado
+            document.addEventListener('DOMContentLoaded', function () {
+                // Inicializar AOS (Animate On Scroll)
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease',
+                    once: true,
+                    offset: 100
+                });
+
+                // Typed.js para texto en movimiento
+                const typed = new Typed('#typed-element', {
+                    strings: ['calculo integral' ,'integrales', 'metodos de integracion', 'teorema fundamental', 'ecuaciones diferenciales'],
+                    typeSpeed: 70,
+                    backSpeed: 50,
+                    backDelay: 1500,
+                    loop: true,
+                    showCursor: true
+                });
+            });
+
+
+        // Botón para ir al principio de la página
+        document.getElementById('topBtn').addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Panel de índice
+        const indexPanel = document.getElementById('indexPanel');
+        const overlay = document.getElementById('overlay');
+        const indexBtn = document.getElementById('indexBtn');
+        const closeIndexBtn = document.getElementById('closeIndexBtn');
+
+        // Mostrar panel de índice
+        indexBtn.addEventListener('click', function () {
+            indexPanel.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        // Cerrar panel de índice
+        closeIndexBtn.addEventListener('click', function () {
+            indexPanel.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Cerrar panel al hacer clic en el overlay
+        overlay.addEventListener('click', function () {
+            indexPanel.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Navegar a las secciones desde el índice
+        const indexItems = document.querySelectorAll('.index-item, .index-subitem');
+        indexItems.forEach(item => {
+            item.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    // Cerrar el panel
+                    indexPanel.classList.remove('active');
+                    overlay.classList.remove('active');
+
+                    // Desplazarse a la sección
+                    const offset = 80; // Compensación para el encabezado
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Recargar MathJax cuando se complete la carga
+        window.addEventListener('load', function () {
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typeset();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../SigMATH.css">
+  <link rel="stylesheet" href="aritmetica.css">
+
+  <title>Aritmética</title>
+  <link rel="website icon" type="png" href="../../img/SigMath.png" />
+
+  <!-- TailwindCSS para estilos -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+<!-- Add Google Fonts link for Poppins -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  
+  <!-- MathJax para renderizar fórmulas matemáticas -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- MathJax para fórmulas matemáticas -->
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+    --primary-color: #1e3a8a;
+    --secondary-color: #3b82f6;
+    --accent-color: #60a5fa;
+    --background-color: #f0f9ff;
+    --text-color: #1e293b;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    scroll-behavior: smooth;
+}
+
+.header-gradient {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.navigation-panel {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navigation-panel:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-link {
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.section-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.section-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+button,
+.btn {
+    transition: all 0.2s ease;
+}
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+input,
+select {
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+    outline: none;
+}
+
+.fadeIn {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Estilos para MathJax */
+.mjx-chtml {
+    margin: 10px 0;
+}
+
+ .content {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      }
+    
+      h1 {
+       
+        margin-bottom: 20px;
+      }
+    
+      p {
+       
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+    
+      /* Tab de búsqueda */
+      .search-tab {
+        position: fixed;
+        right: -350px;
+        top: 0;
+        height: 100vh;
+        width: 350px;
+        background: white;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+        transition: right 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+      }
+    
+      .search-tab.open {
+        right: 0;
+      }
+    
+      .tab-button {
+        position: absolute;
+        left: -50px;
+        top: 100px;
+        width: 50px;
+        height: 120px;
+        background: white;
+        border: none;
+        border-radius: 10px 0 0 10px;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        writing-mode: vertical-rl;
+        font-weight: bold;
+        color: darkblue;
+        font-size: 16px;
+        transition: background 0.3s ease;
+      }
+    
+      .tab-button:hover {
+        background: #f8f9fa;
+      }
+    
+      .search-content {
+        padding: 30px;
+        overflow-y: auto;
+        flex: 1;
+        direction: rtl;
+      }
+    
+      .search-content>* {
+        direction: ltr;
+      }
+    
+      .search-content::-webkit-scrollbar {
+        width: 8px;
+      }
+    
+      .search-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+    
+      .search-content::-webkit-scrollbar-thumb {
+        background: #667eea;
+        border-radius: 10px;
+      }
+    
+      .search-content::-webkit-scrollbar-thumb:hover {
+        background: #5568d3;
+      }
+    
+      .search-header {
+        margin-bottom: 25px;
+      }
+    
+      .search-header h2 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+    
+      .search-header p {
+        color: #999;
+        font-size: 14px;
+      }
+    
+      .search-box {
+        position: relative;
+        margin-bottom: 20px;
+      }
+    
+      .search-input {
+        width: 100%;
+        padding: 15px 45px 15px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+    
+      .search-input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+    
+      .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+    
+      .topics-list {
+        list-style: none;
+      }
+    
+      .topic-item {
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #333;
+      }
+    
+      .topic-item:hover {
+        background: #667eea;
+        color: white;
+        transform: translateX(5px);
+      }
+    
+      .topic-item.hidden {
+        display: none;
+      }
+    
+      .no-results {
+        text-align: center;
+        color: #999;
+        padding: 20px;
+        display: none;
+      }
+    
+      .no-results.show {
+        display: block;
+      }
+  </style>
+  
+</head>
+
+<body class="min-h-screen">
+ 
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+    
+                    <h1 class="sigma">Σ</h1>
+                    <h1 class="sig">Sig</h1>
+                    <h1 class="MATH">MATH</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">SigMATH</a></li>
+                    <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                    <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                    <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                </ul>
+                <button class="hamburger" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Descubre el fascinante mundo de la Aritmetica<span class="typed-text" id="typed-element"></span></h2>
+            <p>La aritmética es una rama fundamental de las matemáticas que se encarga del estudio de los números y las operaciones
+            básicas que se pueden realizar con ellos: suma, resta, multiplicación y división. Además de estas operaciones
+            elementales, la aritmética también abarca temas más avanzados como las potencias, raíces, logaritmos, el orden de las
+            operaciones, las propiedades de los números (como la conmutativa, asociativa y distributiva), y el manejo de diferentes
+            tipos de números, tales como los naturales, enteros, racionales, reales e incluso los complejos en contextos más
+            amplios.</p>
+    
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <div class="search-tab" id="searchTab">
+      <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+    
+      <div class="search-content">
+        <div class="search-header">
+          <h2>Buscar Temas</h2>
+          <p>Encuentra lo que necesitas</p>
+        </div>
+    
+        <div class="search-box">
+          <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+            oninput="filterTopics()">
+          <span class="search-icon">🔍</span>
+        </div>
+    
+        <ul class="topics-list" id="topicsList">
+          <li class="topic-item" onclick="selectTopic(this)"><a href="#numeros-tipos" data-section="numeros-tipos">Numeros</a></li>
+          <li class="topic-item" onclick="selectTopic(this)"><a href="#operaciones-basicas" data-section="operaciones-basicas">Operaciones Basicas</a></li>
+          <li class="topic-item" onclick="selectTopic(this)"><a href="#ejemplos-interactivos" data-section="ejemplos-interactivos">Ejemplos</a></li>
+          <li class="topic-item" onclick="selectTopic(this)"><a href="#matematicas" data-section="matematicas">Introduccion a las Matematicas</a></li>
+          <li class="topic-item" onclick="selectTopic(this)"><a href="#geometria" data-section="geometria">Geometria Basica</a></li>
+          <li class="topic-item" onclick="selectTopic(this)"><a href="#fracciones" data-section="fracciones">Fracciones</a></li>
+          
+         
+        </ul>
+    
+        <div class="no-results" id="noResults">
+          No se encontraron resultados
+        </div>
+      </div>
+    </div>
+    
+    
+    <section id="numeros-tipos" class="section-card p-6 mb-8">
+      <!-- NEW SUBSECTION: Números y Tipos de Números -->
+      <h3 class="text-xl font-semibold mt-6 mb-3">Números y Tipos de Números</h3>
+      <p class="mb-4">Los números se clasifican en diferentes conjuntos según sus propiedades y
+        características. Estos conjuntos forman una jerarquía donde cada conjunto está contenido en otro
+        más amplio.</p>
+      
+      <!-- Números Naturales -->
+      <h4 class="text-lg font-semibold mt-4 mb-2">Números Naturales (ℕ)</h4>
+      <p class="mb-4">Son los números que utilizamos para contar: 1, 2, 3, 4, 5, ... No incluyen el cero
+        ni los números negativos.</p>
+      
+      <div class="formula-block">
+        \begin{align}
+        \mathbb{N} = \{1, 2, 3, 4, 5, ...\}
+        \end{align}
+      </div>
+      
+      <!-- Números Enteros -->
+      <h4 class="text-lg font-semibold mt-4 mb-2">Números Enteros (ℤ)</h4>
+      <p class="mb-4">Incluyen los números naturales, el cero y los números negativos. No contienen
+        fracciones ni decimales.</p>
+      
+      <div class="formula-block">
+        \begin{align}
+        \mathbb{Z} = \{..., -3, -2, -1, 0, 1, 2, 3, ...\}
+        \end{align}
+      </div>
+      
+      <!-- Números Racionales -->
+      <h4 class="text-lg font-semibold mt-4 mb-2">Números Racionales (ℚ)</h4>
+      <p class="mb-4">Son aquellos que pueden expresarse como el cociente de dos números enteros, donde el
+        denominador no es cero. Incluyen fracciones y decimales finitos o periódicos.</p>
+      
+      <div class="formula-block">
+        \begin{align}
+        \mathbb{Q} = \left\{\frac{p}{q} \mid p, q \in \mathbb{Z}, q \neq 0\right\}
+        \end{align}
+      </div>
+      
+      <div class="example-box">
+        <h4 class="font-semibold mb-2">Ejemplos de Números Racionales:</h4>
+        <p class="mb-2">$\frac{1}{2}$, $\frac{-3}{4}$, $0.75$, $-2$, $0.333...$</p>
+        <p>Todos estos números pueden escribirse como el cociente de dos enteros.</p>
+      </div>
+      
+      <!-- Números Irracionales -->
+      <h4 class="text-lg font-semibold mt-4 mb-2">Números Irracionales</h4>
+      <p class="mb-4">Son números reales que no pueden expresarse como una fracción de enteros. Su
+        expresión decimal es infinita no periódica.</p>
+      
+      <div class="formula-block">
+        <p class="mb-2">Ejemplos de números irracionales:</p>
+        \begin{align}
+        \pi &\approx 3.14159265359... \\
+        \sqrt{2} &\approx 1.41421356237... \\
+        e &\approx 2.71828182846...
+        \end{align}
+      </div>
+      
+      <!-- Números Reales -->
+      <h4 class="text-lg font-semibold mt-4 mb-2">Números Reales (ℝ)</h4>
+      <p class="mb-4">Son la unión de los números racionales e irracionales. Representan todos los puntos
+        en la recta numérica.</p>
+      
+      <div class="formula-block">
+        \begin{align}
+        \mathbb{R} = \mathbb{Q} \cup \{x \mid x \text{ es irracional}\}
+        \end{align}
+      </div>
+      
+      <!-- Números Complejos -->
+      <h4 class="text-lg font-semibold mt-4 mb-2">Números Complejos (ℂ)</h4>
+      <p class="mb-4">Amplían los números reales al incluir la unidad imaginaria $i$, donde $i^2 = -1$.
+        Todo número complejo se puede expresar como $a + bi$, donde $a$ y $b$ son números reales.</p>
+      
+      <div class="formula-block">
+        \begin{align}
+        \mathbb{C} = \{a + bi \mid a, b \in \mathbb{R}, i^2 = -1\}
+        \end{align}
+      </div>
+      
+      <div class="example-box">
+        <h4 class="font-semibold mb-2">Operaciones con Números Complejos:</h4>
+        <p class="mb-2">Si $z_1 = a + bi$ y $z_2 = c + di$, entonces:</p>
+        <p class="mb-2">Suma: $z_1 + z_2 = (a + c) + (b + d)i$</p>
+        <p class="mb-2">Multiplicación: $z_1 \cdot z_2 = (ac - bd) + (ad + bc)i$</p>
+      </div>
+    </section>
+
+      <!-- Sección: Operaciones Básicas -->
+      <section id="operaciones-basicas" class="section-card p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-primary-color border-b-2 border-accent-color pb-2">
+          <i class="fas fa-calculator mr-2"></i> Operaciones Básicas
+        </h2>
+        
+        <!-- Suma -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-plus mr-2"></i> Suma
+          </h3>
+          <p class="mb-3">La suma es la operación básica que consiste en combinar dos o más números para obtener un resultado total.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>\[ a + b = c \]</p>
+            <p class="text-sm text-gray-600 mt-2">Donde \(a\) y \(b\) son los sumandos, y \(c\) es la suma o resultado.</p>
+          </div>
+          
+          <p class="mb-3">Propiedades importantes de la suma:</p>
+          <ul class="list-disc pl-6 space-y-1 mb-3">
+            <li>Conmutativa: \(a + b = b + a\)</li>
+            <li>Asociativa: \((a + b) + c = a + (b + c)\)</li>
+            <li>Elemento neutro: \(a + 0 = a\)</li>
+          </ul>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Ejemplo:</p>
+            <p>\[ 5 + 3 = 8 \]</p>
+          </div>
+        </div>
+        
+        <!-- Resta -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-minus mr-2"></i> Resta
+          </h3>
+          <p class="mb-3">La resta es la operación que consiste en quitar una cantidad de otra para averiguar la diferencia entre ambas.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>\[ a - b = c \]</p>
+            <p class="text-sm text-gray-600 mt-2">Donde \(a\) es el minuendo, \(b\) es el sustraendo y \(c\) es la diferencia.</p>
+          </div>
+          
+          <p class="mb-3">Propiedades importantes de la resta:</p>
+          <ul class="list-disc pl-6 space-y-1 mb-3">
+            <li>No es conmutativa: \(a - b \neq b - a\)</li>
+            <li>No es asociativa: \((a - b) - c \neq a - (b - c)\)</li>
+            <li>Elemento neutro: \(a - 0 = a\)</li>
+          </ul>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Ejemplo:</p>
+            <p>\[ 9 - 4 = 5 \]</p>
+          </div>
+        </div>
+        
+        <!-- Multiplicación -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-times mr-2"></i> Multiplicación
+          </h3>
+          <p class="mb-3">La multiplicación es una operación que consiste en sumar un número tantas veces como indica otro número.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>\[ a \times b = c \]</p>
+            <p class="text-sm text-gray-600 mt-2">Donde \(a\) y \(b\) son los factores, y \(c\) es el producto.</p>
+          </div>
+          
+          <p class="mb-3">Propiedades importantes de la multiplicación:</p>
+          <ul class="list-disc pl-6 space-y-1 mb-3">
+            <li>Conmutativa: \(a \times b = b \times a\)</li>
+            <li>Asociativa: \((a \times b) \times c = a \times (b \times c)\)</li>
+            <li>Elemento neutro: \(a \times 1 = a\)</li>
+            <li>Propiedad distributiva: \(a \times (b + c) = a \times b + a \times c\)</li>
+          </ul>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Ejemplo:</p>
+            <p>\[ 4 \times 3 = 12 \]</p>
+          </div>
+        </div>
+        
+        <!-- División -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-divide mr-2"></i> División
+          </h3>
+          <p class="mb-3">La división es la operación que consiste en averiguar cuántas veces un número está contenido en otro.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>\[ a \div b = c \]</p>
+            <p class="text-sm text-gray-600 mt-2">Donde \(a\) es el dividendo, \(b\) es el divisor y \(c\) es el cociente.</p>
+          </div>
+          
+          <p class="mb-3">Propiedades importantes de la división:</p>
+          <ul class="list-disc pl-6 space-y-1 mb-3">
+            <li>No es conmutativa: \(a \div b \neq b \div a\)</li>
+            <li>No es asociativa: \((a \div b) \div c \neq a \div (b \div c)\)</li>
+            <li>Elemento neutro: \(a \div 1 = a\)</li>
+            <li>División por cero: No está definida</li>
+          </ul>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Ejemplo:</p>
+            <p>\[ 15 \div 3 = 5 \]</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección: Ejemplos Interactivos -->
+      <section id="ejemplos-interactivos" class="section-card p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-primary-color border-b-2 border-accent-color pb-2">
+          <i class="fas fa-chalkboard mr-2"></i> Ejemplos Interactivos
+        </h2>
+        
+        <p class="mb-4">Explora estos ejemplos interactivos para comprender mejor los conceptos aritméticos.</p>
+        
+        <!-- Ejemplo 1: Suma -->
+        <div class="bg-white rounded-lg shadow-sm border border-blue-100 p-4 mb-6">
+          <h3 class="text-lg font-semibold text-secondary-color mb-3">Ejemplo 1: Suma de números positivos</h3>
+          
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Planteamiento:</p>
+              <p>Sumar 24 y 18</p>
+              <p class="mt-3 font-semibold">Solución:</p>
+              <p>\[ 24 + 18 = 42 \]</p>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Paso a paso:</p>
+              <p>1. Alineamos los números:</p>
+              <div class="font-mono text-center my-2">
+                <p>\[ \begin{array}{r} 24 \\ +18 \\ \hline \end{array} \]</p>
+              </div>
+              <p>2. Sumamos las unidades: 4 + 8 = 12, escribimos 2 y llevamos 1</p>
+              <p>3. Sumamos las decenas: 2 + 1 + 1 = 4</p>
+              <p>4. El resultado es 42</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Ejemplo 2: Resta -->
+        <div class="bg-white rounded-lg shadow-sm border border-blue-100 p-4 mb-6">
+          <h3 class="text-lg font-semibold text-secondary-color mb-3">Ejemplo 2: Resta con préstamo</h3>
+          
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Planteamiento:</p>
+              <p>Restar 27 de 63</p>
+              <p class="mt-3 font-semibold">Solución:</p>
+              <p>\[ 63 - 27 = 36 \]</p>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Paso a paso:</p>
+              <p>1. Alineamos los números:</p>
+              <div class="font-mono text-center my-2">
+                <p>\[ \begin{array}{r} 63 \\ -27 \\ \hline \end{array} \]</p>
+              </div>
+              <p>2. Restamos las unidades: 3 - 7 no se puede, pedimos prestado. 13 - 7 = 6</p>
+              <p>3. Restamos las decenas: 5 - 2 = 3</p>
+              <p>4. El resultado es 36</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Ejemplo 3: Multiplicación -->
+        <div class="bg-white rounded-lg shadow-sm border border-blue-100 p-4 mb-6">
+          <h3 class="text-lg font-semibold text-secondary-color mb-3">Ejemplo 3: Multiplicación de dos dígitos</h3>
+          
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Planteamiento:</p>
+              <p>Multiplicar 14 por 12</p>
+              <p class="mt-3 font-semibold">Solución:</p>
+              <p>\[ 14 \times 12 = 168 \]</p>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Paso a paso:</p>
+              <p>1. Alineamos los números:</p>
+              <div class="font-mono text-center my-2">
+                <p>\[ \begin{array}{r} 14 \\ \times 12 \\ \hline \end{array} \]</p>
+              </div>
+              <p>2. Multiplicamos 14 × 2 = 28, escribimos 28</p>
+              <p>3. Multiplicamos 14 × 10 = 140</p>
+              <p>4. Sumamos los resultados parciales: 28 + 140 = 168</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Ejemplo 4: División -->
+        <div class="bg-white rounded-lg shadow-sm border border-blue-100 p-4">
+          <h3 class="text-lg font-semibold text-secondary-color mb-3">Ejemplo 4: División con resto</h3>
+          
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Planteamiento:</p>
+              <p>Dividir 85 entre 4</p>
+              <p class="mt-3 font-semibold">Solución:</p>
+              <p>\[ 85 \div 4 = 21 \text{ con resto } 1 \]</p>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+              <p class="font-semibold mb-2">Paso a paso:</p>
+              <p>1. Dividimos 8 entre 4: 8 ÷ 4 = 2, residuo 0</p>
+              <p>2. Bajamos el 5: 05</p>
+              <p>3. Dividimos 5 entre 4: 5 ÷ 4 = 1, residuo 1</p>
+              <p>4. El cociente es 21 y el resto es 1</p>
+              <p>5. Comprobación: (21 × 4) + 1 = 85 ✓</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección: Matemáticas -->
+      <section id="matematicas" class="section-card p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-primary-color border-b-2 border-accent-color pb-2">
+          <i class="fas fa-square-root-alt mr-2"></i> Matemáticas
+        </h2>
+        
+        <!-- Subsección: Sucesiones matemáticas -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-ellipsis-h mr-2"></i> Sucesiones matemáticas
+          </h3>
+          
+          <p class="mb-3">Una sucesión matemática es una lista ordenada de números que siguen un patrón definido.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>Una sucesión \((a_n)_{n \in \mathbb{N}}\) es una función cuyo dominio son los números naturales.</p>
+            <p class="text-sm text-gray-600 mt-2">Cada elemento de la sucesión se denota por \(a_n\), donde \(n\) es la posición del elemento.</p>
+          </div>
+          
+          <p class="mb-3">Tipos comunes de sucesiones:</p>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3 mb-3">
+            <p class="font-semibold">Sucesión aritmética:</p>
+            <p>Cada término se obtiene sumando una constante (la diferencia común) al término anterior.</p>
+            <p>\[ a_n = a_1 + (n-1)d \]</p>
+            <p>Donde \(a_1\) es el primer término y \(d\) es la diferencia común.</p>
+            <p class="mt-2 font-semibold">Ejemplo:</p>
+            <p>\[ 2, 5, 8, 11, 14, ... \]</p>
+            <p>Primer término \(a_1 = 2\), diferencia común \(d = 3\)</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Sucesión geométrica:</p>
+            <p>Cada término se obtiene multiplicando el término anterior por una constante (la razón).</p>
+            <p>\[ a_n = a_1 \cdot r^{n-1} \]</p>
+            <p>Donde \(a_1\) es el primer término y \(r\) es la razón.</p>
+            <p class="mt-2 font-semibold">Ejemplo:</p>
+            <p>\[ 3, 6, 12, 24, 48, ... \]</p>
+            <p>Primer término \(a_1 = 3\), razón \(r = 2\)</p>
+          </div>
+        </div>
+        
+        <!-- Subsección: Números primos -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-hashtag mr-2"></i> Números primos
+          </h3>
+          
+          <p class="mb-3">Un número primo es un número natural mayor que 1 que tiene exactamente dos divisores positivos: 1 y él mismo.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>Un número natural \(p > 1\) es primo si y solo si es divisible únicamente por 1 y por \(p\).</p>
+          </div>
+          
+          <p class="mb-3">Los primeros números primos son:</p>
+          <p class="font-mono text-center text-lg my-3">\[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ... \]</p>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3 mb-3">
+            <p class="font-semibold">Teorema fundamental de la aritmética:</p>
+            <p>Todo número entero mayor que 1 puede expresarse como un producto de números primos de manera única (salvo el orden de los factores).</p>
+            <p class="mt-2 font-semibold">Ejemplo:</p>
+            <p>\[ 60 = 2^2 \times 3 \times 5 \]</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Criba de Eratóstenes:</p>
+            <p>Un algoritmo eficiente para encontrar todos los números primos hasta un límite dado.</p>
+            <ol class="list-decimal ml-5 mt-2">
+              <li>Se escribe la lista de números del 2 al límite deseado.</li>
+              <li>Se marca el 2 como primo y se tachan todos sus múltiplos.</li>
+              <li>Se encuentra el siguiente número no tachado (3), se marca como primo y se tachan todos sus múltiplos.</li>
+              <li>Se repite el proceso hasta que no queden números por verificar.</li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Nueva subsección: Sucesiones Numéricas -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-sort-numeric-up mr-2"></i> Sucesiones Numéricas
+          </h3>
+          
+          <p class="mb-3">Una sucesión numérica es una secuencia ordenada de números que sigue un patrón o regla específica.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>Una sucesión es una función \(f: \mathbb{N} \rightarrow \mathbb{R}\) que asigna a cada número natural un número real.</p>
+            <p>Notación: \(a_1, a_2, a_3, ..., a_n, ...\) donde \(a_n\) representa el término que ocupa la posición \(n\).</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3 mb-3">
+            <p class="font-semibold">Tipos de sucesiones:</p>
+            <ul class="list-disc ml-5 mt-2">
+              <li><strong>Sucesión aritmética:</strong> \(a_n = a_1 + (n-1)d\) donde \(d\) es la diferencia común.</li>
+              <li><strong>Sucesión geométrica:</strong> \(a_n = a_1 \cdot r^{n-1}\) donde \(r\) es la razón.</li>
+              <li><strong>Sucesión de Fibonacci:</strong> \(F_n = F_{n-1} + F_{n-2}\) con \(F_1 = 1\) y \(F_2 = 1\).</li>
+            </ul>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Ejemplos:</p>
+            <p>1. Sucesión aritmética: \(3, 7, 11, 15, 19, ...\) con \(a_1 = 3\) y \(d = 4\)</p>
+            <p>2. Sucesión geométrica: \(2, 6, 18, 54, 162, ...\) con \(a_1 = 2\) y \(r = 3\)</p>
+            <p>3. Fibonacci: \(1, 1, 2, 3, 5, 8, 13, 21, ...\)</p>
+          </div>
+        </div>
+        
+        <!-- Nueva subsección: Signos Mayor que y Menor que -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-greater-than-equal mr-2"></i> Signos Mayor que y Menor que
+          </h3>
+          
+          <p class="mb-3">Los signos "mayor que" (>) y "menor que" (<) son símbolos que se utilizan para comparar la magnitud relativa de dos números o expresiones.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definiciones:</p>
+            <p>- <strong>Mayor que (>):</strong> \(a > b\) significa que \(a\) es mayor que \(b\).</p>
+            <p>- <strong>Menor que (<):</strong> \(a < b\) significa que \(a\) es menor que \(b\).</p>
+            <p>- <strong>Mayor o igual que (≥):</strong> \(a \geq b\) significa que \(a\) es mayor o igual que \(b\).</p>
+            <p>- <strong>Menor o igual que (≤):</strong> \(a \leq b\) significa que \(a\) es menor o igual que \(b\).</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3 mb-3">
+            <p class="font-semibold">Propiedades:</p>
+            <p>1. Si \(a > b\), entonces \(b < a\) (propiedad reflexiva)</p>
+            <p>2. Si \(a > b\) y \(b > c\), entonces \(a > c\) (propiedad transitiva)</p>
+            <p>3. Para cualquier par de números reales \(a\) y \(b\), se cumple exactamente una de estas tres condiciones: \(a < b\), \(a = b\), o \(a > b\) (ley de tricotomía)</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Truco para recordar:</p>
+            <p>El símbolo "mayor que" (>) parece una "boca" que siempre se abre hacia el número más grande.</p>
+            <p class="text-center my-2">\[ 8 > 3 \]</p>
+            <p>El símbolo "menor que" (<) apunta hacia el número más pequeño.</p>
+            <p class="text-center my-2">\[ 3 < 8 \]</p>
+            <p class="mt-2 font-semibold">Ejemplos:</p>
+            <p>- \(5 > 2\) (5 es mayor que 2)</p>
+            <p>- \(1 < 10\) (1 es menor que 10)</p>
+            <p>- \(7 \geq 7\) (7 es mayor o igual que 7)</p>
+            <p>- \(3 \leq 6\) (3 es menor o igual que 6)</p>
+          </div>
+        </div>
+        
+        <!-- Nueva subsección: Unidades, Decenas y Centenas -->
+        <div>
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-cubes mr-2"></i> Unidades, Decenas y Centenas
+          </h3>
+          
+          <p class="mb-3">En nuestro sistema decimal, cada posición representa una potencia de 10, lo que nos permite entender el valor de cada dígito según su posición.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definiciones:</p>
+            <p>- <strong>Unidades:</strong> Representan cantidades individuales (1-9) y ocupan el primer lugar desde la derecha.</p>
+            <p>- <strong>Decenas:</strong> Representan grupos de diez unidades y ocupan el segundo lugar desde la derecha.</p>
+            <p>- <strong>Centenas:</strong> Representan grupos de cien unidades y ocupan el tercer lugar desde la derecha.</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3 mb-3">
+            <p class="font-semibold">Valor posicional:</p>
+            <p>En el número \(375\):</p>
+            <ul class="list-disc ml-5 mt-2">
+              <li>\(5\) está en la posición de las unidades: \(5 \times 1 = 5\) unidades</li>
+              <li>\(7\) está en la posición de las decenas: \(7 \times 10 = 70\) unidades</li>
+              <li>\(3\) está en la posición de las centenas: \(3 \times 100 = 300\) unidades</li>
+            </ul>
+            <p class="mt-2">Por lo tanto: \(375 = 300 + 70 + 5 = 3\) centenas, \(7\) decenas y \(5\) unidades</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Descomposición de números:</p>
+            <p class="mt-2 font-semibold">Ejemplo 1:</p>
+            <p>El número \(426\) se descompone como:</p>
+            <p>\[ 426 = 4 \times 100 + 2 \times 10 + 6 \times 1 = 400 + 20 + 6 \]</p>
+            <p>Es decir, \(4\) centenas, \(2\) decenas y \(6\) unidades.</p>
+            
+            <p class="mt-2 font-semibold">Ejemplo 2:</p>
+            <p>El número \(1,572\) se descompone como:</p>
+            <p>\[ 1,572 = 1 \times 1000 + 5 \times 100 + 7 \times 10 + 2 \times 1 = 1000 + 500 + 70 + 2 \]</p>
+            <p>Es decir, \(1\) millar, \(5\) centenas, \(7\) decenas y \(2\) unidades.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección: Geometría -->
+      <section id="geometria" class="section-card p-6">
+        <h2 class="text-2xl font-bold mb-4 text-primary-color border-b-2 border-accent-color pb-2">
+          <i class="fas fa-shapes mr-2"></i> Geometría
+        </h2>
+        
+        <!-- Subsección: Sucesiones geométricas -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-expand-arrows-alt mr-2"></i> Sucesiones geométricas
+          </h3>
+          
+          <p class="mb-3">Una sucesión geométrica es aquella donde cada término es el resultado de multiplicar el término anterior por un número fijo llamado razón.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>Una sucesión \((a_n)_{n \in \mathbb{N}}\) es geométrica si existe una constante \(r\) tal que:</p>
+            <p>\[ \frac{a_{n+1}}{a_n} = r \]</p>
+            <p>Su fórmula general es: \(a_n = a_1 \cdot r^{n-1}\)</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3 mb-3">
+            <p class="font-semibold">Suma de los n primeros términos:</p>
+            <p>Si \(r \neq 1\):</p>
+            <p>\[ S_n = a_1 \cdot \frac{1 - r^n}{1 - r} \]</p>
+            <p>Si \(r = 1\):</p>
+            <p>\[ S_n = n \cdot a_1 \]</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Ejemplo práctico:</p>
+            <p>Una pelota se deja caer desde 10 metros de altura y en cada rebote alcanza 3/5 de la altura anterior. ¿Cuál es la distancia total recorrida después de 4 rebotes?</p>
+            <p class="mt-2">Solución:</p>
+            <p>Primer término: \(a_1 = 10\) metros</p>
+            <p>Razón: \(r = \frac{3}{5}\)</p>
+            <p>Alturas alcanzadas: \(10, 6, 3.6, 2.16, 1.296, ...\) metros</p>
+            <p>Distancia total = suma de bajadas y subidas = 10 + 2(6 + 3.6 + 2.16 + 1.296) = 10 + 2(13.056) = 36.112 metros</p>
+          </div>
+        </div>
+        
+        <!-- Subsección: Fracciones -->
+        <div>
+          <h3 class="text-xl font-semibold mb-3 text-secondary-color">
+            <i class="fas fa-divide mr-2" id="fracciones"></i> Fracciones
+          </h3>
+          
+          <p class="mb-3">Una fracción es una expresión que indica el cociente de dos números. Representa una parte de un todo.</p>
+          
+          <div class="bg-blue-50 p-4 rounded-lg my-3">
+            <p class="font-semibold">Definición formal:</p>
+            <p>Una fracción se expresa como \(\frac{a}{b}\) donde:</p>
+            <p>- \(a\) es el numerador: indica las partes que se toman.</p>
+            <p>- \(b\) es el denominador: indica el número de partes iguales en que se divide la unidad.</p>
+            <p>- \(b \neq 0\)</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div class="bg-white border border-blue-100 rounded-lg p-3">
+              <p class="font-semibold">Fracciones propias:</p>
+              <p>El numerador es menor que el denominador.</p>
+              <p class="text-center my-2">\[ \frac{1}{2}, \frac{3}{4}, \frac{5}{8} \]</p>
+              <p class="text-sm">Representan cantidades menores que la unidad.</p>
+            </div>
+            
+            <div class="bg-white border border-blue-100 rounded-lg p-3">
+              <p class="font-semibold">Fracciones impropias:</p>
+              <p>El numerador es mayor que el denominador.</p>
+              <p class="text-center my-2">\[ \frac{5}{3}, \frac{7}{4}, \frac{11}{8} \]</p>
+              <p class="text-sm">Representan cantidades mayores que la unidad.</p>
+            </div>
+            
+            <div class="bg-white border border-blue-100 rounded-lg p-3">
+              <p class="font-semibold">Fracciones mixtas:</p>
+              <p>Combinación de un número entero y una fracción propia.</p>
+              <p class="text-center my-2">\[ 1\frac{2}{3}, 2\frac{1}{4}, 3\frac{3}{8} \]</p>
+              <p class="text-sm">Representan cantidades mayores que la unidad.</p>
+            </div>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3 mb-3">
+            <p class="font-semibold">Conversión entre fracciones impropias y mixtas:</p>
+            <p>Para convertir una fracción impropia a mixta:</p>
+            <ol class="list-decimal ml-5 mt-2">
+              <li>Se divide el numerador entre el denominador.</li>
+              <li>El cociente es la parte entera.</li>
+              <li>El resto es el numerador de la parte fraccionaria.</li>
+              <li>El denominador se mantiene igual.</li>
+            </ol>
+            <p class="mt-2 font-semibold">Ejemplo:</p>
+            <p>\[ \frac{17}{5} = 3\frac{2}{5} \]</p>
+            <p>17 ÷ 5 = 3 (cociente) con resto 2</p>
+          </div>
+          
+          <div class="bg-white border border-blue-100 rounded-lg p-3">
+            <p class="font-semibold">Operaciones con fracciones:</p>
+            <p class="mt-2">Suma y resta (con igual denominador):</p>
+            <p>\[ \frac{a}{c} \pm \frac{b}{c} = \frac{a \pm b}{c} \]</p>
+            
+            <p class="mt-2">Multiplicación:</p>
+            <p>\[ \frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d} \]</p>
+            
+            <p class="mt-2">División:</p>
+            <p>\[ \frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c} = \frac{a \times d}{b \times c} \]</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="bg-gray-100 py-8 border-t border-gray-200">
+    <div class="container mx-auto px-6 text-center text-gray-600">
+      <p>© 2025 Guía Descriptiva de Aritmética. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+<!-- Botón Scroll to Top -->
+<div class="scroll-top" id="scroll-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+
+  <script id="app-script">
+     function toggleTab() {
+        const tab = document.getElementById('searchTab');
+        tab.classList.toggle('open');
+      }
+
+      function filterTopics() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const items = document.querySelectorAll('.topic-item');
+        const noResults = document.getElementById('noResults');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(filter)) {
+            item.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+
+        if (visibleCount === 0) {
+          noResults.classList.add('show');
+        } else {
+          noResults.classList.remove('show');
+        }
+      }
+
+      function selectTopic(el) {
+        alert('Has seleccionado: ' + el.textContent);
+        // Aquí puedes agregar la lógica para cargar el contenido del tema
+      }
+
+      // Cerrar tab al hacer clic fuera
+      document.addEventListener('click', function (e) {
+        const tab = document.getElementById('searchTab');
+        const tabButton = document.querySelector('.tab-button');
+
+        if (tab.classList.contains('open') &&
+          !tab.contains(e.target) &&
+          !tabButton.contains(e.target)) {
+          tab.classList.remove('open');
+        }
+      });
+
+    // Activar el enlace de navegación según la sección visible
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+    
+    function setActiveLink() {
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (pageYOffset >= (sectionTop - 300)) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', setActiveLink);
+    
+    // Navegación suave al hacer click en los enlaces
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        window.scrollTo({
+          top: targetSection.offsetTop - 20,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Botón Scroll to Top
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    
+    // Inicializar la página
+    setActiveLink();
+  </script>
+</body>
+</html>

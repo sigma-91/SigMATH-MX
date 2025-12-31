@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Álgebra</title>
+    <link rel="website icon" type="png" href="../../img/SigMath.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../SigMATH.css">
+    <link rel="stylesheet" href="algebra.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- MathJax para fórmulas matemáticas -->
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+
+    <style>
+        body {
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+.formula-block {
+    overflow-x: auto;
+    padding: 1rem;
+    margin: 1rem 0;
+    background-color: #f8fafc;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.example-box {
+    background-color: #eef2ff;
+    border-left: 4px solid #818cf8;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+}
+
+.section-title {
+    padding-top: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 3rem;
+    height: 0.25rem;
+    background-color: #6366f1;
+    border-radius: 0.25rem;
+}
+
+.index-panel {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 320px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    padding: 2rem 1rem;
+}
+
+.index-panel.open {
+    right: 0;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.float-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 30;
+}
+
+.float-button {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.float-button:hover {
+    transform: translateY(-3px);
+}
+
+.index-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+}
+
+.index-link:hover {
+    background-color: #f3f4f6;
+}
+
+.index-link.active {
+    background-color: #eef2ff;
+    color: #4f46e5;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .index-panel {
+        width: 280px;
+    }
+}
+
+ .content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+    
+        h1 {
+            
+            margin-bottom: 20px;
+        }
+    
+        p {
+           
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+    
+        /* Tab de búsqueda */
+        .search-tab {
+            position: fixed;
+            right: -350px;
+            top: 0;
+            height: 100vh;
+            width: 350px;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .search-tab.open {
+            right: 0;
+        }
+    
+        .tab-button {
+            position: absolute;
+            left: -50px;
+            top: 100px;
+            width: 50px;
+            height: 120px;
+            background: white;
+            border: none;
+            border-radius: 10px 0 0 10px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            font-weight: bold;
+            color: darkblue;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+    
+        .tab-button:hover {
+            background: #f8f9fa;
+        }
+    
+        .search-content {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            direction: rtl;
+        }
+    
+        .search-content>* {
+            direction: ltr;
+        }
+    
+        .search-content::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        .search-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+    
+        .search-content::-webkit-scrollbar-thumb:hover {
+            background: #5568d3;
+        }
+    
+        .search-header {
+            margin-bottom: 25px;
+        }
+    
+        .search-header h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+    
+        .search-header p {
+            color: #999;
+            font-size: 14px;
+        }
+    
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+    
+        .search-input {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+    
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+    
+        .topics-list {
+            list-style: none;
+        }
+    
+        .topic-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+    
+        .topic-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+    
+        .topic-item.hidden {
+            display: none;
+        }
+    
+        .no-results {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            display: none;
+        }
+    
+        .no-results.show {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body class="bg-white text-gray-800">
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+    
+                    <h1 class="sigma">Σ</h1>
+                    <h1 class="sig">Sig</h1>
+                    <h1 class="MATH">MATH</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">SigMATH</a></li>
+                    <li><a href="Conceptos Iniciales/iniciales.html">MATH Science MX</a></li>
+                    <li><a href="https://sigma-91.github.io/PhysicMATH-MX/">PhysicMATH MX</a></li>
+                    <li><a href="https://sigma-91.github.io/Acerca-De-SigMATH-MX/">Acerca De</a></li>
+                </ul>
+                <button class="hamburger" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Descubre el fascinante mundo del Algebra<span class="typed-text" id="typed-element"></span></h2>
+            <p>El álgebra es la rama de las matemáticas que estudia la combinación de elementos de estructuras abstractas de acuerdo a
+            ciertas reglas. Inicialmente, estos elementos pueden ser vistos como números y las operaciones con ellos, como la suma,
+            la resta, la multiplicación y la división. Sin embargo, el alcance del álgebra va mucho más allá, ya que también se
+            encarga de analizar y manipular estructuras más generales, como polinomios, matrices, vectores, conjuntos y otros
+            objetos matemáticos, siguiendo leyes y propiedades específicas.</p>
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <div class="search-tab" id="searchTab">
+        <button class="tab-button" onclick="toggleTab()">BUSCAR</button>
+    
+        <div class="search-content">
+            <div class="search-header">
+                <h2>Buscar Temas</h2>
+                <p>Encuentra lo que necesitas</p>
+            </div>
+    
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Escribe para buscar..."
+                    oninput="filterTopics()">
+                <span class="search-icon">🔍</span>
+            </div>
+    
+            <ul class="topics-list" id="topicsList">
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#lenguaje-algebraico" data-section="lenguaje-algebraico">Lenguaje Algebraico</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#ecuaciones-desigualdades" data-section="ecuaciones-desigualdades">Ecuaciones y Desigualdades</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#polinomios" data-section="polinomios">Polinomios</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#factorizacion" data-section="factorizacion">Factorizacion</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#radicales-exponentes" data-section="radicales-exponentes">Exponentes y Radicales</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#logaritmos" data-section="logaritmos">Logaritmos</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#aplicaciones-algebra" data-section="aplicaciones-algebra">Aplicaciones del Algebra</a></li>
+                <li class="topic-item" onclick="selectTopic(this)"><a href="#algebra-lineal" data-section="algebra-lineal">Algebra Lineal</a></li>
+            </ul>
+    
+            <div class="no-results" id="noResults">
+                No se encontraron resultados
+            </div>
+        </div>
+    </div>
+    
+    
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+        <!-- Álgebra Básica -->
+
+            <!-- NEW SUBSECTION: Jerarquías, Notación Científica y Constantes -->
+            <h3 class="text-xl font-semibold mt-6 mb-3">Jerarquías, Notación Científica y Constantes</h3>
+
+            <!-- Jerarquías de Operaciones -->
+            <h4 class="text-lg font-semibold mt-4 mb-2">Jerarquías de Operaciones</h4>
+            <p class="mb-4">El orden de operaciones matemáticas, a menudo recordado como PEMDAS (Paréntesis, Exponentes,
+                Multiplicación/División, Adición/Sustracción), establece la secuencia en que deben resolverse las
+                operaciones.</p>
+
+            <div class="formula-block">
+                \begin{align}
+                1. &\text{ Paréntesis y agrupaciones} \\
+                2. &\text{ Exponentes y raíces} \\
+                3. &\text{ Multiplicación y división (de izquierda a derecha)} \\
+                4. &\text{ Suma y resta (de izquierda a derecha)}
+                \end{align}
+            </div>
+
+            <!-- Notación Científica -->
+            <h4 class="text-lg font-semibold mt-4 mb-2">Notación Científica</h4>
+            <p class="mb-4">La notación científica es una forma de escribir números que son muy grandes o muy pequeños,
+                expresándolos como un producto de un número entre 1 y 10 y una potencia de 10.</p>
+
+            <div class="formula-block">
+                \begin{align}
+                N &= a \times 10^n \\
+                \text{donde } 1 &\leq a < 10 \text{ y } n \text{ es un entero} \end{align} </div>
+
+                    <div class="example-box">
+                        <h4 class="font-semibold mb-2">Ejemplos de Notación Científica:</h4>
+                        <p class="mb-2">Número grande: 299,792,458 = 2.99792458 × 10^8</p>
+                        <p class="mb-2">Número pequeño: 0.000000000911 = 9.11 × 10^{-10}</p>
+                    </div>
+
+                    <!-- Constantes Matemáticas, Físicas y Químicas -->
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Constantes Matemáticas, Físicas y Químicas</h4>
+                    <p class="mb-4">Estas constantes son valores fundamentales que aparecen en múltiples ecuaciones y
+                        aplicaciones.</p>
+
+                    <div class="formula-block">
+                        <p class="font-semibold">Constantes Matemáticas:</p>
+                        \begin{align}
+                        \pi &\approx 3.1415926536 \text{ (Relación entre la circunferencia y el diámetro)} \\
+                        e &\approx 2.7182818285 \text{ (Base del logaritmo natural)} \\
+                        \phi &\approx 1.6180339887 \text{ (Número áureo)}
+                        \end{align}
+
+                        <p class="font-semibold mt-3">Constantes Físicas:</p>
+                        \begin{align}
+                        c &\approx 3.00 \times 10^8 \text{ m/s } \text{ (Velocidad de la luz)} \\
+                        G &\approx 6.674 \times 10^{-11} \text{ N(m/kg)^2 } \text{ (Constante gravitacional)} \\
+                        h &\approx 6.626 \times 10^{-34} \text{ J·s } \text{ (Constante de Planck)}
+                        \end{align}
+
+                        <p class="font-semibold mt-3">Constantes Químicas:</p>
+                        \begin{align}
+                        N_A &\approx 6.022 \times 10^{23} \text{ mol}^{-1} \text{ (Número de Avogadro)} \\
+                        R &\approx 8.314 \text{ J/(mol·K) } \text{ (Constante de los gases ideales)}
+                        \end{align}
+                    </div>
+
+                    <!-- Original Operaciones Fundamentales subsection -->
+                    <h3 class="text-xl font-semibold mt-6 mb-3">Operaciones Fundamentales</h3>
+                    <p class="mb-4">Las operaciones fundamentales del álgebra incluyen suma, resta, multiplicación y
+                        división con variables y constantes.</p>
+
+                    <div class="formula-block">
+                        \begin{align}
+                        a + b &= b + a \quad \text{(Propiedad conmutativa de la suma)} \\
+                        a \times b &= b \times a \quad \text{(Propiedad conmutativa de la multiplicación)} \\
+                        (a + b) + c &= a + (b + c) \quad \text{(Propiedad asociativa de la suma)} \\
+                        (a \times b) \times c &= a \times (b \times c) \quad \text{(Propiedad asociativa de la
+                        multiplicación)} \\
+                        a \times (b + c) &= a \times b + a \times c \quad \text{(Propiedad distributiva)}
+                        \end{align}
+                    </div>
+        </section>
+
+
+
+        <!-- Lenguaje Algebraico -->
+        <section id="lenguaje-algebraico" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Lenguaje Algebraico</h2>
+            <p class="mb-4">El lenguaje algebraico es una forma de expresar situaciones o enunciados matemáticos
+                mediante símbolos, números, operaciones y variables.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Traducción del Lenguaje Natural al Algebraico</h3>
+            <p class="mb-4">El álgebra nos permite traducir problemas descritos en lenguaje natural a expresiones
+                matemáticas que podemos resolver sistemáticamente.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Ejemplos de traducción:</p>
+                \begin{align}
+                \text{"El doble de un número"} &\rightarrow 2x \\
+                \text{"La suma de dos números"} &\rightarrow x + y \\
+                \text{"Un número disminuido en 5"} &\rightarrow x - 5 \\
+                \text{"El cuadrado de un número"} &\rightarrow x^2 \\
+                \text{"La mitad de un número"} &\rightarrow \frac{x}{2}
+                \end{align}
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Uso de Variables en Álgebra</h3>
+            <p class="mb-4">Las variables, comúnmente representadas por letras como x, y, z, permiten generalizar
+                operaciones y representar cantidades desconocidas o cambiantes.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Características de las variables:</p>
+                \begin{align}
+                \text{- Representan valores desconocidos} \\
+                \text{- Pueden tomar diferentes valores dentro de un dominio} \\
+                \text{- Permiten expresar relaciones entre cantidades}
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo de Aplicación:</h4>
+                <p class="mb-2">Traducir el siguiente enunciado a lenguaje algebraico:</p>
+                <p>"La edad de Ana dentro de 5 años será el triple de su edad hace 2 años."</p>
+                <p class="mt-3">Solución:</p>
+                <p>Si llamamos x a la edad actual de Ana:</p>
+                \begin{align}
+                \text{Edad dentro de 5 años} &= x + 5 \\
+                \text{Edad hace 2 años} &= x - 2 \\
+                \end{align}
+
+                <p>Según el enunciado:</p>
+                \begin{align}
+                x + 5 &= 3(x - 2) \\
+                x + 5 &= 3x - 6 \\
+                5 + 6 &= 3x - x \\
+                11 &= 2x \\
+                x &= 5.5
+                \end{align}
+
+                <p>Por lo tanto, Ana tiene 5.5 años actualmente.</p>
+            </div>
+        </section>
+
+        <!-- Ecuaciones y Desigualdades -->
+        <section id="ecuaciones-desigualdades" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Ecuaciones y Desigualdades</h2>
+            <p class="mb-4">Las ecuaciones y desigualdades son expresiones matemáticas que establecen una relación de
+                igualdad o desigualdad entre dos expresiones algebraicas.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Ecuaciones Lineales</h3>
+            <p class="mb-4">Una ecuación lineal con una variable tiene la forma \(ax + b = 0\), donde \(a\) y \(b\) son
+                constantes y \(a \neq 0\).</p>
+
+            <div class="formula-block">
+                \begin{align}
+                ax + b &= 0 \\
+                ax &= -b \\
+                x &= -\frac{b}{a}
+                \end{align}
+            </div>
+
+            <!-- New subsection for Ecuaciones de Segundo Grado -->
+            <h3 class="text-xl font-semibold mt-6 mb-3">Ecuaciones de Segundo Grado</h3>
+            <p class="mb-4">Una ecuación de segundo grado o ecuación cuadrática tiene la forma \(ax^2 + bx + c = 0\),
+                donde \(a\), \(b\) y \(c\) son constantes y \(a \neq 0\).</p>
+
+            <div class="formula-block">
+                <p class="mb-2">La fórmula general para resolver ecuaciones de segundo grado es:</p>
+                \begin{align}
+                x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+                \end{align}
+                <p class="mt-2">Donde el discriminante \(b^2 - 4ac\) determina el número de soluciones:</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Si \(b^2 - 4ac > 0\), la ecuación tiene dos soluciones reales distintas.</li>
+                    <li>Si \(b^2 - 4ac = 0\), la ecuación tiene una solución real (raíz doble).</li>
+                    <li>Si \(b^2 - 4ac < 0\), la ecuación no tiene soluciones reales.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo de Ecuación Cuadrática:</h4>
+                <p class="mb-2">Resolver: \(2x^2 - 5x - 3 = 0\)</p>
+                <p class="mt-3">Solución:</p>
+                <p>Identificamos los coeficientes: \(a = 2\), \(b = -5\), \(c = -3\)</p>
+                <p>Aplicando la fórmula cuadrática:</p>
+                \begin{align}
+                x &= \frac{-(-5) \pm \sqrt{(-5)^2 - 4(2)(-3)}}{2(2)} \\
+                &= \frac{5 \pm \sqrt{25 + 24}}{4} \\
+                &= \frac{5 \pm \sqrt{49}}{4} \\
+                &= \frac{5 \pm 7}{4}
+                \end{align}
+
+                <p>Por lo tanto:</p>
+                \begin{align}
+                x_1 &= \frac{5 + 7}{4} = \frac{12}{4} = 3 \\
+                x_2 &= \frac{5 - 7}{4} = \frac{-2}{4} = -\frac{1}{2}
+                \end{align}
+
+                <p>Las soluciones son \(x = 3\) y \(x = -\frac{1}{2}\).</p>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Desigualdades</h3>
+            <p class="mb-4">Las desigualdades se resuelven de manera similar a las ecuaciones, pero hay que tener en
+                cuenta que cuando multiplicamos o dividimos ambos lados por un número negativo, el sentido de la
+                desigualdad cambia.</p>
+
+            <div class="formula-block">
+                \begin{align}
+                \text{Si } a > b \text{ y } c > 0, \text{ entonces } ac > bc \\
+                \text{Si } a > b \text{ y } c < 0, \text{ entonces } ac < bc \end{align} </div>
+
+                    <div class="example-box">
+                        <h4 class="font-semibold mb-2">Ejemplo de Desigualdad:</h4>
+                        <p class="mb-2">Resolver: \(2x - 3 < 5x + 6\)</p>
+                                <p class="mt-3">Solución:</p>
+                                \begin{align}
+                                2x - 3 &< 5x + 6 \\ 2x - 5x &< 6 + 3 \\ -3x &< 9 \\ x &> -3
+                                    \end{align}
+                    </div>
+        </section>
+
+        <!-- Polinomios -->
+        <section id="polinomios" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Polinomios</h2>
+            <p class="mb-4">Los polinomios son expresiones algebraicas que consisten en variables y coeficientes, que
+                involucran solo las operaciones de adición, sustracción, multiplicación y potencias enteras no negativas
+                de variables.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Forma General</h3>
+            <p class="mb-4">Un polinomio en una variable \(x\) puede escribirse como:</p>
+
+            <div class="formula-block">
+                \begin{align}
+                P(x) = a_n x^n + a_{n-1} x^{n-1} + \ldots + a_1 x + a_0
+                \end{align}
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Operaciones con Polinomios</h3>
+            <p class="mb-4">Las operaciones básicas incluyen suma, resta, multiplicación y división de polinomios.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Multiplicación de polinomios:</p>
+                \begin{align}
+                (ax^2 + bx + c)(dx + e) = adx^3 + (ae + bd)x^2 + (be + cd)x + ce
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo de Multiplicación:</h4>
+                <p class="mb-2">Multiplicar: \((x^2 + 2x - 3)(2x - 1)\)</p>
+                <p class="mt-3">Solución:</p>
+                \begin{align}
+                (x^2 + 2x - 3)(2x - 1) &= 2x^3 - x^2 + 4x^2 - 2x - 6x + 3 \\
+                &= 2x^3 + 3x^2 - 8x + 3
+                \end{align}
+            </div>
+
+            <!-- New subsection for Trinomio Cuadrado Perfecto -->
+            <h3 class="text-xl font-semibold mt-6 mb-3">Trinomio Cuadrado Perfecto</h3>
+            <p class="mb-4">Un trinomio cuadrado perfecto es el resultado de elevar un binomio al cuadrado. Es una forma
+                especial de polinomio que aparece frecuentemente en factorizaciones y simplificaciones algebraicas.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Suma: El cuadrado de la suma de dos términos</p>
+                \begin{align}
+                (x + y)^2 = x^2 + 2xy + y^2
+                \end{align}
+            </div>
+
+            <div class="formula-block">
+                <p class="mb-2">Resta: El cuadrado de la diferencia de dos términos</p>
+                \begin{align}
+                (x - y)^2 = x^2 - 2xy + y^2
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo de Trinomio Cuadrado Perfecto:</h4>
+                <p class="mb-2">Desarrollar: \((3a - 2b)^2\)</p>
+                <p class="mt-3">Solución:</p>
+                <p>Usando la fórmula \((x - y)^2 = x^2 - 2xy + y^2\), donde \(x = 3a\) y \(y = 2b\):</p>
+                \begin{align}
+                (3a - 2b)^2 &= (3a)^2 - 2(3a)(2b) + (2b)^2 \\
+                &= 9a^2 - 12ab + 4b^2
+                \end{align}
+            </div>
+        </section>
+
+        <!-- Factorización -->
+        <section id="factorizacion" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Factorización</h2>
+            <p class="mb-4">La factorización es el proceso de descomponer un polinomio en el producto de dos o más
+                factores.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Tipos de Factorización</h3>
+
+            <!-- Factor Común -->
+            <h4 class="text-lg font-semibold mt-4 mb-2">Factor Común</h4>
+            <p class="mb-4">Consiste en extraer el máximo factor común a todos los términos del polinomio.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Ejemplo 1: Factorizar \(2x + 4\)</p>
+                \begin{align}
+                2x + 4 &= 2 \cdot x + 2 \cdot 2 \\
+                &= 2(x + 2)
+                \end{align}
+            </div>
+
+            <div class="formula-block">
+                <p class="mb-2">Ejemplo 2: Factorizar \(3x^2 + 6x\)</p>
+                \begin{align}
+                3x^2 + 6x &= 3x \cdot x + 3x \cdot 2 \\
+                &= 3x(x + 2)
+                \end{align}
+            </div>
+
+            <!-- Factorización de Trinomios -->
+            <h4 class="text-lg font-semibold mt-4 mb-2">Factorización de Trinomios</h4>
+            <p class="mb-4">La factorización de trinomios de la forma \(ax^2 + bx + c\) consiste en encontrar dos
+                binomios cuyo producto sea igual al trinomio original.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Ejemplo 1: Factorizar \(x^2 + 5x + 6\)</p>
+                \begin{align}
+                x^2 + 5x + 6 &= x^2 + 2x + 3x + 6 \\
+                &= x(x + 2) + 3(x + 2) \\
+                &= (x + 2)(x + 3)
+                \end{align}
+            </div>
+
+            <div class="formula-block">
+                <p class="mb-2">Ejemplo 2: Factorizar \(2x^2 - 5x - 3\)</p>
+                \begin{align}
+                2x^2 - 5x - 3 &= 2x^2 - 6x + x - 3 \\
+                &= 2x(x - 3) + 1(x - 3) \\
+                &= (2x + 1)(x - 3)
+                \end{align}
+            </div>
+
+            <!-- Diferencia de Cuadrados -->
+            <h4 class="text-lg font-semibold mt-4 mb-2">Diferencia de Cuadrados</h4>
+            <p class="mb-4">Una expresión de la forma \(a^2 - b^2\) puede factorizarse como el producto de la suma y la
+                diferencia de las raíces cuadradas.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Ejemplo 1: Factorizar \(x^2 - 9\)</p>
+                \begin{align}
+                x^2 - 9 &= x^2 - 3^2 \\
+                &= (x - 3)(x + 3)
+                \end{align}
+            </div>
+
+            <div class="formula-block">
+                <p class="mb-2">Ejemplo 2: Factorizar \(4x^2 - 25\)</p>
+                \begin{align}
+                4x^2 - 25 &= (2x)^2 - 5^2 \\
+                &= (2x - 5)(2x + 5)
+                \end{align}
+            </div>
+
+            <!-- Suma y Resta de Cubos -->
+            <h4 class="text-lg font-semibold mt-4 mb-2">Suma y Resta de Cubos</h4>
+            <p class="mb-4">Las expresiones de la forma \(a^3 \pm b^3\) pueden factorizarse utilizando fórmulas
+                específicas.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Resta de cubos: \(a^3 - b^3 = (a-b)(a^2+ab+b^2)\)</p>
+                <p class="mb-2">Ejemplo 1: Factorizar \(x^3 - 8\)</p>
+                \begin{align}
+                x^3 - 8 &= x^3 - 2^3 \\
+                &= (x - 2)(x^2 + 2x + 4)
+                \end{align}
+            </div>
+
+            <div class="formula-block">
+                <p class="mb-2">Suma de cubos: \(a^3 + b^3 = (a+b)(a^2-ab+b^2)\)</p>
+                <p class="mb-2">Ejemplo 2: Factorizar \(27x^3 + 125\)</p>
+                \begin{align}
+                27x^3 + 125 &= (3x)^3 + 5^3 \\
+                &= (3x + 5)((3x)^2 - (3x)(5) + 5^2) \\
+                &= (3x + 5)(9x^2 - 15x + 25)
+                \end{align}
+            </div>
+        </section>
+
+        <!-- Radicales y Exponentes -->
+        <section id="radicales-exponentes" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Radicales y Exponentes</h2>
+            <p class="mb-4">Los radicales y exponentes son operaciones fundamentales en álgebra que permiten expresar
+                potencias y raíces de números y variables.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Leyes de los Exponentes</h3>
+
+            <div class="formula-block">
+                \begin{align}
+                x^a \cdot x^b &= x^{a+b} \\
+                \frac{x^a}{x^b} &= x^{a-b} \\
+                (x^a)^b &= x^{a \cdot b} \\
+                x^0 &= 1 \quad (x \neq 0) \\
+                x^{-a} &= \frac{1}{x^a}
+                \end{align}
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Radicales</h3>
+            <p class="mb-4">Un radical es una expresión que involucra una raíz de un número o variable.</p>
+
+            <div class="formula-block">
+                \begin{align}
+                \sqrt[n]{x} &= x^{1/n} \\
+                \sqrt[n]{x^m} &= x^{m/n} \\
+                \sqrt[n]{xy} &= \sqrt[n]{x} \cdot \sqrt[n]{y} \\
+                \sqrt[n]{\frac{x}{y}} &= \frac{\sqrt[n]{x}}{\sqrt[n]{y}}
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo de Simplificación:</h4>
+                <p class="mb-2">Simplificar: \(\sqrt{12} + \sqrt{27}\)</p>
+                <p class="mt-3">Solución:</p>
+                \begin{align}
+                \sqrt{12} + \sqrt{27} &= \sqrt{4 \cdot 3} + \sqrt{9 \cdot 3} \\
+                &= 2\sqrt{3} + 3\sqrt{3} \\
+                &= 5\sqrt{3}
+                \end{align}
+            </div>
+        </section>
+
+        <!-- Logaritmos -->
+        <section id="logaritmos" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Logaritmos</h2>
+            <p class="mb-4">Los logaritmos son las operaciones inversas de la exponenciación. Si \(b^y = x\), entonces
+                \(\log_b(x) = y\).</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Propiedades de los Logaritmos</h3>
+
+            <div class="formula-block">
+                \begin{align}
+                \log_b(xy) &= \log_b(x) + \log_b(y) \\
+                \log_b\left(\frac{x}{y}\right) &= \log_b(x) - \log_b(y) \\
+                \log_b(x^n) &= n\log_b(x) \\
+                \log_b(b) &= 1 \\
+                \log_b(1) &= 0 \\
+                b^{\log_b(x)} &= x
+                \end{align}
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Cambio de Base</h3>
+
+            <div class="formula-block">
+                \begin{align}
+                \log_b(x) = \frac{\log_a(x)}{\log_a(b)}
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo de Aplicación:</h4>
+                <p class="mb-2">Resolver: \(\log_3(x) + \log_3(x+6) = 2\)</p>
+                <p class="mt-3">Solución:</p>
+                \begin{align}
+                \log_3(x) + \log_3(x+6) &= 2 \\
+                \log_3(x(x+6)) &= 2 \\
+                x(x+6) &= 3^2 \\
+                x^2 + 6x &= 9 \\
+                x^2 + 6x - 9 &= 0
+                \end{align}
+
+                Usando la fórmula cuadrática:
+                \begin{align}
+                x = \frac{-6 \pm \sqrt{36+36}}{2} = \frac{-6 \pm \sqrt{72}}{2} = \frac{-6 \pm 6\sqrt{2}}{2} = -3 \pm
+                3\sqrt{2}
+                \end{align}
+
+                Como \(x\) debe ser positivo para que \(\log_3(x)\) esté definido, la solución es \(x = -3 +
+                3\sqrt{2}\).
+            </div>
+        </section>
+
+        <!-- Nueva sección: Aplicaciones del Álgebra a la Vida Real y a la Física -->
+        <section id="aplicaciones-algebra" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Aplicaciones del Álgebra a la Vida Real y a la Física</h2>
+            <p class="mb-4">El álgebra no es solo una disciplina abstracta, sino una poderosa herramienta para modelar y
+                resolver problemas del mundo real. Desde la ingeniería y la física hasta la economía y la vida
+                cotidiana, el álgebra nos permite expresar relaciones complejas mediante ecuaciones y encontrar
+                soluciones prácticas.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Aplicaciones en Física</h3>
+            <p class="mb-4">En física, el álgebra es fundamental para relacionar magnitudes físicas y expresar leyes
+                naturales mediante ecuaciones que describen el comportamiento de los sistemas físicos.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Las leyes del movimiento de Newton expresadas algebraicamente:</p>
+                \begin{align}
+                \vec{F} &= m\vec{a} \quad \text{(Segunda ley de Newton)} \\
+                v &= v_0 + at \quad \text{(Ecuación de velocidad)} \\
+                x &= x_0 + v_0t + \frac{1}{2}at^2 \quad \text{(Ecuación de posición)}
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo: Cálculo de Tiempo de Caída</h4>
+                <p class="mb-2">Un objeto se deja caer desde una altura de 45 metros. ¿Cuánto tiempo tardará en llegar
+                    al suelo?</p>
+                <p class="mt-3">Solución:</p>
+                <p>Usando la ecuación de posición con \(x_0 = 45\) m, \(v_0 = 0\) m/s, \(a = -9.8\) m/s² (gravedad), y
+                    \(x = 0\) (nivel del suelo):</p>
+                \begin{align}
+                0 &= 45 + 0 \cdot t + \frac{1}{2} \cdot (-9.8) \cdot t^2 \\
+                0 &= 45 - 4.9t^2 \\
+                4.9t^2 &= 45 \\
+                t^2 &= \frac{45}{4.9} \\
+                t &= \sqrt{\frac{45}{4.9}} \approx 3.03 \text{ segundos}
+                \end{align}
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Aplicaciones Económicas y Financieras</h3>
+            <p class="mb-4">El álgebra es esencial en finanzas personales, negocios y economía para calcular intereses,
+                inversiones y optimizar recursos.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Fórmulas de interés compuesto y valor presente:</p>
+                \begin{align}
+                A &= P(1 + r)^n \quad \text{(Interés compuesto)} \\
+                P &= \frac{A}{(1 + r)^n} \quad \text{(Valor presente)}
+                \end{align}
+                <p>Donde \(A\) es el monto final, \(P\) es el principal (inversión inicial), \(r\) es la tasa de interés
+                    y \(n\) es el número de períodos.</p>
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo: Planificación de Inversión</h4>
+                <p class="mb-2">¿Cuánto deberías invertir hoy a una tasa anual del 5% para tener $10,000 dentro de 10
+                    años?</p>
+                <p class="mt-3">Solución:</p>
+                <p>Usando la fórmula del valor presente con \(A = 10,000\), \(r = 0.05\), y \(n = 10\):</p>
+                \begin{align}
+                P &= \frac{10,000}{(1 + 0.05)^{10}} \\
+                &= \frac{10,000}{1.05^{10}} \\
+                &= \frac{10,000}{1.6289} \\
+                &\approx 6,138.82
+                \end{align}
+                <p>Deberías invertir aproximadamente $6,138.82 hoy.</p>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Aplicaciones en Ingeniería y Tecnología</h3>
+            <p class="mb-4">En ingeniería, el álgebra permite diseñar estructuras, circuitos eléctricos, sistemas de
+                control y algoritmos computacionales.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Ley de Ohm en circuitos eléctricos:</p>
+                \begin{align}
+                V &= IR \quad \text{(Voltaje = Corriente × Resistencia)} \\
+                P &= VI = I^2R = \frac{V^2}{R} \quad \text{(Potencia eléctrica)}
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo: Dimensionamiento de Estructuras</h4>
+                <p class="mb-2">Un puente soporta una carga de 5000 kg distribuida uniformemente. Si la ecuación que
+                    relaciona la deflexión máxima \(y\) con la carga \(w\) es \(y = \frac{5wL^4}{384EI}\), ¿qué rigidez
+                    \(EI\) debe tener la viga para limitar la deflexión a 1 cm en un tramo de 10 metros?</p>
+                <p class="mt-3">Solución:</p>
+                <p>La carga distribuida es \(w = \frac{5000 \cdot 9.8}{10} = 4900\) N/m y queremos \(y = 0.01\) m con
+                    \(L = 10\) m:</p>
+                \begin{align}
+                0.01 &= \frac{5 \cdot 4900 \cdot 10^4}{384 \cdot EI} \\
+                EI &= \frac{5 \cdot 4900 \cdot 10^4}{384 \cdot 0.01} \\
+                &= \frac{24,500,000}{3.84} \\
+                &\approx 6,380,208 \text{ N·m²}
+                \end{align}
+            </div>
+
+            <!-- NEW SUBSECTION: Aplicaciones en Estequiometría -->
+            <h3 class="text-xl font-semibold mt-6 mb-3">Aplicaciones en Estequiometría</h3>
+            <p class="mb-4">La estequiometría utiliza el álgebra para calcular cantidades de reactivos y productos en
+                reacciones químicas, basándose en la ley de conservación de la masa y las proporciones definidas.</p>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo 1: Estequiometría Básica</h4>
+                <p class="mb-2">Si 2 moles de H₂ reaccionan con 1 mol de O₂ para formar agua (H₂O), ¿cuántos moles de
+                    agua se producen?</p>
+                <p class="mt-3">Solución:</p>
+                <p>Primero escribimos la ecuación química balanceada:</p>
+                \begin{align}
+                2\text{H}_2 + \text{O}_2 \rightarrow 2\text{H}_2\text{O}
+                \end{align}
+                <p>La ecuación balanceada muestra que por cada 2 moles de H₂ y 1 mol de O₂ que reaccionan, se producen 2
+                    moles de H₂O. Esta es una relación 1:1 entre los moles de H₂ y los moles de H₂O.</p>
+                <p>Por lo tanto, a partir de 2 moles de H₂, se producen 2 moles de H₂O.</p>
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo 2: Cálculos Estequiométricos</h4>
+                <p class="mb-2">En la reacción: C₃H₈ + 5O₂ → 3CO₂ + 4H₂O, si se tienen 10 moles de O₂, ¿cuántos moles de
+                    CO₂ se producen?</p>
+                <p class="mt-3">Solución:</p>
+                <p>A partir de la ecuación balanceada, establecemos la relación estequiométrica entre O₂ y CO₂:</p>
+                \begin{align}
+                \frac{3 \text{ moles CO}_2}{5 \text{ moles O}_2}
+                \end{align}
+                <p>Ahora calculamos los moles de CO₂ producidos a partir de 10 moles de O₂:</p>
+                \begin{align}
+                \text{moles de CO}_2 &= 10 \text{ moles O}_2 \times \frac{3 \text{ moles CO}_2}{5 \text{ moles O}_2} \\
+                &= 10 \times \frac{3}{5} \\
+                &= 6 \text{ moles de CO}_2
+                \end{align}
+                <p>Por lo tanto, se producen 6 moles de CO₂.</p>
+            </div>
+
+            <!-- NEW SUBSECTION: Problema de Logaritmos en Química -->
+            <h3 class="text-xl font-semibold mt-6 mb-3">Problema de Logaritmos en Química</h3>
+            <p class="mb-4">Los logaritmos son fundamentales en química para describir fenómenos como el pH, las leyes
+                de velocidad de reacción y el equilibrio químico.</p>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo: Ley de Velocidad Logarítmica</h4>
+                <p class="mb-2">La ley de velocidad de una reacción sigue la forma logarítmica: log([A]) = -kt +
+                    log([A]₀). Si se conoce que en una reacción el logaritmo de la concentración inicial de A es 1.2 y,
+                    después de cierto tiempo, log([A]) es 0.7, calcula el producto kt.</p>
+                <p class="mt-3">Solución:</p>
+                <p>Según la ecuación dada:</p>
+                \begin{align}
+                \log([\text{A}]) = -kt + \log([\text{A}]_0)
+                \end{align}
+
+                <p>Despejando el término kt:</p>
+                \begin{align}
+                kt = \log([\text{A}]_0) - \log([\text{A}])
+                \end{align}
+
+                <p>Sustituyendo los valores conocidos:</p>
+                \begin{align}
+                kt &= 1.2 - 0.7 \\
+                kt &= 0.5
+                \end{align}
+
+                <p>Por lo tanto, el producto kt es igual a 0.5, lo que proporciona información sobre la velocidad y el
+                    tiempo transcurrido en la reacción.</p>
+            </div>
+        </section>
+
+        <!-- Álgebra Lineal -->
+        <section id="algebra-lineal" class="mb-16">
+            <h2 class="text-3xl font-bold section-title">Álgebra Lineal</h2>
+            <p class="mb-4">El álgebra lineal es el estudio de las ecuaciones lineales y sus representaciones en
+                espacios vectoriales a través de matrices y vectores.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Matrices y Determinantes</h3>
+            <p class="mb-4">Una matriz es un arreglo rectangular de números. Los determinantes son valores asociados a
+                matrices cuadradas.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Determinante de una matriz 2×2:</p>
+                \begin{align}
+                \det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc
+                \end{align}
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Sistemas de Ecuaciones Lineales</h3>
+            <p class="mb-4">Un sistema de ecuaciones lineales puede representarse en forma matricial como \(AX = B\),
+                donde \(A\) es la matriz de coeficientes, \(X\) es el vector de incógnitas y \(B\) es el vector de
+                términos constantes.</p>
+
+            <div class="formula-block">
+                <p class="mb-2">Sistema de ecuaciones en forma matricial:</p>
+                \begin{align}
+                \begin{pmatrix}
+                a_{11} & a_{12} & \cdots & a_{1n} \\
+                a_{21} & a_{22} & \cdots & a_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                a_{m1} & a_{m2} & \cdots & a_{mn}
+                \end{pmatrix}
+                \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix} =
+                \begin{pmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{pmatrix}
+                \end{align}
+            </div>
+
+            <div class="example-box">
+                <h4 class="font-semibold mb-2">Ejemplo de Resolución de Sistema:</h4>
+                <p class="mb-2">Resolver el sistema:</p>
+                \begin{align}
+                2x + y &= 5 \\
+                x - y &= 1
+                \end{align}
+                <p class="mt-3">Solución:</p>
+                <p>En forma matricial:</p>
+                \begin{align}
+                \begin{pmatrix} 2 & 1 \\ 1 & -1 \end{pmatrix}
+                \begin{pmatrix} x \\ y \end{pmatrix} =
+                \begin{pmatrix} 5 \\ 1 \end{pmatrix}
+                \end{align}
+
+                <p>Sumando las dos ecuaciones:</p>
+                \begin{align}
+                3x &= 6 \\
+                x &= 2
+                \end{align}
+
+                <p>Sustituyendo en la primera ecuación:</p>
+                \begin{align}
+                2(2) + y &= 5 \\
+                4 + y &= 5 \\
+                y &= 1
+                \end{align}
+
+                <p>La solución es \(x = 2\) y \(y = 1\).</p>
+            </div>
+        </section>
+
+
+    </main>
+
+    
+
+    <!-- Botones flotantes -->
+    <div class="float-buttons">
+        <div id="scrollToTop" class="float-button bg-white text-indigo-600 border border-indigo-200">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+      
+    </div>
+
+    <footer class="bg-gray-100 py-8 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>© 2025 Guía Descriptiva de Álgebra. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script id="app-script">
+        // Renderizar MathJax
+        function renderMathJax() {
+            if (window.MathJax) {
+                window.MathJax.typeset();
+            }
+        }
+
+        // Scroll suave para los enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    // Scroll al elemento
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+
+                    // Actualizar clase active en el índice
+                    document.querySelectorAll('.index-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+
+                    // Cerrar el panel en móviles
+                    if (window.innerWidth < 768) {
+                        toggleIndexPanel(false);
+                    }
+                }
+            });
+        });
+
+        // Botón para volver arriba
+        document.getElementById('scrollToTop').addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Toggle para el panel de índice
+        const indexPanel = document.getElementById('indexPanel');
+        const overlay = document.getElementById('overlay');
+
+        function toggleIndexPanel(forceState) {
+            const newState = forceState !== undefined ? forceState : !indexPanel.classList.contains('open');
+
+            if (newState) {
+                indexPanel.classList.add('open');
+                overlay.classList.add('show');
+            } else {
+                indexPanel.classList.remove('open');
+                overlay.classList.remove('show');
+            }
+
+            // Guardar estado en localStorage si está habilitado
+            const rememberState = document.getElementById('rememberIndexState').checked;
+            if (rememberState) {
+                localStorage.setItem('algebraIndexOpen', newState);
+            }
+        }
+
+        document.getElementById('toggleIndex').addEventListener('click', function () {
+            toggleIndexPanel();
+        });
+
+        overlay.addEventListener('click', function () {
+            toggleIndexPanel(false);
+        });
+
+        // Recordar estado del índice
+        const rememberCheckbox = document.getElementById('rememberIndexState');
+        rememberCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                localStorage.setItem('algebraRememberIndex', 'true');
+                localStorage.setItem('algebraIndexOpen', indexPanel.classList.contains('open'));
+            } else {
+                localStorage.removeItem('algebraRememberIndex');
+                localStorage.removeItem('algebraIndexOpen');
+            }
+        });
+
+        // Al cargar la página
+        document.addEventListener('DOMContentLoaded', function () {
+            // Renderizar fórmulas matemáticas
+            renderMathJax();
+
+            // Cargar preferencias del usuario
+            if (localStorage.getItem('algebraRememberIndex') === 'true') {
+                rememberCheckbox.checked = true;
+                const wasOpen = localStorage.getItem('algebraIndexOpen') === 'true';
+                toggleIndexPanel(wasOpen);
+            }
+
+            // Marcar el enlace activo basado en la posición de scroll
+            function updateActiveLink() {
+                const scrollPosition = window.scrollY;
+
+                document.querySelectorAll('section').forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        const id = section.getAttribute('id');
+                        document.querySelectorAll('.index-link').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Observador de scroll para actualizar enlace activo
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
+        });
+
+        // Reiniciar MathJax cuando cambia el contenido visible
+        document.addEventListener('scroll', function () {
+            clearTimeout(window.mathJaxTimer);
+            window.mathJaxTimer = setTimeout(renderMathJax, 1000);
+        });
+
+          function toggleTab() {
+                const tab = document.getElementById('searchTab');
+                tab.classList.toggle('open');
+            }
+
+            function filterTopics() {
+                const input = document.getElementById('searchInput');
+                const filter = input.value.toLowerCase();
+                const items = document.querySelectorAll('.topic-item');
+                const noResults = document.getElementById('noResults');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.add('show');
+                } else {
+                    noResults.classList.remove('show');
+                }
+            }
+
+            function selectTopic(el) {
+                alert('Has seleccionado: ' + el.textContent);
+                // Aquí puedes agregar la lógica para cargar el contenido del tema
+            }
+
+            // Cerrar tab al hacer clic fuera
+            document.addEventListener('click', function (e) {
+                const tab = document.getElementById('searchTab');
+                const tabButton = document.querySelector('.tab-button');
+
+                if (tab.classList.contains('open') &&
+                    !tab.contains(e.target) &&
+                    !tabButton.contains(e.target)) {
+                    tab.classList.remove('open');
+                }
+            });
+    </script>
+</body>
+
+</html>
